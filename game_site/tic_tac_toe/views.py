@@ -1,12 +1,14 @@
 from django.shortcuts import render, redirect
 
-from .models import Game
+from .models import Game, Player
 
 def index(request):
     return render(request, 'tic_tac_toe/index.html', {})
 
-def new_game(request):
+def new_game(request, p1, p2):
     g = Game()
+    g.p1 = Player.objects.get(name=p1)
+    g.p2 = Player.objects.get(name=p2)
     g.save()
     return redirect(game, g.id)
 
@@ -47,7 +49,25 @@ def gameover(request, game_id):
 
     if g.winner == 1:
         win = 'Player 1 won'
+        g.p1.wins += 1
+        g.p2.losses += 1
+        g.p1.save()
+        g.p2.save()
     if g.winner == 2:
         win = 'Player 2 won'
+        g.p1.losses += 1
+        g.p2.wins += 1
+        g.p1.save()
+        g.p2.save()
+    
+    g.delete()
 
     return render(request, 'tic_tac_toe/gameover.html', {'win_str': win})
+
+def create_user(request, name):
+    p = Player()
+
+    p.name = name
+    p.save()
+
+    return redirect(index)

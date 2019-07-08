@@ -2,12 +2,18 @@ from django.db import models
 
 from typing import Optional
 
+class Player(models.Model):
+    name = models.CharField(max_length=50)
+    wins = models.IntegerField(default=0)
+    ties = models.IntegerField(default=0)
+    losses = models.IntegerField(default=0)
 
 class Game(models.Model):
     field = models.CharField(default='0'*9, max_length=9)
     player = models.IntegerField(default=1)
     winner = models.IntegerField(default=0)
-    # field = [0,0,0,0,0,0,0,0,0]
+    p1 = models.ForeignKey(Player, related_name='p1', on_delete=models.DO_NOTHING, default=0)
+    p2 = models.ForeignKey(Player, related_name='p2', on_delete=models.DO_NOTHING, default=0)
 
     def get_position(self, i: int, j: int) -> Optional[int]:
         if i < 0 or j < 0 or i > 2 or j > 2:
