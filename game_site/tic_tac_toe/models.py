@@ -4,10 +4,10 @@ from typing import Optional
 
 
 class Game(models.Model):
-    # field = models.CharField(default='0'*9, max_length=9)
-    player = 1
-    winner = 0
-    field = [0,0,0,0,0,0,0,0,0]
+    field = models.CharField(default='0'*9, max_length=9)
+    player = models.IntegerField(default=1)
+    winner = models.IntegerField(default=0)
+    # field = [0,0,0,0,0,0,0,0,0]
 
     def get_position(self, i: int, j: int) -> Optional[int]:
         if i < 0 or j < 0 or i > 2 or j > 2:
@@ -28,13 +28,13 @@ class Game(models.Model):
                 return True
 
     def place(self, p: int) -> bool:
-        if self.field[p] == 0:
-            self.field[p] = self.player
+        if self.field[p] == '0':
+            self.field = self.field[:p] + str(self.player) + self.field[p+1:]
             return True
         else:
             return False
 
-    def move(self, i: int, j: int) -> bool:
+    def play(self, i: int, j: int) -> bool:
         p = self.get_position(i, j)
         if p is None or not self.place(p):
             return False
