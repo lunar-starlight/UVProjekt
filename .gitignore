@@ -1,0 +1,7 @@
+.vscode/
+venv-django/
+venv-bottle/
+
+db.*
+
+__pycache__
