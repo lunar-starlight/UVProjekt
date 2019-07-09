@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.urls import reverse
 from typing import Optional
 
 class Player(models.Model):
@@ -14,6 +14,7 @@ class Game(models.Model):
     winner = models.IntegerField(default=0)
     p1 = models.ForeignKey(Player, related_name='p1', on_delete=models.DO_NOTHING, default=0)
     p2 = models.ForeignKey(Player, related_name='p2', on_delete=models.DO_NOTHING, default=0)
+    # test = models.CharField(validators=[validate_comma_separated_integer_list])
 
     def get_position(self, i: int, j: int) -> Optional[int]:
         if i < 0 or j < 0 or i > 2 or j > 2:
@@ -51,3 +52,15 @@ class Game(models.Model):
         if self.check_win(i, j):
             self.winner = player
         self.toggle_player()
+
+    # def html(self):
+    #     s = '<table>'
+    #     conv = {'0': '', '1': 'X', '2': 'O'}
+    #     field = [[conv[self.field[3*i + j]] for j in range(3)] for i in range(3)]
+    #     for i, row in enumerate(field):
+    #         s += '<tr>'
+    #         for j, el in enumerate(row):
+    #             s += '<td><a style="text-decoration: none; color:black" href="'+ reverse('ttt:play', args=(self.id, i, j)) +'"><div style="border: 1px solid black; width: 60px; height: 60px; font-size: 40px">' + str(el) + '</div></a></td>'
+    #         s += '</tr>'
+    #     s += '</table>'
+    #     return s
