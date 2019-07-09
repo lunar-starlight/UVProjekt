@@ -33,17 +33,21 @@ class Game(models.Model):
             if self.field[2] == self.field[4] == self.field[6]:
                 return True
 
-    def place(self, p: int) -> bool:
+    def place(self, p: int, player: str = None) -> bool:
+        if player is None:
+            player = self.player
         if self.field[p] == '0':
-            self.field = self.field[:p] + str(self.player) + self.field[p+1:]
+            self.field = self.field[:p] + str(player) + self.field[p+1:]
             return True
         else:
             return False
 
-    def play(self, i: int, j: int) -> bool:
+    def play(self, i: int, j: int, player: str = None) -> bool:
+        if player is None:
+            player = self.player
         p = self.get_position(i, j)
-        if p is None or not self.place(p):
+        if p is None or not self.place(p, player=player):
             return False
         if self.check_win(i, j):
-            self.winner = self.player
+            self.winner = player
         self.toggle_player()
