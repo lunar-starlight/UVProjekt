@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'tic_tac_toe.apps.TicTacToeConfig',
+    'ultimate_tic_tac_toe.apps.UltimateTicTacToeConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
