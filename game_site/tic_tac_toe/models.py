@@ -5,16 +5,19 @@ from typing import Optional
 class Player(models.Model):
     name = models.CharField(max_length=50)
     wins = models.IntegerField(default=0)
-    ties = models.IntegerField(default=0)
     losses = models.IntegerField(default=0)
 
 class Game(models.Model):
     field = models.CharField(default='0'*9, max_length=9)
     player = models.IntegerField(default=1)
     winner = models.IntegerField(default=0)
-    p1 = models.ForeignKey(Player, related_name='p1', on_delete=models.DO_NOTHING, default=0)
-    p2 = models.ForeignKey(Player, related_name='p2', on_delete=models.DO_NOTHING, default=0)
-    # test = models.CharField(validators=[validate_comma_separated_integer_list])
+    p1 = models.ForeignKey(Player, related_name='ttt_p1', on_delete=models.DO_NOTHING, default=0)
+    p2 = models.ForeignKey(Player, related_name='ttt_p2', on_delete=models.DO_NOTHING, default=0)
+    keep_score = models.BooleanField(default=True)
+
+    # def __init__(self, p1, p2):
+    #     t1 = Player.objects.get(id=p1)
+    #     t2 = Player.objects.get(id=p2)
 
     def get_position(self, i: int, j: int) -> Optional[int]:
         if i < 0 or j < 0 or i > 2 or j > 2:
@@ -43,7 +46,7 @@ class Game(models.Model):
         else:
             return False
 
-    def play(self, i: int, j: int, player: str = None) -> bool:
+    def play(self, i: int, j: int, player: int = None) -> bool:
         if player is None:
             player = self.player
         p = self.get_position(i, j)
@@ -51,6 +54,16 @@ class Game(models.Model):
             return False
         if self.check_win(i, j):
             self.winner = player
+            if self.keep_score and self.winner == 1:
+                self.p1.wins += 1
+                self.p2.losses += 1
+                self.p1.save()
+                self.p2.save()
+            if self.keep_score and self.winner == 2:
+                self.p1.losses += 1
+                self.p2.wins += 1
+                self.p1.save()
+                self.p2.save()
         self.toggle_player()
 
     # def html(self):
