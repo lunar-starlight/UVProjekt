@@ -1,0 +1,13 @@
+.ttt_cell {
+    border: 1px solid black;
+    width: 60px;
+    height: 60px;
+    font-size: 60px;
+}
+
+a.ttt_link {
+    text-decoration: none;
+    color: black;
+    text-align: center;
+    font-family: Helvetica, sans-serif;
+}
