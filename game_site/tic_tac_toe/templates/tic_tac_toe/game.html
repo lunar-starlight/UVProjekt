@@ -1,29 +1,29 @@
-game id: {{ game_id }}
-field: {{ field }}
+{% comment %} game id: {{ game_id }}
+field: {{ field }} {% endcomment %}
 {% comment %} <table>
     {% for row in field %}
         <tr>
         {% for el in row %}
-            <a href="{% url 'play' game_id i j %}"><td style="border: 1px solid black; width: 20px; height: 20px"> {{ el }} </td></a>
+            <a href="{% url 'ttt:play' game_id 0 forloop.counter %}"><td style="border: 1px solid black; width: 20px; height: 20px"> {{ el }} </td></a>
         {% endfor %}
         </tr>
     {% endfor %}
 </table> {% endcomment %}
-
+{% comment %} <br /> {{ html }} <br /> {% endcomment %}
 <table>
     <tr>
-        <td><a style="text-decoration: none; color:black" href="{% url 'play' game_id 0 0 %}"><div style="border: 1px solid black; width: 60px; height: 60px; font-size: 40px">{{ field0 }}</div></a></td>
-        <td><a style="text-decoration: none; color:black" href="{% url 'play' game_id 0 1 %}"><div style="border: 1px solid black; width: 60px; height: 60px; font-size: 40px">{{ field1 }}</div></a></td>
-        <td><a style="text-decoration: none; color:black" href="{% url 'play' game_id 0 2 %}"><div style="border: 1px solid black; width: 60px; height: 60px; font-size: 40px">{{ field2 }}</div></a></td>
+        <td><a style="text-decoration: none; color:black" href="{% url 'ttt:play' game_id 0 0 %}"><div style="border: 1px solid black; width: 60px; height: 60px; font-size: 40px">{{ field0 }}</div></a></td>
+        <td><a style="text-decoration: none; color:black" href="{% url 'ttt:play' game_id 0 1 %}"><div style="border: 1px solid black; width: 60px; height: 60px; font-size: 40px">{{ field1 }}</div></a></td>
+        <td><a style="text-decoration: none; color:black" href="{% url 'ttt:play' game_id 0 2 %}"><div style="border: 1px solid black; width: 60px; height: 60px; font-size: 40px">{{ field2 }}</div></a></td>
     </tr>
     <tr>
-        <td><a style="text-decoration: none; color:black" href="{% url 'play' game_id 1 0 %}"><div style="border: 1px solid black; width: 60px; height: 60px; font-size: 40px">{{ field3 }}</div></a></td>
-        <td><a style="text-decoration: none; color:black" href="{% url 'play' game_id 1 1 %}"><div style="border: 1px solid black; width: 60px; height: 60px; font-size: 40px">{{ field4 }}</div></a></td>
-        <td><a style="text-decoration: none; color:black" href="{% url 'play' game_id 1 2 %}"><div style="border: 1px solid black; width: 60px; height: 60px; font-size: 40px">{{ field5 }}</div></a></td>
+        <td><a style="text-decoration: none; color:black" href="{% url 'ttt:play' game_id 1 0 %}"><div style="border: 1px solid black; width: 60px; height: 60px; font-size: 40px">{{ field3 }}</div></a></td>
+        <td><a style="text-decoration: none; color:black" href="{% url 'ttt:play' game_id 1 1 %}"><div style="border: 1px solid black; width: 60px; height: 60px; font-size: 40px">{{ field4 }}</div></a></td>
+        <td><a style="text-decoration: none; color:black" href="{% url 'ttt:play' game_id 1 2 %}"><div style="border: 1px solid black; width: 60px; height: 60px; font-size: 40px">{{ field5 }}</div></a></td>
     </tr>
     <tr>
-        <td><a style="text-decoration: none; color:black" href="{% url 'play' game_id 2 0 %}"><div style="border: 1px solid black; width: 60px; height: 60px; font-size: 40px">{{ field6 }}</div></a></td>
-        <td><a style="text-decoration: none; color:black" href="{% url 'play' game_id 2 1 %}"><div style="border: 1px solid black; width: 60px; height: 60px; font-size: 40px">{{ field7 }}</div></a></td>
-        <td><a style="text-decoration: none; color:black" href="{% url 'play' game_id 2 2 %}"><div style="border: 1px solid black; width: 60px; height: 60px; font-size: 40px">{{ field8 }}</div></a></td>
+        <td><a style="text-decoration: none; color:black" href="{% url 'ttt:play' game_id 2 0 %}"><div style="border: 1px solid black; width: 60px; height: 60px; font-size: 40px">{{ field6 }}</div></a></td>
+        <td><a style="text-decoration: none; color:black" href="{% url 'ttt:play' game_id 2 1 %}"><div style="border: 1px solid black; width: 60px; height: 60px; font-size: 40px">{{ field7 }}</div></a></td>
+        <td><a style="text-decoration: none; color:black" href="{% url 'ttt:play' game_id 2 2 %}"><div style="border: 1px solid black; width: 60px; height: 60px; font-size: 40px">{{ field8 }}</div></a></td>
     </tr>
 </table>
