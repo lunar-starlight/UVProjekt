@@ -10,7 +10,7 @@ class Player(models.Model):
     def get_absolute_url(self):
         return reverse('ttt:create_user')
 
-class Game(models.Model):
+class GameTTT(models.Model):
     field = models.CharField(default='0'*9, max_length=9)
     player = models.IntegerField(default=1)
     winner = models.IntegerField(default=0)

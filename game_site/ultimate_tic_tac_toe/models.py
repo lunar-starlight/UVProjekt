@@ -1,6 +1,6 @@
 from django.db import models
 
-from tic_tac_toe.models import Game as GameTTT, Player
+from tic_tac_toe.models import GameTTT, Player
 
 
 class GameUTTT(models.Model):
