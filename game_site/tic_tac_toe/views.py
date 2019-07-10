@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect, get_object_or_404, reverse
+from django.shortcuts import redirect, get_object_or_404
 from django.template import loader
 from django.http import HttpResponse
 from django.views import generic
