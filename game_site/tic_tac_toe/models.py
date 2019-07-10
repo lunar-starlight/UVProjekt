@@ -18,6 +18,8 @@ class Game(models.Model):
     p2 = models.ForeignKey(Player, related_name='ttt_p2', on_delete=models.DO_NOTHING, default=0)
     keep_score = models.BooleanField(default=True)
     game_over = models.BooleanField(default=False)
+    play_id = models.IntegerField(default=0)
+    play_url = models.CharField(default='ttt:play', max_length=100)
 
     def get_position(self, i: int, j: int) -> Optional[int]:
         if i < 0 or j < 0 or i > 2 or j > 2:
@@ -26,6 +28,7 @@ class Game(models.Model):
 
     def toggle_player(self) -> None:
         self.player = 3 - self.player
+        self.save()
     
     def check_win(self, i: int, j: int) -> bool:
         if self.field[j] == self.field[3 + j] == self.field[6 + j] or self.field[3*i] == self.field[3*i + 1] == self.field[3*i + 2]:
@@ -68,6 +71,7 @@ class Game(models.Model):
         if self.field.count('0') == 0:
             self.game_over = True
         self.toggle_player()
+        self.save()
 
     def context(self):
         conv = {'0': '', '1': 'X', '2': 'O'}
