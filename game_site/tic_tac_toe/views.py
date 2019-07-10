@@ -22,11 +22,6 @@ class GameView(generic.DetailView):
     template_name = 'tic_tac_toe/game.html'
 
 
-# def game(request, pk):
-#     g = get_object_or_404(Game, pk=pk)
-#     return render(request, 'tic_tac_toe/game.html', g.context())
-
-
 def play(request, pk, i, j):
     g = Game.objects.get(id=pk)
     g.play(i, j)
@@ -34,30 +29,6 @@ def play(request, pk, i, j):
     return redirect('ttt:game', pk)
 
 
-# def gameover(request, pk):
-#     g = Game.objects.get(id=pk)
-
-#     win = 'The game was tied'
-#     if g.winner == 1:
-#         win = 'Player 1 won'
-#     if g.winner == 2:
-#         win = 'Player 2 won'
-    
-#     # Maybe do that elsewhere?
-#     # Do I even want this?
-#     # g.delete()
-
-#     return render(request, 'tic_tac_toe/gameover.html', {'win_str': win})
-
 class CreateUserView(generic.CreateView):
     model = Player
     fields = ['name']
-
-
-# def create_user(request, name):
-#     p = Player()
-
-#     p.name = name
-#     p.save()
-
-#     return redirect('ttt:index')
