@@ -17,6 +17,7 @@ class Game(models.Model):
     p1 = models.ForeignKey(Player, related_name='ttt_p1', on_delete=models.DO_NOTHING, default=0)
     p2 = models.ForeignKey(Player, related_name='ttt_p2', on_delete=models.DO_NOTHING, default=0)
     keep_score = models.BooleanField(default=True)
+    game_over = models.BooleanField(default=False)
 
     # def __init__(self, p1, p2):
     #     t1 = Player.objects.get(id=p1)
@@ -56,6 +57,7 @@ class Game(models.Model):
         if p is None or not self.place(p, player=player):
             return False
         if self.check_win(i, j):
+            self.game_over = True
             self.winner = player
             if self.keep_score and self.winner == 1:
                 self.p1.wins += 1
@@ -67,6 +69,8 @@ class Game(models.Model):
                 self.p2.wins += 1
                 self.p1.save()
                 self.p2.save()
+        if self.field.count('0') == 0:
+            self.game_over = True
         self.toggle_player()
 
     def context(self):
