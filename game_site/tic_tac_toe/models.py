@@ -8,7 +8,7 @@ class Player(models.Model):
     losses = models.IntegerField(default=0)
 
     def get_absolute_url(self):
-        return reverse('ttt:index')
+        return reverse('ttt:create_user')
 
 class Game(models.Model):
     field = models.CharField(default='0'*9, max_length=9)
