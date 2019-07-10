@@ -8,6 +8,10 @@
     text-align: center;
 }
 
+.no_link:hover {
+    cursor: default;
+}
+
 a.ttt_link {
     text-decoration: none;
 }
