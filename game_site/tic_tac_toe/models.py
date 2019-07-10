@@ -49,7 +49,7 @@ class Game(models.Model):
         else:
             return False
 
-    def play(self, i: int, j: int, player: int = None) -> bool:
+    def play(self, _, i: int, j: int, player: int = None) -> bool:
         if player is None:
             player = self.player
         p = self.get_position(i, j)
@@ -72,6 +72,7 @@ class Game(models.Model):
             self.game_over = True
         self.toggle_player()
         self.save()
+        return True
 
     def context(self):
         conv = {'0': '', '1': 'X', '2': 'O'}

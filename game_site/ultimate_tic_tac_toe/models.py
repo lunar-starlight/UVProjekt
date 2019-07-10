@@ -25,7 +25,7 @@ class GameUTTT(models.Model):
     def toggle_player(self) -> None:
         self.player = 3 - self.player
 
-    def play(self, i: int, j: int) -> bool:
+    def play(self, fk: int, i: int, j: int) -> bool:
         p = self.game.get_position(i, j)
         if p is None:
             return False
@@ -33,12 +33,12 @@ class GameUTTT(models.Model):
         # pp = self.game.get_position(self.prev_i, self.prev_j)
         # self.games = [self.g0.id, self.g1.id, self.g2.id, self.g3.id, self.g4.id, self.g5.id, self.g6.id, self.g7.id, self.g8.id]
         g = GameTTT.objects.get(id=fk)
-        g.play(i, j, player=self.player)
+        if g.play(fk, i, j, player=self.player):
 
-        if g.winner != 0:
-            self.game.play(i, j, player=self.player)
+            if g.winner != 0:
+                self.game.play(fk, self.prev_i, self.prev_j, player=self.player)
 
-        self.prev_i = i
-        self.prev_j = j
-        self.toggle_player()
-        self.save()
+            self.prev_i = i
+            self.prev_j = j
+            self.toggle_player()
+            self.save()

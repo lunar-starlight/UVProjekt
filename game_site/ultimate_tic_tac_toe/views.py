@@ -38,21 +38,27 @@ def game(request, pk: int):
     g:GameUTTT = get_object_or_404(GameUTTT, pk=pk)
 
     template = loader.get_template('tic_tac_toe/game.html')
+    p = g.game.get_position(g.prev_i, g.prev_j)
+    t = True
+    if p is not None and g.game.field[p] != '0':
+        t = False
+    w = g.game.winner != 0
 
     context = {'game': g}
-    context['g0'] = template.render({'game': g.g0, 'disabled': 'g' + str(3*g.prev_i + g.prev_j) != 'g0'}, request)
-    context['g1'] = template.render({'game': g.g1, 'disabled': 'g' + str(3*g.prev_i + g.prev_j) != 'g1'}, request)
-    context['g2'] = template.render({'game': g.g2, 'disabled': 'g' + str(3*g.prev_i + g.prev_j) != 'g2'}, request)
-    context['g3'] = template.render({'game': g.g3, 'disabled': 'g' + str(3*g.prev_i + g.prev_j) != 'g3'}, request)
-    context['g4'] = template.render({'game': g.g4, 'disabled': 'g' + str(3*g.prev_i + g.prev_j) != 'g4'}, request)
-    context['g5'] = template.render({'game': g.g5, 'disabled': 'g' + str(3*g.prev_i + g.prev_j) != 'g5'}, request)
-    context['g6'] = template.render({'game': g.g6, 'disabled': 'g' + str(3*g.prev_i + g.prev_j) != 'g6'}, request)
-    context['g7'] = template.render({'game': g.g7, 'disabled': 'g' + str(3*g.prev_i + g.prev_j) != 'g7'}, request)
-    context['g8'] = template.render({'game': g.g8, 'disabled': 'g' + str(3*g.prev_i + g.prev_j) != 'g8'}, request)
+    context['g0'] = template.render({'game': g.g0, 'disabled': w or t and 'g' + str(3*g.prev_i + g.prev_j) != 'g0'}, request)
+    context['g1'] = template.render({'game': g.g1, 'disabled': w or t and 'g' + str(3*g.prev_i + g.prev_j) != 'g1'}, request)
+    context['g2'] = template.render({'game': g.g2, 'disabled': w or t and 'g' + str(3*g.prev_i + g.prev_j) != 'g2'}, request)
+    context['g3'] = template.render({'game': g.g3, 'disabled': w or t and 'g' + str(3*g.prev_i + g.prev_j) != 'g3'}, request)
+    context['g4'] = template.render({'game': g.g4, 'disabled': w or t and 'g' + str(3*g.prev_i + g.prev_j) != 'g4'}, request)
+    context['g5'] = template.render({'game': g.g5, 'disabled': w or t and 'g' + str(3*g.prev_i + g.prev_j) != 'g5'}, request)
+    context['g6'] = template.render({'game': g.g6, 'disabled': w or t and 'g' + str(3*g.prev_i + g.prev_j) != 'g6'}, request)
+    context['g7'] = template.render({'game': g.g7, 'disabled': w or t and 'g' + str(3*g.prev_i + g.prev_j) != 'g7'}, request)
+    context['g8'] = template.render({'game': g.g8, 'disabled': w or t and 'g' + str(3*g.prev_i + g.prev_j) != 'g8'}, request)
+    # context['gm'] = template.render({'game': g.game, 'disabled': w or t and 'g' + str(3*g.prev_i + g.prev_j) != 'g8'}, request)
 
     return render(request, 'ultimate_tic_tac_toe/game.html', context=context)
 
-def play(request, pk: int, i: int, j: int):
-    g = get_object_or_404(GameUTTT, pk=pk)
-    g.play(i, j)
+def play(request, pk: int, fk: int, i: int, j: int):
+    g:GameUTTT = get_object_or_404(GameUTTT, pk=pk)
+    g.play(fk, i, j)
     return redirect('uttt:game', pk)

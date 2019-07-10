@@ -19,3 +19,10 @@
         <td>{% if game.g8.winner == 0 %} <div>{{ g8 }}</div> {% else %} <div class="ttt_cell won_board"> {{ game.g8.context.winner }} </div> {% endif %} </td>
     </tr>
 </table>
+{% if game.game.game_over %}
+    {% if game.game.winner == 0 %} The game was a tie. {% endif %}
+    {% if game.game.winner == 1 %} Player 1 won. {% endif %}
+    {% if game.game.winner == 2 %} Player 2 won. {% endif %}
+
+    <br><a href="{% url 'uttt:index' %}">Return</a>
+{% endif %}

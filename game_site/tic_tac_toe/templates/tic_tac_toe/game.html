@@ -42,62 +42,62 @@ field: {{ field }} {% endcomment %}
     <table>
         <tr>
             <td>
-                {% if disabled %} <a> {% else %} <a class="ttt_link" href="{% url game.play_url game.play_id 0 0 %}"> {% endif %}
+                {% if disabled %} <a> {% else %} <a class="ttt_link" href="{% url game.play_url game.play_id game.id 0 0 %}"> {% endif %}
                 <div class="ttt_cell">{{ game.context.field0 }}</div>
                 </a>
             </td>
             <td>
-                {% if disabled %} <a> {% else %} <a class="ttt_link" href="{% url game.play_url game.play_id 0 1 %}"> {% endif %}
+                {% if disabled %} <a> {% else %} <a class="ttt_link" href="{% url game.play_url game.play_id game.id 0 1 %}"> {% endif %}
                 <div class="ttt_cell">{{ game.context.field1 }}</div>
                 </a>
             </td>
             <td>
-                {% if disabled %} <a> {% else %} <a class="ttt_link" href="{% url game.play_url game.play_id 0 2 %}"> {% endif %}
+                {% if disabled %} <a> {% else %} <a class="ttt_link" href="{% url game.play_url game.play_id game.id 0 2 %}"> {% endif %}
                 <div class="ttt_cell">{{ game.context.field2 }}</div>
                 </a>
             </td>
-            {% comment %} <td><a class="ttt_link" href="{% url game.play_url game.play_id 0 1 %}"><div class="ttt_cell">{{ game.context.field1 }}</div></a></td> {% endcomment %}
-            {% comment %} <td><a class="ttt_link" href="{% url game.play_url game.play_id 0 2 %}"><div class="ttt_cell">{{ game.context.field2 }}</div></a></td> {% endcomment %}
+            {% comment %} <td><a class="ttt_link" href="{% url game.play_url game.play_id game.id 0 1 %}"><div class="ttt_cell">{{ game.context.field1 }}</div></a></td> {% endcomment %}
+            {% comment %} <td><a class="ttt_link" href="{% url game.play_url game.play_id game.id 0 2 %}"><div class="ttt_cell">{{ game.context.field2 }}</div></a></td> {% endcomment %}
         </tr>
         <tr>
             <td>
-                {% if disabled %} <a> {% else %} <a class="ttt_link" href="{% url game.play_url game.play_id 1 0 %}"> {% endif %}
+                {% if disabled %} <a> {% else %} <a class="ttt_link" href="{% url game.play_url game.play_id game.id 1 0 %}"> {% endif %}
                 <div class="ttt_cell">{{ game.context.field3 }}</div>
                 </a>
             </td>
             <td>
-                {% if disabled %} <a> {% else %} <a class="ttt_link" href="{% url game.play_url game.play_id 1 1 %}"> {% endif %}
+                {% if disabled %} <a> {% else %} <a class="ttt_link" href="{% url game.play_url game.play_id game.id 1 1 %}"> {% endif %}
                 <div class="ttt_cell">{{ game.context.field4 }}</div>
                 </a>
             </td>
             <td>
-                {% if disabled %} <a> {% else %} <a class="ttt_link" href="{% url game.play_url game.play_id 1 2 %}"> {% endif %}
+                {% if disabled %} <a> {% else %} <a class="ttt_link" href="{% url game.play_url game.play_id game.id 1 2 %}"> {% endif %}
                 <div class="ttt_cell">{{ game.context.field5 }}</div>
                 </a>
             </td>
-            {% comment %} <td><a class="ttt_link" href="{% url game.play_url game.play_id 1 0 %}"><div class="ttt_cell">{{ game.context.field3 }}</div></a></td> {% endcomment %}
-            {% comment %} <td><a class="ttt_link" href="{% url game.play_url game.play_id 1 1 %}"><div class="ttt_cell">{{ game.context.field4 }}</div></a></td> {% endcomment %}
-            {% comment %} <td><a class="ttt_link" href="{% url game.play_url game.play_id 1 2 %}"><div class="ttt_cell">{{ game.context.field5 }}</div></a></td> {% endcomment %}
+            {% comment %} <td><a class="ttt_link" href="{% url game.play_url game.play_id game.id 1 0 %}"><div class="ttt_cell">{{ game.context.field3 }}</div></a></td> {% endcomment %}
+            {% comment %} <td><a class="ttt_link" href="{% url game.play_url game.play_id game.id 1 1 %}"><div class="ttt_cell">{{ game.context.field4 }}</div></a></td> {% endcomment %}
+            {% comment %} <td><a class="ttt_link" href="{% url game.play_url game.play_id game.id 1 2 %}"><div class="ttt_cell">{{ game.context.field5 }}</div></a></td> {% endcomment %}
         </tr>
         <tr>
             <td>
-                {% if disabled %} <a> {% else %} <a class="ttt_link" href="{% url game.play_url game.play_id 2 0 %}"> {% endif %}
+                {% if disabled %} <a> {% else %} <a class="ttt_link" href="{% url game.play_url game.play_id game.id 2 0 %}"> {% endif %}
                 <div class="ttt_cell">{{ game.context.field6 }}</div>
                 </a>
             </td>
             <td>
-                {% if disabled %} <a> {% else %} <a class="ttt_link" href="{% url game.play_url game.play_id 2 1 %}"> {% endif %}
+                {% if disabled %} <a> {% else %} <a class="ttt_link" href="{% url game.play_url game.play_id game.id 2 1 %}"> {% endif %}
                 <div class="ttt_cell">{{ game.context.field7 }}</div>
                 </a>
             </td>
             <td>
-                {% if disabled %} <a> {% else %} <a class="ttt_link" href="{% url game.play_url game.play_id 2 2 %}"> {% endif %}
+                {% if disabled %} <a> {% else %} <a class="ttt_link" href="{% url game.play_url game.play_id game.id 2 2 %}"> {% endif %}
                 <div class="ttt_cell">{{ game.context.field8 }}</div>
                 </a>
             </td>
-            {% comment %} <td><a class="ttt_link" href="{% url game.play_url game.play_id 2 0 %}"><div class="ttt_cell">{{ game.context.field6 }}</div></a></td> {% endcomment %}
-            {% comment %} <td><a class="ttt_link" href="{% url game.play_url game.play_id 2 1 %}"><div class="ttt_cell">{{ game.context.field7 }}</div></a></td> {% endcomment %}
-            {% comment %} <td><a class="ttt_link" href="{% url game.play_url game.play_id 2 2 %}"><div class="ttt_cell">{{ game.context.field8 }}</div></a></td> {% endcomment %}
+            {% comment %} <td><a class="ttt_link" href="{% url game.play_url game.play_id game.id 2 0 %}"><div class="ttt_cell">{{ game.context.field6 }}</div></a></td> {% endcomment %}
+            {% comment %} <td><a class="ttt_link" href="{% url game.play_url game.play_id game.id 2 1 %}"><div class="ttt_cell">{{ game.context.field7 }}</div></a></td> {% endcomment %}
+            {% comment %} <td><a class="ttt_link" href="{% url game.play_url game.play_id game.id 2 2 %}"><div class="ttt_cell">{{ game.context.field8 }}</div></a></td> {% endcomment %}
         </tr>
     </table>
 {% endif %}

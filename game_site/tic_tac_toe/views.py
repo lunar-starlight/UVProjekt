@@ -15,17 +15,16 @@ def new_game(request, p1: int, p2: int):
     g.save()
     g.play_id = g.id
     g.save()
-    return redirect('ttt:game', g.id)
+    return redirect('ttt:game', g.id, g.id)
 
 class GameView(generic.DetailView):
     model = Game
     template_name = 'tic_tac_toe/game.html'
 
-def play(request, pk: int, i: int, j: int):
+def play(request, pk: int, _, i: int, j: int):
     g = get_object_or_404(Game, pk=pk)
-    g.play(i, j)
-    g.save()
-    return redirect('ttt:game', pk)
+    g.play(pk, i, j)
+    return redirect('ttt:game', pk, pk)
 
 class CreateUserView(generic.CreateView):
     model = Player
