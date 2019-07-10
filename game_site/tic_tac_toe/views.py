@@ -8,7 +8,6 @@ from .models import Game, Player
 class IndexView(generic.TemplateView):
     template_name = 'tic_tac_toe/index.html'
 
-
 def new_game(request, p1, p2):
     t1 = get_object_or_404(Player, pk=p1)
     t2 = get_object_or_404(Player, pk=p2)
@@ -16,18 +15,15 @@ def new_game(request, p1, p2):
     g.save()
     return redirect('ttt:game', g.id)
 
-
 class GameView(generic.DetailView):
     model = Game
     template_name = 'tic_tac_toe/game.html'
 
-
 def play(request, pk, i, j):
-    g = Game.objects.get(id=pk)
+    g = get_object_or_404(Game, pk=pk)
     g.play(i, j)
     g.save()
     return redirect('ttt:game', pk)
-
 
 class CreateUserView(generic.CreateView):
     model = Player
