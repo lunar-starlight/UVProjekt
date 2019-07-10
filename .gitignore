@@ -5,3 +5,5 @@ venv-bottle/
 db.*
 
 __pycache__
+
+*.code-workspace
