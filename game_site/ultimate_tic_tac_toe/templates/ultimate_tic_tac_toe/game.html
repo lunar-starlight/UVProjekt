@@ -1,17 +1,21 @@
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'tic_tac_toe/style.css' %}">
+
 <table>
     <tr>
-        <td><div>{{ g0 }}</div></td>
-        <td><div>{{ g1 }}</div></td>
-        <td><div>{{ g2 }}</div></td>
+        <td>{% if game.g0.winner == 0 %} <div>{{ g0 }}</div> {% else %} <div class="ttt_cell won_board"> {{ game.g0.context.winner }} </div> {% endif %} </td>
+        <td>{% if game.g1.winner == 0 %} <div>{{ g1 }}</div> {% else %} <div class="ttt_cell won_board"> {{ game.g1.context.winner }} </div> {% endif %} </td>
+        <td>{% if game.g2.winner == 0 %} <div>{{ g2 }}</div> {% else %} <div class="ttt_cell won_board"> {{ game.g2.context.winner }} </div> {% endif %} </td>
     </tr>
     <tr>
-        <td><div>{{ g3 }}</div></td>
-        <td><div>{{ g4 }}</div></td>
-        <td><div>{{ g5 }}</div></td>
+        <td>{% if game.g3.winner == 0 %} <div>{{ g3 }}</div> {% else %} <div class="ttt_cell won_board"> {{ game.g3.context.winner }} </div> {% endif %} </td>
+        <td>{% if game.g4.winner == 0 %} <div>{{ g4 }}</div> {% else %} <div class="ttt_cell won_board"> {{ game.g4.context.winner }} </div> {% endif %} </td>
+        <td>{% if game.g5.winner == 0 %} <div>{{ g5 }}</div> {% else %} <div class="ttt_cell won_board"> {{ game.g5.context.winner }} </div> {% endif %} </td>
     </tr>
     <tr>
-        <td><div>{{ g6 }}</div></td>
-        <td><div>{{ g7 }}</div></td>
-        <td><div>{{ g8 }}</div></td>
+        <td>{% if game.g6.winner == 0 %} <div>{{ g6 }}</div> {% else %} <div class="ttt_cell won_board"> {{ game.g6.context.winner }} </div> {% endif %} </td>
+        <td>{% if game.g7.winner == 0 %} <div>{{ g7 }}</div> {% else %} <div class="ttt_cell won_board"> {{ game.g7.context.winner }} </div> {% endif %} </td>
+        <td>{% if game.g8.winner == 0 %} <div>{{ g8 }}</div> {% else %} <div class="ttt_cell won_board"> {{ game.g8.context.winner }} </div> {% endif %} </td>
     </tr>
 </table>

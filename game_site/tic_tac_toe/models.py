@@ -76,4 +76,5 @@ class Game(models.Model):
     def context(self):
         conv = {'0': '', '1': 'X', '2': 'O'}
         context = {'field'+str(i): conv[self.field[i]] for i in range(9)}
+        context['winner'] = conv[str(self.winner)]
         return context
