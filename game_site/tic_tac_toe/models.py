@@ -7,6 +7,9 @@ class Player(models.Model):
     wins = models.IntegerField(default=0)
     losses = models.IntegerField(default=0)
 
+    def get_absolute_url(self):
+        return reverse('ttt:index')
+
 class Game(models.Model):
     field = models.CharField(default='0'*9, max_length=9)
     player = models.IntegerField(default=1)
@@ -65,6 +68,11 @@ class Game(models.Model):
                 self.p1.save()
                 self.p2.save()
         self.toggle_player()
+
+    def context(self):
+        conv = {'0': '', '1': 'X', '2': 'O'}
+        context = {'field'+str(i): conv[self.field[i]] for i in range(9)}
+        return context
 
     # def html(self):
     #     s = '<table>'
