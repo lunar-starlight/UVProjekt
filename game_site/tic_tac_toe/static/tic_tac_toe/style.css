@@ -3,11 +3,11 @@
     width: 60px;
     height: 60px;
     font-size: 60px;
+    font-family: Helvetica, sans-serif;
+    color: black;
+    text-align: center;
 }
 
 a.ttt_link {
     text-decoration: none;
-    color: black;
-    text-align: center;
-    font-family: Helvetica, sans-serif;
 }
