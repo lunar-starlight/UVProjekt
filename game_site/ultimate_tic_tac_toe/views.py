@@ -52,7 +52,7 @@ def game(request, pk: int):
 
     return render(request, 'ultimate_tic_tac_toe/game.html', context=context)
 
-def play(request, pk: int, fk: int, i: int, j: int):
+def play(request, pk: int, i: int, j: int):
     g = get_object_or_404(GameUTTT, pk=pk)
-    g.play(fk, i, j)
+    g.play(i, j)
     return redirect('uttt:game', pk)

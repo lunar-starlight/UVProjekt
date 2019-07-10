@@ -25,7 +25,7 @@ class GameUTTT(models.Model):
     def toggle_player(self) -> None:
         self.player = 3 - self.player
 
-    def play(self, fk: int, i: int, j: int) -> bool:
+    def play(self, i: int, j: int) -> bool:
         p = self.game.get_position(i, j)
         if p is None:
             return False
