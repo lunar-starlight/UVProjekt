@@ -26,25 +26,43 @@ class GameTTT(models.Model):
             return None
         return 3*i + j
 
+    def get_data(self, i: int, j: int) -> Optional[int]:
+        try:
+            d = DataCell.objects.get(id_game=self.id, row=i, col=j)
+            return d.data
+        except:
+            return None
+
+    def set_data(self, i: int, j: int, data: int):
+        cell:DataCell
+        try:
+            cell = DataCell.objects.get(id_game=self.id, row=i, col=j)
+        except:
+            cell = DataCell(id_game=self, row=i, col=j)
+        cell.data = data
+        cell.save()
+
     def toggle_player(self) -> None:
         self.player = 3 - self.player
         self.save()
     
     def check_win(self, i: int, j: int) -> bool:
-        if self.field[j] == self.field[3 + j] == self.field[6 + j] or self.field[3*i] == self.field[3*i + 1] == self.field[3*i + 2]:
+        if self.get_data(0, j) == self.get_data(1, j) == self.get_data(2, j) or self.get_data(i, 0) == self.get_data(i, 1) == self.get_data(i, 2):
             return True
         if i == j:
-            if self.field[0] == self.field[4] == self.field[8]:
+            if self.get_data(0, 0) == self.get_data(1, 1) == self.get_data(2, 2):
                 return True
         if i == 2-j:
-            if self.field[2] == self.field[4] == self.field[6]:
+            if self.get_data(0, 2) == self.get_data(1, 1) == self.get_data(2, 0):
                 return True
 
-    def place(self, p: int, player: str = None) -> bool:
+    def place(self, i: int, j: int, player: str = None) -> bool:
         if player is None:
             player = self.player
-        if self.field[p] == '0':
+        p = self.get_position(i, j)
+        if p is not None and self.get_data(i, j) in {'0', None}:
             self.field = self.field[:p] + str(player) + self.field[p+1:]
+            self.set_data(i, j, player)
             return True
         else:
             return False
@@ -52,8 +70,7 @@ class GameTTT(models.Model):
     def play(self, _, i: int, j: int, player: int = None) -> bool:
         if player is None:
             player = self.player
-        p = self.get_position(i, j)
-        if p is None or not self.place(p, player=player):
+        if not self.place(i, j, player=player):
             return False
         if self.check_win(i, j):
             self.game_over = True
@@ -79,3 +96,10 @@ class GameTTT(models.Model):
         context = {'field'+str(i): conv[self.field[i]] for i in range(9) if self.field[i] != '0'}
         context['winner'] = conv[str(self.winner)]
         return context
+
+
+class DataCell(models.Model):
+    id_game = models.ForeignKey(GameTTT, on_delete=models.CASCADE)
+    row = models.IntegerField(default=0)
+    col = models.IntegerField(default=0)
+    data = models.IntegerField(default=0)
