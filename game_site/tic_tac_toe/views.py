@@ -20,6 +20,7 @@ def new_game(request, p1: int, p2: int):
 class GameView(generic.DetailView):
     model = GameTTT
     template_name = 'tic_tac_toe/game.html'
+    context_object_name = 'game'
 
 def play(request, pk: int, _, i: int, j: int):
     g = get_object_or_404(GameTTT, pk=pk)

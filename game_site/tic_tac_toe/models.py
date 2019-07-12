@@ -75,7 +75,7 @@ class GameTTT(models.Model):
         return True
 
     def context(self):
-        conv = {'0': ' ', '1': 'X', '2': 'O'}
-        context = {'field'+str(i): conv[self.field[i]] for i in range(9)}
+        conv = {'0': '', '1': 'X', '2': 'O'}
+        context = {'field'+str(i): conv[self.field[i]] for i in range(9) if self.field[i] != '0'}
         context['winner'] = conv[str(self.winner)]
         return context
