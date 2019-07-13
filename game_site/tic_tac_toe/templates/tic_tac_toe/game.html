@@ -4,17 +4,25 @@
 
 {% comment %} game id: {{ game_id }}
 field: {{ field }} {% endcomment %}
-{% comment %} <table>
-    {% for row in field %}
+<table>
+    {% for row in game.context.field %}
         <tr>
         {% for el in row %}
-            <a href="{% url 'ttt:play' game_id 0 forloop.counter %}"><td style="border: 1px solid black; width: 20px; height: 20px"> {{ el }} </td></a>
+        <td>
+            {% if disabled or game.game_over or el %}
+                <a class="no_link">
+            {% else %} 
+                <a class="ttt_link" href="{% url game.play_url game.play_id forloop.parentloop.counter0 forloop.counter0 %}">
+            {% endif %}
+            <div class="ttt_cell">{{ el }}</div>
+            </a>
+        </td>
         {% endfor %}
         </tr>
     {% endfor %}
-</table> {% endcomment %}
+</table>
 {% comment %} <br /> {{ html }} <br /> {% endcomment %}
-
+{% comment %} 
 <table>
     <tr>
         <td>
@@ -67,7 +75,7 @@ field: {{ field }} {% endcomment %}
             </a>
         </td>
     </tr>
-</table>
+</table> {% endcomment %}
 {% if game.game_over %}
     {% if game.winner == 0 %} The game was a tie. {% endif %}
     {% if game.winner == 1 %} Player 1 won. {% endif %}
