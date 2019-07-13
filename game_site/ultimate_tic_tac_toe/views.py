@@ -53,17 +53,19 @@ def game(request, pk: int):
     w = g.game.winner != 0
 
     # context = {'game': g}
-    context = {
-        'g'+str(3*i+j)+'_field': template.render({
-            'game': Child.get_game(g, i, j),
-            'disabled': w or t and (i != g.prev_i or j != g.prev_j)
-        }, request) for i in range(3) for j in range(3)
-    }
-    for i in range(3):
-        for j in range(3):
-            context['g'+str(3*i+j)] = Child.get_game(g, i, j)
-            context['disabled'+str(3*i+j)] = w or t and (i != g.prev_i or j != g.prev_j)
+    # context = {
+    #     'g'+str(3*i+j)+'_field': template.render({
+    #         'game': Child.get_game(g, i, j),
+    #         'disabled': w or t and (i != g.prev_i or j != g.prev_j)
+    #     }, request) for i in range(3) for j in range(3)
+    # }
+    context = dict()
+    # for i in range(3):
+    #     for j in range(3):
+    #         context['g'+str(3*i+j)] = Child.get_game(g, i, j)
+    #         context['disabled'+str(3*i+j)] = w or t and (i != g.prev_i or j != g.prev_j)
     context['game'] = g
+    context['free_pick'] = g.game.field[p] != '0'
     # context['g0'] = template.render({'game': g.g0, 'disabled': w or t and 'g' + str(3*g.prev_i + g.prev_j) != 'g0'}, request)
     # context['g1'] = template.render({'game': g.g1, 'disabled': w or t and 'g' + str(3*g.prev_i + g.prev_j) != 'g1'}, request)
     # context['g2'] = template.render({'game': g.g2, 'disabled': w or t and 'g' + str(3*g.prev_i + g.prev_j) != 'g2'}, request)
@@ -81,3 +83,9 @@ def play(request, pk: int, i: int, j: int):
     g:GameUTTT = get_object_or_404(GameUTTT, pk=pk)
     g.play(i, j)
     return redirect('uttt:game', pk)
+
+def pick(request, pk: int, row: int, col: int, i: int, j: int):
+    g:GameUTTT = get_object_or_404(GameUTTT, pk=pk)
+    g.pick(row, col, i, j)
+    return redirect('uttt:game', pk)
+

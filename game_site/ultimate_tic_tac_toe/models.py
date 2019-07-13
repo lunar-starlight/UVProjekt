@@ -34,6 +34,20 @@ class GameUTTT(models.Model):
                 self.save()
         except:
             pass
+        
+    def pick(self, row: int, col: int, i: int, j: int) -> bool:
+        self.prev_i = row
+        self.prev_j = col
+        self.play(i, j)
+
+    def games(self) -> list:
+        g = list()
+        for i in range(3):
+            t = list()
+            for j in range(3):
+                t.append(GameUTTT_ChildGame.get_game(self, row=i, col=j))
+            g.append(t)
+        return g
 
 class GameUTTT_ChildGame(models.Model):
     id_parent = models.ForeignKey(GameUTTT, on_delete=models.CASCADE)
