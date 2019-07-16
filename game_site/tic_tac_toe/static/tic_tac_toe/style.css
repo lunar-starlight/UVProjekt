@@ -8,6 +8,10 @@
     text-align: center;
 }
 
+.enabled_game {
+    background-color: lightgreen;
+}
+
 .no_link:hover {
     cursor: default;
 }

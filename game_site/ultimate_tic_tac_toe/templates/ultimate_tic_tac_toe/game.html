@@ -2,6 +2,7 @@
 
 <link rel="stylesheet" type="text/css" href="{% static 'tic_tac_toe/style.css' %}">
 {% with '../../tic_tac_toe/templates/tic_tac_toe/game.html' as ttttemplate %}
+Player {{ game.player }}
 <table>
     {% for row in game.games %}
         <tr>
@@ -9,9 +10,10 @@
         <td>
             {% if gm.winner == 0 %}
                 {% if forloop.parentloop.counter0 != game.prev_i or forloop.counter0 != game.prev_j %}
-                    <div>{% include ttttemplate with game=gm disabled='true' free_pick=free_pick game_row=forloop.parentloop.counter0 game_col=forloop.counter0 %}
+                    {% if not free_pick %} <div> {% else %} <div class="enabled_game"> {% endif %}
+                    {% include ttttemplate with game=gm disabled='true' free_pick=free_pick game_row=forloop.parentloop.counter0 game_col=forloop.counter0 %}
                 {% else %}
-                    <div>{% include ttttemplate with game=gm %}
+                    <div class="enabled_game">{% include ttttemplate with game=gm %}
                 {% endif %}
             {% else %} 
                 <div class="ttt_cell won_board"> {{ gm.context.winner }}
@@ -22,23 +24,6 @@
         </tr>
     {% endfor %}
 </table>
-{% comment %} <table>
-    <tr>
-        <td>{% if game.games.0.0.winner == 0 %} <div>{% include ttttemplate with game=g0 disabled=disabled0 %}</div> {% else %} <div class="ttt_cell won_board"> {{ g0.context.winner }} </div> {% endif %} </td>
-        <td>{% if g1.winner == 0 %} <div>{% include ttttemplate with game=g1 disabled=disabled1 %}</div> {% else %} <div class="ttt_cell won_board"> {{ g1.context.winner }} </div> {% endif %} </td>
-        <td>{% if g2.winner == 0 %} <div>{% include ttttemplate with game=g2 disabled=disabled2 %}</div> {% else %} <div class="ttt_cell won_board"> {{ g2.context.winner }} </div> {% endif %} </td>
-    </tr>
-    <tr>
-        <td>{% if g3.winner == 0 %} <div>{% include ttttemplate with game=g3 disabled=disabled3 %}</div> {% else %} <div class="ttt_cell won_board"> {{ g3.context.winner }} </div> {% endif %} </td>
-        <td>{% if g4.winner == 0 %} <div>{% include ttttemplate with game=g4 disabled=disabled4 %}</div> {% else %} <div class="ttt_cell won_board"> {{ g4.context.winner }} </div> {% endif %} </td>
-        <td>{% if g5.winner == 0 %} <div>{% include ttttemplate with game=g5 disabled=disabled5 %}</div> {% else %} <div class="ttt_cell won_board"> {{ g5.context.winner }} </div> {% endif %} </td>
-    </tr>
-    <tr>
-        <td>{% if g6.winner == 0 %} <div>{% include ttttemplate with game=g6 disabled=disabled6 %}</div> {% else %} <div class="ttt_cell won_board"> {{ g6.context.winner }} </div> {% endif %} </td>
-        <td>{% if g7.winner == 0 %} <div>{% include ttttemplate with game=g7 disabled=disabled7 %}</div> {% else %} <div class="ttt_cell won_board"> {{ g7.context.winner }} </div> {% endif %} </td>
-        <td>{% if g8.winner == 0 %} <div>{% include ttttemplate with game=g8 disabled=disabled8 %}</div> {% else %} <div class="ttt_cell won_board"> {{ g8.context.winner }} </div> {% endif %} </td>
-    </tr>
-</table> {% endcomment %}
 {% endwith %}
 {% if game.game.game_over %}
     {% if game.game.winner == 0 %} The game was a tie. {% endif %}

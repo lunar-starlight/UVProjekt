@@ -2,8 +2,6 @@
 
 <link rel="stylesheet" type="text/css" href="{% static 'tic_tac_toe/style.css' %}">
 
-{% comment %} game id: {{ game_id }}
-field: {{ field }} {% endcomment %}
 <table>
     {% for row in game.context.field %}
         <tr>
@@ -25,61 +23,7 @@ field: {{ field }} {% endcomment %}
         </tr>
     {% endfor %}
 </table>
-{% comment %} <br /> {{ html }} <br /> {% endcomment %}
-{% comment %} 
-<table>
-    <tr>
-        <td>
-            {% if disabled or game.game_over or game.context.field0 %} <a class="no_link"> {% else %} <a class="ttt_link" href="{% url game.play_url game.play_id game.id 0 0 %}"> {% endif %}
-            <div class="ttt_cell">{{ game.context.field0 }}</div>
-            </a>
-        </td>
-        <td>
-            {% if disabled or game.game_over or game.context.field1 %} <a class="no_link"> {% else %} <a class="ttt_link" href="{% url game.play_url game.play_id game.id 0 1 %}"> {% endif %}
-            <div class="ttt_cell">{{ game.context.field1 }}</div>
-            </a>
-        </td>
-        <td>
-            {% if disabled or game.game_over or game.context.field2 %} <a class="no_link"> {% else %} <a class="ttt_link" href="{% url game.play_url game.play_id game.id 0 2 %}"> {% endif %}
-            <div class="ttt_cell">{{ game.context.field2 }}</div>
-            </a>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            {% if disabled or game.game_over or game.context.field3 %} <a class="no_link"> {% else %} <a class="ttt_link" href="{% url game.play_url game.play_id game.id 1 0 %}"> {% endif %}
-            <div class="ttt_cell">{{ game.context.field3 }}</div>
-            </a>
-        </td>
-        <td>
-            {% if disabled or game.game_over or game.context.field4 %} <a class="no_link"> {% else %} <a class="ttt_link" href="{% url game.play_url game.play_id game.id 1 1 %}"> {% endif %}
-            <div class="ttt_cell">{{ game.context.field4 }}</div>
-            </a>
-        </td>
-        <td>
-            {% if disabled or game.game_over or game.context.field5 %} <a class="no_link"> {% else %} <a class="ttt_link" href="{% url game.play_url game.play_id game.id 1 2 %}"> {% endif %}
-            <div class="ttt_cell">{{ game.context.field5 }}</div>
-            </a>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            {% if disabled or game.game_over or game.context.field6 %} <a class="no_link"> {% else %} <a class="ttt_link" href="{% url game.play_url game.play_id game.id 2 0 %}"> {% endif %}
-            <div class="ttt_cell">{{ game.context.field6 }}</div>
-            </a>
-        </td>
-        <td>
-            {% if disabled or game.game_over or game.context.field7 %} <a class="no_link"> {% else %} <a class="ttt_link" href="{% url game.play_url game.play_id game.id 2 1 %}"> {% endif %}
-            <div class="ttt_cell">{{ game.context.field7 }}</div>
-            </a>
-        </td>
-        <td>
-            {% if disabled or game.game_over or game.context.field8 %} <a class="no_link"> {% else %} <a class="ttt_link" href="{% url game.play_url game.play_id game.id 2 2 %}"> {% endif %}
-            <div class="ttt_cell">{{ game.context.field8 }}</div>
-            </a>
-        </td>
-    </tr>
-</table> {% endcomment %}
+
 {% if game.game_over %}
     {% if game.winner == 0 %} The game was a tie. {% endif %}
     {% if game.winner == 1 %} Player 1 won. {% endif %}
