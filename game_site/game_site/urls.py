@@ -21,3 +21,8 @@ urlpatterns = [
     path('ttt/', include('tic_tac_toe.urls')),
     path('uttt/', include('ultimate_tic_tac_toe.urls')),
 ]
+
+# Add Django site authentication urls (for login, logout, password management)
+urlpatterns += [
+    path('accounts/', include('django.contrib.auth.urls')),
+]
