@@ -1,6 +1,5 @@
 .vscode/
-venv-django/
-venv-bottle/
+venv*/
 
 db.*
 
