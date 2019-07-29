@@ -1,7 +1,8 @@
+from typing import Optional
+
 from django.db import models
 from django.urls import reverse
 
-from typing import Optional
 
 class Player(models.Model):
     name = models.CharField(max_length=50)
@@ -10,6 +11,7 @@ class Player(models.Model):
 
     def get_absolute_url(self):
         return reverse('ttt:create_user')
+
 
 class GameTTT(models.Model):
     field = models.CharField(default='0'*9, max_length=9)
@@ -31,14 +33,14 @@ class GameTTT(models.Model):
         try:
             d = DataCell.objects.get(id_game=self.id, row=i, col=j)
             return d.data
-        except:
+        except models.ObjectDoesNotExist:
             return None
 
     def set_data(self, i: int, j: int, data: int):
-        cell:DataCell
+        cell: DataCell
         try:
             cell = DataCell.objects.get(id_game=self.id, row=i, col=j)
-        except:
+        except models.ObjectDoesNotExist:
             cell = DataCell(id_game=self, row=i, col=j)
         cell.data = data
         cell.save()
@@ -46,7 +48,7 @@ class GameTTT(models.Model):
     def toggle_player(self) -> None:
         self.player = 3 - self.player
         self.save()
-    
+
     def check_win(self, i: int, j: int) -> bool:
         if self.get_data(0, j) == self.get_data(1, j) == self.get_data(2, j) or self.get_data(i, 0) == self.get_data(i, 1) == self.get_data(i, 2):
             return True

@@ -1,6 +1,6 @@
-from django.db import models
-
 from typing import Optional
+
+from django.db import models
 
 from tic_tac_toe.models import GameTTT, Player
 
@@ -15,7 +15,6 @@ class GameUTTT(models.Model):
 
     def toggle_player(self) -> None:
         self.player = 3 - self.player
-
 
     def play(self, i: int, j: int) -> bool:
         # g = GameTTT.objects.get(id=fk)
@@ -32,9 +31,9 @@ class GameUTTT(models.Model):
                 self.toggle_player()
                 g.save()
                 self.save()
-        except:
+        except (models.ObjectDoesNotExist, Exception):
             pass
-        
+
     def pick(self, row: int, col: int, i: int, j: int) -> bool:
         self.prev_i = row
         self.prev_j = col
@@ -49,6 +48,7 @@ class GameUTTT(models.Model):
             g.append(t)
         return g
 
+
 class GameUTTT_ChildGame(models.Model):
     id_parent = models.ForeignKey(GameUTTT, on_delete=models.CASCADE)
     row = models.IntegerField(default=0)
@@ -61,16 +61,14 @@ class GameUTTT_ChildGame(models.Model):
         try:
             g = GameTTT(p1=parent.p1, p2=parent.p2, keep_score=False)
             g.save()
-        except:
-            print('g')
+        except models.ObjectDoesNotExist:
             return None
 
-        try:    
+        try:
             obj = GameUTTT_ChildGame(id_parent=parent, row=i, col=j, game=g)
             obj.save()
-        except:
+        except models.ObjectDoesNotExist:
             g.delete()
-            print('h')
             return None
         return g
 
@@ -79,5 +77,5 @@ class GameUTTT_ChildGame(models.Model):
         try:
             g = GameUTTT_ChildGame.objects.get(id_parent=parent, row=row, col=col)
             return g.game
-        except:
+        except models.ObjectDoesNotExist:
             return None

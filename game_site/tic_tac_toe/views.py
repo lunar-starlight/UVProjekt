@@ -1,12 +1,12 @@
-from django.shortcuts import redirect, get_object_or_404, reverse
-from django.template import loader
-from django.http import HttpResponse
+from django.shortcuts import get_object_or_404, redirect
 from django.views import generic
 
 from .models import GameTTT, Player
 
+
 class IndexView(generic.TemplateView):
     template_name = 'tic_tac_toe/index.html'
+
 
 def new_game(request, p1: int, p2: int):
     t1 = get_object_or_404(Player, pk=p1)
@@ -17,15 +17,18 @@ def new_game(request, p1: int, p2: int):
     g.save()
     return redirect('ttt:game', g.id)
 
+
 class GameView(generic.DetailView):
     model = GameTTT
     template_name = 'tic_tac_toe/game.html'
     context_object_name = 'game'
 
+
 def play(request, pk: int, i: int, j: int):
     g = get_object_or_404(GameTTT, pk=pk)
     g.play(pk, i, j)
     return redirect('ttt:game', pk)
+
 
 class CreateUserView(generic.CreateView):
     model = Player

@@ -1,12 +1,14 @@
-from django.shortcuts import render, redirect, get_object_or_404
-from django.template import loader
-from django.http import HttpResponse
+from django.shortcuts import get_object_or_404, redirect, render
 from django.views import generic
 
-from .models import GameUTTT, GameUTTT_ChildGame as Child, GameTTT, Player
+from .models import GameTTT, GameUTTT
+from .models import GameUTTT_ChildGame as Child
+from .models import Player
+
 
 class IndexView(generic.TemplateView):
     template_name = 'ultimate_tic_tac_toe/index.html'
+
 
 def new_game(request, p1: int, p2: int):
     t1 = get_object_or_404(Player, pk=p1)
@@ -26,10 +28,10 @@ def new_game(request, p1: int, p2: int):
 
     return redirect('uttt:game', g.id)
 
-def game(request, pk: int):
-    g:GameUTTT = get_object_or_404(GameUTTT, pk=pk)
 
-    template = loader.get_template('tic_tac_toe/game.html')
+def game(request, pk: int):
+    g: GameUTTT = get_object_or_404(GameUTTT, pk=pk)
+
     p = g.game.get_position(g.prev_i, g.prev_j)
 
     context = dict()
@@ -38,12 +40,14 @@ def game(request, pk: int):
 
     return render(request, 'ultimate_tic_tac_toe/game.html', context=context)
 
+
 def play(request, pk: int, i: int, j: int):
-    g:GameUTTT = get_object_or_404(GameUTTT, pk=pk)
+    g: GameUTTT = get_object_or_404(GameUTTT, pk=pk)
     g.play(i, j)
     return redirect('uttt:game', pk)
 
+
 def pick(request, pk: int, row: int, col: int, i: int, j: int):
-    g:GameUTTT = get_object_or_404(GameUTTT, pk=pk)
+    g: GameUTTT = get_object_or_404(GameUTTT, pk=pk)
     g.pick(row, col, i, j)
     return redirect('uttt:game', pk)
