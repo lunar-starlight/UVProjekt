@@ -39,10 +39,8 @@ def game(request, pk: int):
     context = dict()
     context['game'] = g
     context['free_pick'] = g.game.field[p] != '0'
-
-    if g.current_player() != request.user:
-        context['disabled'] = True
-
+    context['my_turn'] = g.current_player() == request.user
+        
     return render(request, 'ultimate_tic_tac_toe/game.html', context=context)
 
 
