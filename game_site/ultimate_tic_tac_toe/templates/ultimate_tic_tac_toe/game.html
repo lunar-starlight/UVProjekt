@@ -2,6 +2,9 @@
 
 <link rel="stylesheet" type="text/css" href="{% static 'tic_tac_toe/style.css' %}">
 {% with '../../tic_tac_toe/templates/tic_tac_toe/game.html' as ttttemplate %}
+
+<title>UTTT Game {{ game.pk }} </title>
+
 Player {{ game.player }}
 <game_board>
 {% for row in game.games %}
