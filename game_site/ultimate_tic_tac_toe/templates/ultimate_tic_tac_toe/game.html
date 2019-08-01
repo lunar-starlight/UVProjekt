@@ -9,7 +9,7 @@ Player {{ game.player }}
     {% for gm in row %}
     <td>
         {% if gm.winner == 0 %}
-            {% if forloop.parentloop.counter0 != game.prev_i or forloop.counter0 != game.prev_j %}
+            {% if disabled or forloop.parentloop.counter0 != game.prev_i or forloop.counter0 != game.prev_j %}
                 {% if not free_pick %} <div> {% else %} <div class="enabled_game"> {% endif %}
                 {% include ttttemplate with game=gm disabled='true' free_pick=free_pick game_row=forloop.parentloop.counter0 game_col=forloop.counter0 %}
             {% else %}

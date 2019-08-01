@@ -17,6 +17,12 @@ class GameUTTT(models.Model):
     def toggle_player(self) -> None:
         self.player = 3 - self.player
 
+    def current_player(self):
+        if self.player == 1:
+            return self.p1
+        else:
+            return self.p2
+
     def play(self, i: int, j: int) -> bool:
         # g = GameTTT.objects.get(id=fk)
         try:

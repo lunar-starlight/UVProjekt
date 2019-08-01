@@ -1,4 +1,5 @@
 from django.contrib.auth import get_user_model
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views import generic
 
@@ -29,6 +30,7 @@ def new_game(request, p1: int, p2: int):
     return redirect('uttt:game', g.id)
 
 
+@login_required
 def game(request, pk: int):
     g: GameUTTT = get_object_or_404(GameUTTT, pk=pk)
 
@@ -38,16 +40,23 @@ def game(request, pk: int):
     context['game'] = g
     context['free_pick'] = g.game.field[p] != '0'
 
+    if g.current_player() != request.user:
+        context['disabled'] = True
+
     return render(request, 'ultimate_tic_tac_toe/game.html', context=context)
 
 
+@login_required
 def play(request, pk: int, i: int, j: int):
     g: GameUTTT = get_object_or_404(GameUTTT, pk=pk)
-    g.play(i, j)
+    if g.current_player() == request.user:
+        g.play(i, j)
     return redirect('uttt:game', pk)
 
 
+@login_required
 def pick(request, pk: int, row: int, col: int, i: int, j: int):
     g: GameUTTT = get_object_or_404(GameUTTT, pk=pk)
-    g.pick(row, col, i, j)
+    if g.current_player() == request.user:
+        g.pick(row, col, i, j)
     return redirect('uttt:game', pk)
