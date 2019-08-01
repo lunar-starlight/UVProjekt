@@ -1,29 +1,25 @@
 {% load static %}
 
 <link rel="stylesheet" type="text/css" href="{% static 'tic_tac_toe/style.css' %}">
-
-<table>
-    {% for row in game.context.field %}
-        <tr>
-        {% for el in row %}
-        <td>
-            {% if free_pick %}
-                <a class="ttt_link" href="{% url game.play_url game.play_id game_row game_col forloop.parentloop.counter0 forloop.counter0 %}">
+<game_board>
+{% for row in game.context.field %}
+    <row>
+    {% for el in row %}
+        {% if free_pick %}
+            <a class="ttt_link" href="{% url game.play_url game.play_id game_row game_col forloop.parentloop.counter0 forloop.counter0 %}">
+        {% else %}
+            {% if disabled or game.game_over or el %}
+                <a class="no_link">
             {% else %}
-                {% if disabled or game.game_over or el %}
-                    <a class="no_link">
-                {% else %}
-                    <a class="ttt_link" href="{% url game.play_url game.play_id forloop.parentloop.counter0 forloop.counter0 %}">
-                {% endif %}
+                <a class="ttt_link" href="{% url game.play_url game.play_id forloop.parentloop.counter0 forloop.counter0 %}">
             {% endif %}
-            <div class="ttt_cell">{{ el }}</div>
-            </a>
-        </td>
-        {% endfor %}
-        </tr>
+        {% endif %}
+        <cell>{{ el }}</cell>
+        </a>
     {% endfor %}
-</table>
-
+    </row>
+{% endfor %}
+</game_board>
 {% if game.game_over and game.keep_score %}
     {% if game.winner == 0 %} The game was a tie. {% endif %}
     {% if game.winner == 1 %} Player 1 won. {% endif %}

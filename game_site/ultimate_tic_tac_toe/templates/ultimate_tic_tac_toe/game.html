@@ -3,28 +3,27 @@
 <link rel="stylesheet" type="text/css" href="{% static 'tic_tac_toe/style.css' %}">
 {% with '../../tic_tac_toe/templates/tic_tac_toe/game.html' as ttttemplate %}
 Player {{ game.player }}
-<table>
+<game_board>
 {% for row in game.games %}
-    <tr>
+    <row>
     {% for gm in row %}
-    <td>
         {% if gm.winner == 0 %}
-            {% if forloop.parentloop.counter0 != game.prev_i or forloop.counter0 != game.prev_j %}
+            {% if not my_turn or forloop.parentloop.counter0 != game.prev_i or forloop.counter0 != game.prev_j %}
                 {% if not free_pick or not my_turn %} <div> {% else %} <div class="enabled_game"> {% endif %}
                 {% include ttttemplate with game=gm disabled='true' free_pick=free_pick game_row=forloop.parentloop.counter0 game_col=forloop.counter0 %}
             {% else %}
-                {% if game.game.game_over or not my_turn %} <div> {% else %} <div class="enabled_game"> {% endif %}
+                {% if game.game.game_over %} <div> {% else %} <div class="enabled_game"> {% endif %}
                 {% include ttttemplate with game=gm %}
             {% endif %}
+            </div>
         {% else %} 
-            <div class="ttt_cell won_board"> {{ gm.context.winner }}
+            <cell class="won_board"> {{ gm.context.winner }} </cell>
         {% endif %}
-        </div>
-    </td>
     {% endfor %}
-    </tr>
+    </row>
 {% endfor %}
-</table>
+</game_board>
+
 {% endwith %}
 {% if game.game.game_over %}
     {% if game.game.winner == 0 %} The game was a tie. {% endif %}
