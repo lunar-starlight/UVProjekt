@@ -40,7 +40,7 @@ def game(request, pk: int):
     context['game'] = g
     context['free_pick'] = g.game.field[p] != '0'
     context['my_turn'] = g.current_player() == request.user
-        
+
     return render(request, 'ultimate_tic_tac_toe/game.html', context=context)
 
 
