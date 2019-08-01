@@ -4,25 +4,26 @@
 {% with '../../tic_tac_toe/templates/tic_tac_toe/game.html' as ttttemplate %}
 Player {{ game.player }}
 <table>
-    {% for row in game.games %}
-        <tr>
-        {% for gm in row %}
-        <td>
-            {% if gm.winner == 0 %}
-                {% if forloop.parentloop.counter0 != game.prev_i or forloop.counter0 != game.prev_j %}
-                    {% if not free_pick %} <div> {% else %} <div class="enabled_game"> {% endif %}
-                    {% include ttttemplate with game=gm disabled='true' free_pick=free_pick game_row=forloop.parentloop.counter0 game_col=forloop.counter0 %}
-                {% else %}
-                    <div class="enabled_game">{% include ttttemplate with game=gm %}
-                {% endif %}
-            {% else %} 
-                <div class="ttt_cell won_board"> {{ gm.context.winner }}
+{% for row in game.games %}
+    <tr>
+    {% for gm in row %}
+    <td>
+        {% if gm.winner == 0 %}
+            {% if forloop.parentloop.counter0 != game.prev_i or forloop.counter0 != game.prev_j %}
+                {% if not free_pick %} <div> {% else %} <div class="enabled_game"> {% endif %}
+                {% include ttttemplate with game=gm disabled='true' free_pick=free_pick game_row=forloop.parentloop.counter0 game_col=forloop.counter0 %}
+            {% else %}
+                {% if game.game.game_over %} <div> {% else %} <div class="enabled_game"> {% endif %}
+                {% include ttttemplate with game=gm %}
             {% endif %}
-            </div>
-        </td>
-        {% endfor %}
-        </tr>
+        {% else %} 
+            <div class="ttt_cell won_board"> {{ gm.context.winner }}
+        {% endif %}
+        </div>
+    </td>
     {% endfor %}
+    </tr>
+{% endfor %}
 </table>
 {% endwith %}
 {% if game.game.game_over %}

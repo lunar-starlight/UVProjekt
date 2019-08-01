@@ -1,13 +1,14 @@
 from typing import Optional
 
+from django.conf import settings
 from django.db import models
 
-from tic_tac_toe.models import GameTTT, Player
+from tic_tac_toe.models import GameTTT
 
 
 class GameUTTT(models.Model):
-    p1 = models.ForeignKey(Player, related_name='uttt_p1', on_delete=models.DO_NOTHING, default=0)
-    p2 = models.ForeignKey(Player, related_name='uttt_p2', on_delete=models.DO_NOTHING, default=0)
+    p1 = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='uttt_p1', on_delete=models.DO_NOTHING, default=0)
+    p2 = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='uttt_p2', on_delete=models.DO_NOTHING, default=0)
     prev_i = models.IntegerField(default=0)
     prev_j = models.IntegerField(default=0)
     player = models.IntegerField(default=1)
@@ -21,10 +22,14 @@ class GameUTTT(models.Model):
         try:
             g = GameUTTT_ChildGame.get_game(self, row=self.prev_i, col=self.prev_j)
             if g.play(i, j, player=self.player):
-
                 if g.winner != 0:
                     if not self.game.play(self.prev_i, self.prev_j, player=self.player):
                         raise Exception
+
+                    if self.game.winner != 0:
+                        for game in GameTTT.objects.filter(play_id=self.pk):
+                            game.game_over = True
+                            game.save()
 
                 self.prev_i = i
                 self.prev_j = j

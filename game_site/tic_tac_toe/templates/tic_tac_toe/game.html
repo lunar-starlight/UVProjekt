@@ -24,7 +24,7 @@
     {% endfor %}
 </table>
 
-{% if game.game_over %}
+{% if game.game_over and game.keep_score %}
     {% if game.winner == 0 %} The game was a tie. {% endif %}
     {% if game.winner == 1 %} Player 1 won. {% endif %}
     {% if game.winner == 2 %} Player 2 won. {% endif %}

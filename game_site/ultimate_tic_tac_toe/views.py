@@ -1,9 +1,9 @@
+from django.contrib.auth import get_user_model
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views import generic
 
 from .models import GameTTT, GameUTTT
 from .models import GameUTTT_ChildGame as Child
-from .models import Player
 
 
 class IndexView(generic.TemplateView):
@@ -11,8 +11,8 @@ class IndexView(generic.TemplateView):
 
 
 def new_game(request, p1: int, p2: int):
-    t1 = get_object_or_404(Player, pk=p1)
-    t2 = get_object_or_404(Player, pk=p2)
+    t1 = get_object_or_404(get_user_model(), pk=p1)
+    t2 = get_object_or_404(get_user_model(), pk=p2)
     game = GameTTT(p1=t1, p2=t2)
     game.save()
     g = GameUTTT(p1=t1, p2=t2, game=game)

@@ -1,24 +1,34 @@
 from typing import Optional
 
+from django.conf import settings
+from django.contrib.auth.models import AbstractUser
 from django.db import models
-from django.urls import reverse
+# from django.urls import reverse
 
 
-class Player(models.Model):
-    name = models.CharField(max_length=50)
+class User(AbstractUser):
     wins = models.IntegerField(default=0)
     losses = models.IntegerField(default=0)
 
-    def get_absolute_url(self):
-        return reverse('ttt:create_user')
+    # def get_absolute_url(self):
+    #     return reverse('ttt:create_user')
+
+
+# class Player(models.Model):
+#     name = models.CharField(max_length=50)
+#     wins = models.IntegerField(default=0)
+#     losses = models.IntegerField(default=0)
+
+#     def get_absolute_url(self):
+#         return reverse('ttt:create_user')
 
 
 class GameTTT(models.Model):
     field = models.CharField(default='0'*9, max_length=9)
     player = models.IntegerField(default=1)
     winner = models.IntegerField(default=0)
-    p1 = models.ForeignKey(Player, related_name='ttt_p1', on_delete=models.DO_NOTHING, default=0, null=True)
-    p2 = models.ForeignKey(Player, related_name='ttt_p2', on_delete=models.DO_NOTHING, default=0, null=True)
+    p1 = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='ttt_p1', on_delete=models.DO_NOTHING, default=0, null=True)
+    p2 = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='ttt_p2', on_delete=models.DO_NOTHING, default=0, null=True)
     keep_score = models.BooleanField(default=True)
     game_over = models.BooleanField(default=False)
     play_id = models.IntegerField(default=0)
@@ -34,14 +44,17 @@ class GameTTT(models.Model):
             d = DataCell.objects.get(id_game=self.id, row=i, col=j)
             return d.data
         except models.ObjectDoesNotExist:
+            print("does not exist")
             return None
 
     def set_data(self, i: int, j: int, data: int):
         cell: DataCell
         try:
             cell = DataCell.objects.get(id_game=self.id, row=i, col=j)
+            print(f"Modified cell at ({i}, {j}) with {data}.")
         except models.ObjectDoesNotExist:
             cell = DataCell(id_game=self, row=i, col=j)
+            print(f"Added cell at ({i}, {j}) with {data}.")
         cell.data = data
         cell.save()
 
@@ -63,19 +76,23 @@ class GameTTT(models.Model):
         if player is None:
             player = self.player
         p = self.get_position(i, j)
-        if p is not None and self.get_data(i, j) in {'0', None}:
+        if p is not None and self.get_data(i, j) in {0, None}:
             self.field = self.field[:p] + str(player) + self.field[p+1:]
             self.set_data(i, j, player)
             return True
         else:
+            # print(f"ERR: {p is not None} and {self.get_data(i, j) in {'0', None}}")
             return False
 
     def play(self, i: int, j: int, player: int = None) -> bool:
+        print(f"Play at ({i}, {j})")
         if player is None:
             player = self.player
         if not self.place(i, j, player=player):
+            print(f"ERR: Failed to place at ({i}, {j}) as player {player}.")
             return False
         if self.check_win(i, j):
+            print(f"Game won. {player} won.")
             self.game_over = True
             self.winner = player
             # remove score keeping from here

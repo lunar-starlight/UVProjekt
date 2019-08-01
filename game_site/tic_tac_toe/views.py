@@ -1,7 +1,8 @@
+from django.contrib.auth import get_user_model
 from django.shortcuts import get_object_or_404, redirect
 from django.views import generic
 
-from .models import GameTTT, Player
+from .models import GameTTT
 
 
 class IndexView(generic.TemplateView):
@@ -9,8 +10,8 @@ class IndexView(generic.TemplateView):
 
 
 def new_game(request, p1: int, p2: int):
-    t1 = get_object_or_404(Player, pk=p1)
-    t2 = get_object_or_404(Player, pk=p2)
+    t1 = get_object_or_404(get_user_model(), pk=p1)
+    t2 = get_object_or_404(get_user_model(), pk=p2)
     g = GameTTT(p1=t1, p2=t2, play_id=1)
     g.save()
     g.play_id = g.id
@@ -26,10 +27,11 @@ class GameView(generic.DetailView):
 
 def play(request, pk: int, i: int, j: int):
     g = get_object_or_404(GameTTT, pk=pk)
-    g.play(pk, i, j)
+    print(f"play game {pk} at ({i}, {j})")
+    g.play(i, j)
     return redirect('ttt:game', pk)
 
 
 class CreateUserView(generic.CreateView):
-    model = Player
+    model = get_user_model()
     fields = ['name']
