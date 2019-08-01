@@ -14,15 +14,6 @@ class User(AbstractUser):
     #     return reverse('ttt:create_user')
 
 
-# class Player(models.Model):
-#     name = models.CharField(max_length=50)
-#     wins = models.IntegerField(default=0)
-#     losses = models.IntegerField(default=0)
-
-#     def get_absolute_url(self):
-#         return reverse('ttt:create_user')
-
-
 class GameTTT(models.Model):
     field = models.CharField(default='0'*9, max_length=9)
     player = models.IntegerField(default=1)
