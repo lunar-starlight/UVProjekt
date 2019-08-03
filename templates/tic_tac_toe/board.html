@@ -1,0 +1,19 @@
+<game_board>
+{% for row in game.context.field %}
+    <row>
+    {% for el in row %}
+        {% if free_pick %}
+            <a class="ttt_link" href="{% url game.play_url game.play_id game_row game_col forloop.parentloop.counter0 forloop.counter0 %}">
+        {% else %}
+            {% if disabled or game.game_over or el %}
+                <a class="no_link">
+            {% else %}
+                <a class="ttt_link" href="{% url game.play_url game.play_id forloop.parentloop.counter0 forloop.counter0 %}">
+            {% endif %}
+        {% endif %}
+        <cell>{{ el }}</cell>
+        </a>
+    {% endfor %}
+    </row>
+{% endfor %}
+</game_board>

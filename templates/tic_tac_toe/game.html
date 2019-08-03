@@ -1,28 +1,9 @@
-{% load static %}
+{% extends '../common/base.html' %}
 
-<link rel="stylesheet" type="text/css" href="{% static 'tic_tac_toe/style.css' %}">
+{% block title %} TTT Game {{ game.pk }} {% endblock title %}
 
-<title>TTT Game {{ game.pk }} </title>
-
-<game_board>
-{% for row in game.context.field %}
-    <row>
-    {% for el in row %}
-        {% if free_pick %}
-            <a class="ttt_link" href="{% url game.play_url game.play_id game_row game_col forloop.parentloop.counter0 forloop.counter0 %}">
-        {% else %}
-            {% if disabled or game.game_over or el %}
-                <a class="no_link">
-            {% else %}
-                <a class="ttt_link" href="{% url game.play_url game.play_id forloop.parentloop.counter0 forloop.counter0 %}">
-            {% endif %}
-        {% endif %}
-        <cell>{{ el }}</cell>
-        </a>
-    {% endfor %}
-    </row>
-{% endfor %}
-</game_board>
+{% block content %}
+{% include 'tic_tac_toe/board.html' %}
 {% if game.game_over and game.keep_score %}
     {% if game.winner == 0 %} The game was a tie. {% endif %}
     {% if game.winner == 1 %} Player 1 won. {% endif %}
@@ -30,3 +11,4 @@
 
     <br><a href="{% url 'ttt:index' %}">Return</a>
 {% endif %}
+{% endblock content %}

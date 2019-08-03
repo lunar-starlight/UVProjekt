@@ -1,0 +1,33 @@
+<!DOCTYPE html5>
+<html lang="en">
+<head>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'tic_tac_toe/style.css' %}">
+    <title>{% block title %}My amazing site{% endblock %}</title>
+</head>
+
+<body>
+    <nav>
+        {% block nav %}
+        {% if user.is_authenticated %}
+            <p>Hello {{ user.username }}</p>
+        {% else %}
+            <a href="{% url login %}">Login</a>
+            <a href="#">Register</a>
+        {% endif %}
+        {% endblock nav %}
+    </nav>
+    <sidebar>
+        {% block sidebar %}
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/blog/">Blog</a></li>
+        </ul>
+        {% endblock %}
+    </sidebar>
+
+    <content>
+        {% block content %}{% endblock %}
+    </content>
+</body>
+</html>

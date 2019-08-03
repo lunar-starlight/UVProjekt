@@ -1,33 +1,10 @@
-{% load static %}
+{% extends '../common/base.html' %}
 
-<link rel="stylesheet" type="text/css" href="{% static 'tic_tac_toe/style.css' %}">
-{% with 'tic_tac_toe/game.html' as ttttemplate %}
+{% block title %} UTTT Game {{ game.pk }} {% endblock title %}
 
-<title>UTTT Game {{ game.pk }} </title>
+{% block content %}
+{% include 'ultimate_tic_tac_toe/board.html' %}
 
-Player {{ game.player }}
-<game_board>
-{% for row in game.games %}
-    <row>
-    {% for gm in row %}
-        {% if gm.winner == 0 %}
-            {% if not my_turn or forloop.parentloop.counter0 != game.prev_i or forloop.counter0 != game.prev_j %}
-                {% if not free_pick or not my_turn %} <div> {% else %} <div class="enabled_game"> {% endif %}
-                {% include ttttemplate with game=gm disabled='true' free_pick=free_pick game_row=forloop.parentloop.counter0 game_col=forloop.counter0 %}
-            {% else %}
-                {% if game.game.game_over %} <div> {% else %} <div class="enabled_game"> {% endif %}
-                {% include ttttemplate with game=gm %}
-            {% endif %}
-            </div>
-        {% else %} 
-            <cell class="won_board"> {{ gm.context.winner }} </cell>
-        {% endif %}
-    {% endfor %}
-    </row>
-{% endfor %}
-</game_board>
-
-{% endwith %}
 {% if game.game.game_over %}
     {% if game.game.winner == 0 %} The game was a tie. {% endif %}
     {% if game.game.winner == 1 %} Player 1 won. {% endif %}
@@ -35,3 +12,5 @@ Player {{ game.player }}
 
     <br><a href="{% url 'uttt:index' %}">Return</a>
 {% endif %}
+
+{% endblock content %}
