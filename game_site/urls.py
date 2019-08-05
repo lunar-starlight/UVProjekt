@@ -15,8 +15,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
+from django.views.generic.base import TemplateView
 
 urlpatterns = [
+    path('', TemplateView.as_view(template_name='common/home.html'), name='home'),
+
     path('admin/', admin.site.urls),
     path('ttt/', include('tic_tac_toe.urls')),
     path('uttt/', include('ultimate_tic_tac_toe.urls')),
@@ -24,5 +27,6 @@ urlpatterns = [
 
 # Add Django site authentication urls (for login, logout, password management)
 urlpatterns += [
-    path('accounts/', include('django.contrib.auth.urls')),
+    path('user/', include('accounts.urls')),
+    path('user/', include('django.contrib.auth.urls')),
 ]

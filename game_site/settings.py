@@ -31,14 +31,15 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'tic_tac_toe.apps.TicTacToeConfig',
-    'ultimate_tic_tac_toe.apps.UltimateTicTacToeConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'tic_tac_toe.apps.TicTacToeConfig',
+    'ultimate_tic_tac_toe.apps.UltimateTicTacToeConfig',
+    'accounts.apps.AccountsConfig',
 ]
 
 MIDDLEWARE = [
@@ -127,8 +128,10 @@ STATICFILES_DIRS = [
 
 
 # Redirect to home URL after login (Default redirects to /accounts/profile/)
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = 'home'
+LOGOUT_REDIRECT_URL = 'home'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-AUTH_USER_MODEL = 'tic_tac_toe.User'
+AUTH_USER_MODEL = 'accounts.Player'
+

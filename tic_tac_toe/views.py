@@ -30,8 +30,3 @@ def play(request, pk: int, i: int, j: int):
     print(f"play game {pk} at ({i}, {j})")
     g.play(i, j)
     return redirect('ttt:game', pk)
-
-
-class CreateUserView(generic.CreateView):
-    model = get_user_model()
-    fields = ['name']

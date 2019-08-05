@@ -1,38 +1,49 @@
-game_board {
-    display: flex;
-    flex-direction: column;
+.ttt-game-board,
+.uttt-game-board {
     margin: 3px;
 }
 
-row {
-    display: flex;
+.col,
+.ttt-game-board {
+    width: calc(12rem + 3*2*2px);
+    flex-grow: 0;
 }
 
-cell {
+.no-gutters {
+    margin-right: 0;
+    margin-left: 0;
+}
+.no-gutters > .col,
+.no-gutters > [class*="col-"] {
+    padding-right: 0;
+    padding-left: 0;
+}
+
+.cell {
     display: block;
     border: 1px solid black;
-    width: 60px;
-    height: 60px;
-    font-size: 64px;
+    width: 4rem;
+    height: 4rem;
+    font-size: 4rem;
     font-family: Helvetica, sans-serif;
     color: black;
     text-align: center;
     margin: 2px;
 }
 
-.enabled_game {
+.enabled-game {
     background-color: lightgreen;
 }
 
-.no_link:hover {
+.no-link:hover {
     cursor: default;
 }
 
-a.ttt_link {
+a.ttt-link {
     text-decoration: none;
 }
 
-.won_board {
+.won-board {
     margin: 3px;
     width: 192px;
     height: 192px;
