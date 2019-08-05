@@ -31,14 +31,15 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'tic_tac_toe.apps.TicTacToeConfig',
-    'ultimate_tic_tac_toe.apps.UltimateTicTacToeConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'tic_tac_toe.apps.TicTacToeConfig',
+    'ultimate_tic_tac_toe.apps.UltimateTicTacToeConfig',
+    'accounts.apps.AccountsConfig',
 ]
 
 MIDDLEWARE = [
