@@ -128,8 +128,10 @@ STATICFILES_DIRS = [
 
 
 # Redirect to home URL after login (Default redirects to /accounts/profile/)
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = 'home'
+LOGOUT_REDIRECT_URL = 'home'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-AUTH_USER_MODEL = 'tic_tac_toe.User'
+AUTH_USER_MODEL = 'accounts.Player'
+
