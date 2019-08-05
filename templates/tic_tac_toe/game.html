@@ -8,6 +8,7 @@
 {% block title %} TTT Game {{ game.pk }} {% endblock title %}
 
 {% block content %}
+<div class="container">
 {% include 'tic_tac_toe/board.html' %}
 {% if game.game_over and game.keep_score %}
     {% if game.winner == 0 %} The game was a tie. {% endif %}
@@ -16,4 +17,5 @@
 
     <br><a href="{% url 'ttt:index' %}">Return</a>
 {% endif %}
+</div>
 {% endblock content %}
