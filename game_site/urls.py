@@ -21,6 +21,7 @@ urlpatterns = [
     path('', TemplateView.as_view(template_name='common/home.html'), name='home'),
 
     path('admin/', admin.site.urls),
+    path('cf/', include('connect_four.urls')),
     path('ttt/', include('tic_tac_toe.urls')),
     path('uttt/', include('ultimate_tic_tac_toe.urls')),
 ]
