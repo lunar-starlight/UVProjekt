@@ -37,6 +37,12 @@ class GameTTT(models.Model):
         self.player = 3 - self.player
         self.save()
 
+    def current_player(self):
+        if self.player == 1:
+            return self.p1
+        else:
+            return self.p2
+
     def check_win(self, i: int, j: int) -> bool:
         if self.get_data(0, j) == self.get_data(1, j) == self.get_data(2, j) or self.get_data(i, 0) == self.get_data(i, 1) == self.get_data(i, 2):
             return True
