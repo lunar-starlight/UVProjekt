@@ -10,10 +10,11 @@
 {% block content %}
 {% include 'ultimate_tic_tac_toe/board.html' %}
 
-{% if game.game.game_over %}
-    {% if game.game.winner == 0 %} The game was a tie. {% endif %}
-    {% if game.game.winner == 1 %} Player 1 won. {% endif %}
-    {% if game.game.winner == 2 %} Player 2 won. {% endif %}
+
+{% if game.game_over %}
+    {% if game.winner == 0 %} The game was a tie. {% endif %}
+    {% if game.winner == 1 %} Player 1 won. {% endif %}
+    {% if game.winner == 2 %} Player 2 won. {% endif %}
 
     <br><a href="{% url 'uttt:index' %}">Return</a>
 {% endif %}
