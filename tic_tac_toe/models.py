@@ -5,7 +5,6 @@ from django.db import models
 
 
 class GameTTT(models.Model):
-    field = models.CharField(default='0'*9, max_length=9)
     player = models.IntegerField(default=1)
     winner = models.IntegerField(default=0)
     p1 = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='ttt_p1', on_delete=models.DO_NOTHING, default=0, null=True)
@@ -14,11 +13,6 @@ class GameTTT(models.Model):
     game_over = models.BooleanField(default=False)
     play_id = models.IntegerField(default=0)
     play_url = models.CharField(default='ttt:play', max_length=100)
-
-    def get_position(self, i: int, j: int) -> Optional[int]:
-        if i < 0 or j < 0 or i > 2 or j > 2:
-            return None
-        return 3*i + j
 
     def get_data(self, i: int, j: int) -> Optional[int]:
         try:
@@ -56,13 +50,11 @@ class GameTTT(models.Model):
     def place(self, i: int, j: int, player: str = None) -> bool:
         if player is None:
             player = self.player
-        p = self.get_position(i, j)
-        if p is not None and self.get_data(i, j) in {0, None}:
-            self.field = self.field[:p] + str(player) + self.field[p+1:]
+        if self.get_data(i, j) is None:
             self.set_data(i, j, player)
             return True
         else:
-            # print(f"ERR: {p is not None} and {self.get_data(i, j) in {'0', None}}")
+            # print(f"ERR: {self.get_data(i, j) is None}")
             return False
 
     def play(self, i: int, j: int, player: int = None) -> bool:
@@ -87,18 +79,17 @@ class GameTTT(models.Model):
                 self.p2.wins += 1
                 self.p1.save()
                 self.p2.save()
-        if self.field.count('0') == 0:
+        if DataCell.objects.filter(id_game=self.pk).count() == 9:
             self.game_over = True
         self.toggle_player()
         return True
 
-    def context(self):
-        conv = {'0': '', '1': 'X', '2': 'O'}
-        # context = {'field'+str(i): conv[self.field[i]] for i in range(9) if self.field[i] != '0'}
-        context = dict()
-        context['field'] = [[conv[self.field[3*i + j]] for j in range(3)] for i in range(3)]
-        context['winner'] = conv[str(self.winner)]
-        return context
+    def field(self):
+        conv = {1: 'X', 2: 'O'}
+        field = [['' for j in range(3)] for i in range(3)]
+        for e in DataCell.objects.filter(id_game=self.pk):
+            field[e.row][e.col] = conv[e.data]
+        return field
 
 
 class DataCell(models.Model):
