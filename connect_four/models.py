@@ -83,17 +83,12 @@ class GameCF(models.Model):
             print(f"Game won. {self.player} won.")
             self.game_over = True
             self.winner = self.player
-            # remove score keeping from here
             if self.winner == 1:
-                self.p1.wins += 1
-                self.p2.losses += 1
-                self.p1.save()
-                self.p2.save()
+                self.p1.won()
+                self.p2.lost()
             if self.winner == 2:
-                self.p1.losses += 1
-                self.p2.wins += 1
-                self.p1.save()
-                self.p2.save()
+                self.p1.lost()
+                self.p2.won()
         if DataCell.objects.filter(id_game=self.pk).count() == WIDTH * HEIGHT:
             self.game_over = True
         self.toggle_player()

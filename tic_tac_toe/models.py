@@ -69,17 +69,12 @@ class GameTTT(models.Model):
             print(f"Game won. {player} won.")
             self.game_over = True
             self.winner = player
-            # remove score keeping from here
-            if self.keep_score and self.winner == 1:
-                self.p1.wins += 1
-                self.p2.losses += 1
-                self.p1.save()
-                self.p2.save()
-            if self.keep_score and self.winner == 2:
-                self.p1.losses += 1
-                self.p2.wins += 1
-                self.p1.save()
-                self.p2.save()
+            if self.winner == 1:
+                self.p1.won()
+                self.p2.lost()
+            if self.winner == 2:
+                self.p1.lost()
+                self.p2.won()
         if DataCell.objects.filter(id_game=self.pk).count() == 9:
             self.game_over = True
         self.toggle_player()
