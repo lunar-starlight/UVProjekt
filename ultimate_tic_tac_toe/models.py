@@ -1,27 +1,15 @@
 from typing import Optional
 
-from django.conf import settings
 from django.db import models
 
+from common.models import Game
 from tic_tac_toe.models import GameTTT
 
 
-class GameUTTT(models.Model):
-    p1 = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='uttt_p1', on_delete=models.DO_NOTHING, default=0)
-    p2 = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='uttt_p2', on_delete=models.DO_NOTHING, default=0)
+class GameUTTT(Game):
+    game = models.ForeignKey(GameTTT, on_delete=models.CASCADE, related_name='uttt_game', null=True)
     prev_i = models.IntegerField(default=0)
     prev_j = models.IntegerField(default=0)
-    player = models.IntegerField(default=1)
-    game = models.ForeignKey(GameTTT, on_delete=models.CASCADE, related_name='uttt_game', null=True)
-
-    def toggle_player(self) -> None:
-        self.player = 3 - self.player
-
-    def current_player(self):
-        if self.player == 1:
-            return self.p1
-        else:
-            return self.p2
 
     def play(self, i: int, j: int) -> bool:
         # g = GameTTT.objects.get(id=fk)
@@ -33,10 +21,12 @@ class GameUTTT(models.Model):
                         raise Exception
 
                     if self.game.winner != 0:
+                        self.winner = self.game.winner
                         for game in GameTTT.objects.filter(play_id=self.pk):
                             game.game_over = True
                             game.save()
 
+                self.game_over = self.game.game_over
                 self.prev_i = i
                 self.prev_j = j
                 self.toggle_player()

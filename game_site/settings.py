@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'connect_four.apps.ConnectFourConfig',
 
     'crispy_forms',
+    'polymorphic',
 ]
 
 MIDDLEWARE = [
