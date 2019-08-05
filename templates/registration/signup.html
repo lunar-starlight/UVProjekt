@@ -1,12 +1,26 @@
 {% extends '../common/base.html' %}
 
+{% load crispy_forms_tags %}
+
 {% block title %}Sign Up{% endblock %}
 
 {% block content %}
 <h2>Sign up</h2>
 <form method="post">
 {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Sign up</button>
+    {{ form.username|as_crispy_field }}
+    {{ form.email|as_crispy_field }}
+    <div class="row">
+      <div class="col-6">
+        {{ form.first_name|as_crispy_field }}
+      </div>
+      <div class="col-6">
+        {{ form.last_name|as_crispy_field }}
+      </div>
+    </div>
+    {{ form.password1|as_crispy_field }}
+    {{ form.password2|as_crispy_field }}
+    <button type="submit" class="btn btn-success">Save</button>
+    <a role="button" href="{% url 'home' %}" class="btn btn-danger">Cancel</a>
 </form>
 {% endblock %}
