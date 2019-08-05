@@ -1,11 +1,11 @@
 from django.urls import path
 
-from . import views
+from .views import GameView, IndexView, new_game, play
 
 app_name = 'ttt'
 urlpatterns = [
-    path('', views.IndexView.as_view(), name='index'),
-    path('new_game/<int:p1>/<int:p2>/', views.new_game, name='new_game'),
-    path('game/<int:pk>/', views.GameView.as_view(), name='game'),
-    path('game/<int:pk>/<int:i>/<int:j>/', views.play, name='play'),
+    path('', IndexView.as_view(), name='index'),
+    path('new_game/<int:p1>/<int:p2>/', new_game, name='new_game'),
+    path('game/<int:pk>/', GameView.as_view(), name='game'),
+    path('game/<int:pk>/<int:i>/<int:j>/', play, name='play'),
 ]
