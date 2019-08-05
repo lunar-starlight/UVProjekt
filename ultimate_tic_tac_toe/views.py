@@ -1,6 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import get_object_or_404, redirect, render
+from django.shortcuts import get_object_or_404, redirect, render, reverse
 from django.views import generic
 
 from .models import GameTTT, GameUTTT
@@ -49,7 +49,12 @@ def play(request, pk: int, i: int, j: int):
     g: GameUTTT = get_object_or_404(GameUTTT, pk=pk)
     if g.current_player() == request.user:
         g.play(i, j)
-    return redirect('uttt:game', pk)
+        return redirect('uttt:game', pk)
+    else:
+        base_url = reverse('login')
+        query_string = 'next='+reverse('uttt:play', args=(pk, i, j))
+        url = '{}?{}'.format(base_url, query_string)
+        return redirect(url)
 
 
 @login_required
@@ -57,4 +62,9 @@ def pick(request, pk: int, row: int, col: int, i: int, j: int):
     g: GameUTTT = get_object_or_404(GameUTTT, pk=pk)
     if g.current_player() == request.user:
         g.pick(row, col, i, j)
-    return redirect('uttt:game', pk)
+        return redirect('uttt:game', pk)
+    else:
+        base_url = reverse('login')
+        query_string = 'next='+reverse('uttt:pick', args=(pk, row, col, i, j))
+        url = '{}?{}'.format(base_url, query_string)
+        return redirect(url)
