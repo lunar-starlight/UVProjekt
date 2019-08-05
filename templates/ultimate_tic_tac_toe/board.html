@@ -1,5 +1,8 @@
 {% with 'tic_tac_toe/board.html' as ttttemplate %}
 
+{% load tags %}
+
+
 Player {{ game.player }}
 <div class="container uttt-game-board">
 {% for row in game.games %}
@@ -10,12 +13,14 @@ Player {{ game.player }}
                 {% if not free_pick or not my_turn %} <div class="col"> {% else %} <div class="col enabled-game"> {% endif %}
                 {% include ttttemplate with game=gm disabled='true' free_pick=free_pick game_row=forloop.parentloop.counter0 game_col=forloop.counter0 %}
             {% else %}
-                {% if game.game.game_over %} <div class="col"> {% else %} <div class="col enabled-game"> {% endif %}
+                {% if game.game_over %} <div class="col"> {% else %} <div class="col enabled-game"> {% endif %}
                 {% include ttttemplate with game=gm %}
             {% endif %}
             </div>
-        {% else %} 
-            <div class="col cell won-board"> {{ gm.context.winner }} </cell>
+        {% elif gm.winner == 1 %}
+            <div class="cell won-board">{% icon 'times' 'solid' %}</div>
+        {% elif gm.winner == 2 %}
+            <div class="cell won-board">{% icon 'circle' 'regular' %}</div>
         {% endif %}
     {% endfor %}
     </div>

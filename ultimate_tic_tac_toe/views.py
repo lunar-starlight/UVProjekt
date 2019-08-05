@@ -34,11 +34,9 @@ def new_game(request, p1: int, p2: int):
 def game(request, pk: int):
     g: GameUTTT = get_object_or_404(GameUTTT, pk=pk)
 
-    p = g.game.get_position(g.prev_i, g.prev_j)
-
     context = dict()
     context['game'] = g
-    context['free_pick'] = g.game.field[p] != '0'
+    context['free_pick'] = Child.get_game(g, g.prev_i, g.prev_j).winner != 0
     context['my_turn'] = g.current_player() == request.user
 
     return render(request, 'ultimate_tic_tac_toe/game.html', context=context)

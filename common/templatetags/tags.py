@@ -1,4 +1,5 @@
 from django import template
+from django.utils.html import format_html
 
 register = template.Library()
 
@@ -9,4 +10,4 @@ def icon(name, style, *args, **kwargs):
         style = 's'
     css_class = kwargs.get('class', '')
 
-    return f'<i class="fa{style[0]} fa-{name} {css_class}"></i>'
+    return format_html('<i class="fa{} fa-{} {}"></i>', style[0], name, css_class)
