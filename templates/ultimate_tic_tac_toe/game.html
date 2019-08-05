@@ -17,6 +17,13 @@
     {% if game.winner == 2 %} Player 2 won. {% endif %}
 
     <br><a href="{% url 'uttt:index' %}">Return</a>
+{% else %}
+    <script>
+        setTimeout(function(){
+            let e = document.getElementsByClassName("enabled-game")[0];
+            e.scrollIntoView({behavior: "smooth", block: "center", inline: "center"});
+        }, 250);
+    </script>
 {% endif %}
 
 {% endblock content %}
