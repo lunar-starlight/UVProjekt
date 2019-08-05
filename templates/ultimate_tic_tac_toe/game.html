@@ -1,5 +1,10 @@
 {% extends '../common/base.html' %}
 
+{% block head %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'tic_tac_toe/style.css' %}">
+{% endblock head %}
+
 {% block title %} UTTT Game {{ game.pk }} {% endblock title %}
 
 {% block content %}

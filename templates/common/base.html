@@ -2,32 +2,38 @@
 <html lang="en">
 <head>
     {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'tic_tac_toe/style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'bootstrap/bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'common/style.css' %}">
     <title>{% block title %}My amazing site{% endblock %}</title>
+    {% block head %}{% endblock head %}
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 </head>
 
 <body>
+    <script href="{% static 'bootstrap/jquery-3.3.1.slim.min.js' %}"></script>
+    <script href="{% static 'bootstrap/popper.min.js' %}"></script>
+    <script href="{% static 'bootstrap/bootstrap.min.js' %}"></script>
+    <header>
+        {% block header %}
+        {% if user.is_authenticated %}
+            <p>Hello {{ user.username }}. <a href="{% url 'logout' %}">Logout</a></p>
+        {% else %}
+            <a href="{% url 'login' %}">Login</a>
+            <a href="#">Sign Up</a>
+        {% endif %}
+        {% endblock header %}
+    </header>
     <nav>
         {% block nav %}
-        {% if user.is_authenticated %}
-            <p>Hello {{ user.username }}</p>
-        {% else %}
-            <a href="{% url login %}">Login</a>
-            <a href="#">Register</a>
-        {% endif %}
-        {% endblock nav %}
-    </nav>
-    <sidebar>
-        {% block sidebar %}
         <ul>
             <li><a href="/">Home</a></li>
             <li><a href="/blog/">Blog</a></li>
         </ul>
-        {% endblock %}
-    </sidebar>
+        {% endblock nav %}
+    </nav>
 
-    <content>
+    <div class="container">
         {% block content %}{% endblock %}
-    </content>
+    </div>
 </body>
 </html>
