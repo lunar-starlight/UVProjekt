@@ -46,6 +46,7 @@ class GameTTT(models.Model):
         if i == 2-j:
             if self.get_data(0, 2) == self.get_data(1, 1) == self.get_data(2, 0):
                 return True
+        return False
 
     def place(self, i: int, j: int, player: str = None) -> bool:
         if player is None:

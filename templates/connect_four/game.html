@@ -1,0 +1,21 @@
+{% extends '../common/base.html' %}
+
+{% block head %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'tic_tac_toe/style.css' %}">
+{% endblock head %}
+
+{% block title %} TTT Game {{ game.pk }} {% endblock title %}
+
+{% block content %}
+<div class="container">
+{% include 'connect_four/board.html' %}
+{% if game.game_over %}
+    {% if game.winner == 0 %} The game was a tie. {% endif %}
+    {% if game.winner == 1 %} Player 1 won. {% endif %}
+    {% if game.winner == 2 %} Player 2 won. {% endif %}
+
+    <br><a href="{% url 'cf:index' %}">Return</a>
+{% endif %}
+</div>
+{% endblock content %}

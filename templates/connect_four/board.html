@@ -1,0 +1,15 @@
+<div class="cf-game-board">
+{% for row in game.field %}
+    <div class="row no-gutters">
+    {% for el in row %}
+        {% if disabled or game.game_over or el %}
+            <a class="no-link">
+        {% else %}
+            <a class="cf-link" href="{% url 'cf:play' game.pk forloop.counter0 %}">
+        {% endif %}
+        <div class="cell">{{ el }}</div>
+        </a>
+    {% endfor %}
+    </div>
+{% endfor %}
+</div>
