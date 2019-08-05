@@ -37,10 +37,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
     'tic_tac_toe.apps.TicTacToeConfig',
     'ultimate_tic_tac_toe.apps.UltimateTicTacToeConfig',
     'accounts.apps.AccountsConfig',
     'connect_four.apps.ConnectFourConfig',
+
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -135,3 +138,5 @@ LOGOUT_REDIRECT_URL = 'home'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 AUTH_USER_MODEL = 'accounts.Player'
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
