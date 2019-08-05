@@ -51,3 +51,9 @@ a.ttt-link {
     height: 192px;
     font-size: 204px;
 }
+
+.fa-circle {
+    -webkit-text-stroke: 6px;
+    margin-top: 9px;
+    font-size: 44px;
+}

@@ -3,6 +3,8 @@ from typing import Optional
 from django.conf import settings
 from django.db import models
 
+from common.templatetags.tags import icon
+
 
 class GameTTT(models.Model):
     player = models.IntegerField(default=1)
@@ -87,7 +89,8 @@ class GameTTT(models.Model):
         return True
 
     def field(self):
-        conv = {1: 'X', 2: 'O'}
+        # conv = {1: '<i class="fas fa-times"></i>', 2: '<i class="far fa-circle"></i>'}
+        conv = {1: icon('times', 'solid'), 2: icon('circle', 'regular')}
         field = [['' for j in range(3)] for i in range(3)]
         for e in DataCell.objects.filter(id_game=self.pk):
             field[e.row][e.col] = conv[e.data]

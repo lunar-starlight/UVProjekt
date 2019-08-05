@@ -11,7 +11,7 @@
                 <a class="ttt-link" href="{% url game.play_url game.play_id forloop.parentloop.counter0 forloop.counter0 %}">
             {% endif %}
         {% endif %}
-        <div class="cell">{{ el }}</div>
+        <div class="cell">{{ el|safe }}</div>
         </a>
     {% endfor %}
     </div>

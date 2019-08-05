@@ -7,7 +7,7 @@
         {% else %}
             <a class="cf-link" href="{% url 'cf:play' game.pk forloop.counter0 %}">
         {% endif %}
-        <div class="cell">{{ el }}</div>
+        <div class="cell">{{ el|safe }}</div>
         </a>
     {% endfor %}
     </div>

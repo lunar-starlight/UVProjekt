@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'common',
+
     'tic_tac_toe.apps.TicTacToeConfig',
     'ultimate_tic_tac_toe.apps.UltimateTicTacToeConfig',
     'accounts.apps.AccountsConfig',

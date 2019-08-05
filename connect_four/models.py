@@ -3,6 +3,8 @@ from typing import Optional
 from django.conf import settings
 from django.db import models
 
+from common.templatetags.tags import icon
+
 WIDTH = 7
 HEIGHT = 6
 
@@ -95,7 +97,7 @@ class GameCF(models.Model):
         return True
 
     def field(self):
-        conv = {1: 'X', 2: 'O'}
+        conv = {1: icon('times', 'solid'), 2: icon('circle', 'regular')}
         field = [['' for j in range(WIDTH)] for i in range(HEIGHT)]
         for e in DataCell.objects.filter(id_game=self.pk):
             field[e.row][e.col] = conv[e.data]
