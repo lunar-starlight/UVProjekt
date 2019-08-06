@@ -24,13 +24,14 @@
             </thead>
             <tbody>
             {% for player in player_list %}
+                {% is_friend request.user player as is_friend %}
                 <tr>
                     <th scope="row" class="text-right">{{ forloop.counter }}</th>
                     <td>{{ player.get_full_name }}</td>
                     <td>{{ player.username }}</td>
                     <td>{{ player.wins }}</td>
                     <td>{{ player.losses }}</td>
-                    <td>{% is_friend request.user player %}</td>
+                    <td>{{ is_friend|yesno }}</td>
                 </tr>
             {% endfor %}
             </tbody>
