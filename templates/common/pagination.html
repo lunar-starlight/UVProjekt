@@ -1,4 +1,22 @@
 {% load tags %}
+{% load mathfilters %}
+<form method="GET" class="form-inline justify-content-start">
+    <div class="form-group">
+        <label for="paginate_by">
+            Showing {{ page_obj.start_index }} to {{ page_obj.end_index}} of {{ paginator.count }} rows
+        </label>
+        <select class="custom-select ml-2 mr-1" onchange="this.form.submit()" id="paginate_by" name="paginate_by">
+            {% for val in paginate_by_values %}
+                {% if val == paginator.per_page %}
+                    <option selected>{{ val }}</option>
+                {% else %}
+                    <option>{{ val }}</option>
+                {% endif %}
+            {% endfor %}
+        </select>
+        <label for="paginate_by">rows per page</label>
+    </div>
+</form>
 
 {% if is_paginated %}
     <ul class="pagination justify-content-center">
@@ -20,20 +38,28 @@
         {% endif %}
 
         {% for i in paginator.page_range %}
-            {% if page_obj.number == i %}
-                <li class="page-item active">
-                    {% comment %} <a class="page-link" href="?page={{ i }}"> {% endcomment %}
-                    <a class="page-link" href="{% add_get page=i %}">
-                        {{ i }} <span class="sr-only">(current)</span>
-                    </a>
-                </li>
-            {% else %}
-                <li class="page-item">
-                    {% comment %} <a class="page-link" href="?page={{ i }}"> {% endcomment %}
-                    <a class="page-link" href="{% add_get page=i %}">
-                        {{ i }}
-                    </a>
-                </li>
+            {% if i <= page_obj.number|add:2 and i >= page_obj.number|sub:2 or i == 1 or i == paginator.num_pages %}
+                {% if page_obj.number == i %}
+                    <li class="page-item active">
+                        {% comment %} <a class="page-link" href="?page={{ i }}"> {% endcomment %}
+                        <a class="page-link" href="{% add_get page=i %}">
+                            {{ i }} <span class="sr-only">(current)</span>
+                        </a>
+                    </li>
+                {% else %}
+                    <li class="page-item">
+                        {% comment %} <a class="page-link" href="?page={{ i }}"> {% endcomment %}
+                        <a class="page-link" href="{% add_get page=i %}">
+                            {{ i }}
+                        </a>
+                    </li>
+                {% endif %}
+            {% elif i == 2 and page_obj.number > 4 or i == paginator.num_pages|sub:1 and page_obj.number < paginator.num_pages|sub:3 %}
+            <li class="page-item disabled">
+                <a class="page-link" href="#" tabindex="-1">
+                    <span aria-hidden="true">&#8943;</span>
+                </a>
+            </li>
             {% endif %}
         {% endfor %}
 
