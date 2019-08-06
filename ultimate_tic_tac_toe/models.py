@@ -47,12 +47,10 @@ class GameUTTT(Game):
         return self.play(i, j)
 
     def games(self) -> list:
-        g = list()
-        for i in range(3):
-            t = list()
-            for j in range(3):
-                t.append(GameUTTT_ChildGame.get_game(self, row=i, col=j))
-            g.append(t)
+        games = GameUTTT_ChildGame.objects.filter(id_parent=self.pk)
+        g = [[None for i in range(3)] for j in range(3)]
+        for game in games:
+            g[game.row][game.col] = game.game
         return g
 
 
