@@ -23,9 +23,6 @@ class GameTTT(Game):
                 return True
         return False
 
-    def play(self, i: int, j: int, player: int = None) -> bool:
-        return super().play(i, j, player=player)
-
     def field(self):
         conv = {1: icon('times', 'solid'), 2: icon('circle', 'regular')}
         field = [['' for j in range(3)] for i in range(3)]
