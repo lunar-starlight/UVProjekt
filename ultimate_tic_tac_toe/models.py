@@ -35,13 +35,16 @@ class GameUTTT(Game):
                 self.toggle_player()
                 g.save()
                 self.save()
+                return True
+            else:
+                return False
         except (models.ObjectDoesNotExist, Exception):
-            pass
+            return False
 
     def pick(self, row: int, col: int, i: int, j: int) -> bool:
         self.prev_i = row
         self.prev_j = col
-        self.play(i, j)
+        return self.play(i, j)
 
     def games(self) -> list:
         g = list()
