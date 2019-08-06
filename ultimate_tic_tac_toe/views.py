@@ -7,8 +7,11 @@ from .models import GameTTT, GameUTTT
 from .models import GameUTTT_ChildGame as Child
 
 
-class IndexView(generic.TemplateView):
+class IndexView(generic.ListView):
     template_name = 'ultimate_tic_tac_toe/index.html'
+    queryset = GameUTTT.objects.filter(game_over=False)
+    context_object_name = 'games'
+    paginate_by = 10
 
 
 def new_game(request, p1: int, p2: int):

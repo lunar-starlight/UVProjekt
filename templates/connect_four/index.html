@@ -1,1 +1,7 @@
-<a href="{% url 'cf:new_game' 1 1 %}"> Start </a>
+{% extends '../common/base.html' %}
+
+{% block title %} Connect Four {% endblock title %}
+
+{% block content %}
+{% include "../common/base_index.html" with url_game='cf:game' url_new_game='cf:new_game' %}
+{% endblock content %}

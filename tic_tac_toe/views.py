@@ -6,8 +6,12 @@ from django.views import generic
 from .models import GameTTT
 
 
-class IndexView(generic.TemplateView):
+class IndexView(generic.ListView):
     template_name = 'tic_tac_toe/index.html'
+    queryset = GameTTT.objects.filter(game_over=False, keep_score=True)
+    context_object_name = 'games'
+    paginate_by = 10
+    ordering = ['pk']
 
 
 def new_game(request, p1: int, p2: int):

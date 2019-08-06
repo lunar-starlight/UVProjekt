@@ -1,1 +1,7 @@
-<a href="{% url 'uttt:new_game' 1 1 %}"> Start </a>
+{% extends '../common/base.html' %}
+
+{% block title %} Ultimate Tic Tac Toe {% endblock title %}
+
+{% block content %}
+{% include "../common/base_index.html" with url_game='uttt:game' url_new_game='uttt:new_game' %}
+{% endblock content %}

@@ -5,8 +5,11 @@ from django.views import generic
 from .models import GameCF
 
 
-class IndexView(generic.TemplateView):
+class IndexView(generic.ListView):
     template_name = 'connect_four/index.html'
+    queryset = GameCF.objects.filter(game_over=False)
+    context_object_name = 'games'
+    paginate_by = 10
 
 
 def new_game(request, p1: int, p2: int):
