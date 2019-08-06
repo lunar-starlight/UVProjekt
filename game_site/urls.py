@@ -16,9 +16,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 from django.views.generic.base import TemplateView
+from common.views import LeaderboardView
 
 urlpatterns = [
     path('', TemplateView.as_view(template_name='common/home.html'), name='home'),
+    path('leaderboard/', LeaderboardView.as_view(), name='leaderboard'),
 
     path('admin/', admin.site.urls),
     path('cf/', include('connect_four.urls')),

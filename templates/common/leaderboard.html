@@ -1,0 +1,38 @@
+{% extends "../common/base.html" %}
+
+{% block title %} Leaderboard {% endblock title %}
+
+{% load tags %}
+
+{% block content %}
+<div class="container">
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col" class="text-right">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Username</th>
+                    <th scope="col">Wins</th>
+                    <th scope="col">Losses</th>
+                    <th scope="col">Friends</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for player in player_list %}
+                <tr>
+                    <th scope="row" class="text-right">{{ forloop.counter }}</th>
+                    <td>{{ player.get_full_name }}</td>
+                    <td>{{ player.username }}</td>
+                    <td>{{ player.wins }}</td>
+                    <td>{{ player.losses }}</td>
+                    <td>{% is_friend request.user player %}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% include "common/pagination.html" %}
+{% endblock content %}
