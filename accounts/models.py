@@ -9,7 +9,7 @@ class Player(AbstractUser):
     first_name = None
     last_name = None
     full_name = models.CharField(_('full name'), max_length=200, blank=True)
-    friends = models.ManyToManyField('self', symmetrical=False)
+    friends = models.ManyToManyField('self', symmetrical=False, blank=True)
 
     def won(self):
         self.wins += 1
