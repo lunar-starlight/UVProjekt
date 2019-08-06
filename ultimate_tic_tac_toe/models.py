@@ -11,6 +11,9 @@ class GameUTTT(Game):
     prev_i = models.IntegerField(default=0)
     prev_j = models.IntegerField(default=0)
 
+    WIDTH = 9
+    HEIGHT = 9
+
     def play(self, i: int, j: int) -> bool:
         # g = GameTTT.objects.get(id=fk)
         try:
