@@ -16,6 +16,7 @@
         </select>
         <label for="paginate_by">rows per page</label>
     </div>
+    <input type="hidden" name="search" value="{{ request.GET.search }}" />
 </form>
 
 {% if is_paginated %}
