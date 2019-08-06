@@ -11,3 +11,8 @@ def icon(name, style, *args, **kwargs):
     css_class = kwargs.get('class', '')
 
     return format_html('<i class="fa{} fa-{} {}"></i>', style[0], name, css_class)
+
+
+@register.simple_tag
+def is_friend(p1, p2):
+    return p1.is_friend(p2)

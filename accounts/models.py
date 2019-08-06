@@ -24,3 +24,6 @@ class Player(AbstractUser):
 
     def get_short_name(self):
         return self.full_name.split(' ')[0]
+
+    def is_friend(self, player=None) -> bool:
+        return player in self.friends.all()
