@@ -57,15 +57,22 @@ a.ttt-link {
     flex-grow: 0;
 }
 
-.won-board > .fa-circle {
-    -webkit-text-stroke: 16px;
-    margin-top: 32px;
-    margin-bottom: 32px;
-    font-size: 140px;
+[class*="material-icons"] {
+    font-size: 4rem;
+    font-weight: 900;
+    margin-left: -0.24rem;
 }
 
-.fa-circle {
-    -webkit-text-stroke: 6px;
-    margin-top: 9px;
-    font-size: 44px;
+.won-board > [class*="material-icons"] {
+    font-size: calc(12rem + 3*2*2px);
+    font-weight: 900;
+    margin-left: -0.46rem;
+    margin-top: 0.074rem;
+}
+
+.debug-cell {
+    width: 2rem;
+    height: 2rem;
+    position: relative;
+    top: calc(-4rem - 2*2px);
 }

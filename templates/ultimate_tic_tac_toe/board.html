@@ -18,9 +18,9 @@ Player {{ game.player }}
             {% endif %}
             </div>
         {% elif gm.winner == 1 %}
-            <div class="cell won-board">{% icon 'times' 'solid' %}</div>
+            <div class="cell won-board">{% icon 'clear' 'round' %}</div>
         {% elif gm.winner == 2 %}
-            <div class="cell won-board">{% icon 'circle' 'regular' %}</div>
+            <div class="cell won-board">{% icon 'fiber_manual_record' 'outlined' %}</div>
         {% endif %}
     {% endfor %}
     </div>

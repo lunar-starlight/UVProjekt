@@ -6,11 +6,18 @@ register = template.Library()
 
 @register.simple_tag
 def icon(name, style, *args, **kwargs):
-    if style not in ('s', 'solid', 'r', 'regular', 'l', 'light', 'd', 'duotone', 'b', 'brand'):
-        style = 's'
+    if style not in ('filled', 'outlined', 'rounded', 'round', 'two-tone', 'sharp'):
+        style = 'filled'
+    if style == 'rounder':
+        style = '-round'
+    elif style != 'filled':
+        style = '-' + style
+    else:
+        style = ''
+
     css_class = kwargs.get('class', '')
 
-    return format_html('<i class="fa{} fa-{} {}"></i>', style[0], name, css_class)
+    return format_html('<i class="material-icons{} {}">{}</i>', style, css_class, name)
 
 
 @register.simple_tag
