@@ -8,7 +8,7 @@ from .models import GameTTT
 
 class IndexView(generic.ListView):
     template_name = 'tic_tac_toe/index.html'
-    queryset = GameTTT.objects.filter(game_over=False, keep_score=True)
+    queryset = GameTTT.objects.filter(game_over=False, keep_score=True).exclude(play_id=0)
     context_object_name = 'games'
     paginate_by = 10
     ordering = ['pk']
