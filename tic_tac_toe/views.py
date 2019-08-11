@@ -9,12 +9,13 @@ from common.views import SearchView
 from .models import GameTTT
 
 
-class IndexView(generic.ListView):
+class IndexView(SearchView):
     template_name = 'tic_tac_toe/index.html'
     queryset = GameTTT.objects.filter(game_over=False, keep_score=True).exclude(play_id=0)
     context_object_name = 'games'
-    paginate_by = 10
+    model = GameTTT
     ordering = ['pk']
+    search_fields = {'p2__username', 'p2__full_name'}
 
 
 def new_game(request, p1: int, p2: int):

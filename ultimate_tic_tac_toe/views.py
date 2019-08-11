@@ -2,7 +2,6 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404, redirect, render, reverse
-from django.views import generic
 
 from common.views import SearchView
 
@@ -10,11 +9,13 @@ from .models import GameTTT, GameUTTT
 from .models import GameUTTT_ChildGame as Child
 
 
-class IndexView(generic.ListView):
+class IndexView(SearchView):
     template_name = 'ultimate_tic_tac_toe/index.html'
     queryset = GameUTTT.objects.filter(game_over=False)
     context_object_name = 'games'
-    paginate_by = 10
+    model = GameUTTT
+    ordering = ['pk']
+    search_fields = {'p2__username', 'p2__full_name'}
 
 
 def new_game(request, p1: int, p2: int):
