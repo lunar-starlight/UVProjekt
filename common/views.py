@@ -20,7 +20,7 @@ class SearchView(generic.ListView):
                 return redirect(request.path + '?search=' + request.GET['search'])
             else:
                 return redirect(request.path)
-        return super().get(request, args, kwargs)
+        return super().get(request, *args, **kwargs)
 
     def get_queryset(self):
         try:
