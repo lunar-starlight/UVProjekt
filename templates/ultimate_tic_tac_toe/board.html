@@ -5,7 +5,7 @@
 
 Player {{ game.player }}
 <div class="container uttt-game-board">
-{% for row in game.games %}
+{% for row in game.game_list %}
     <div class="row no-gutters">
     {% for gm in row %}
         {% if gm.winner == 0 %}

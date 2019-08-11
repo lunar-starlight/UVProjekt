@@ -46,10 +46,10 @@ class GameUTTT(Game):
         self.prev_j = col
         return self.play(i, j)
 
-    def games(self) -> list:
-        games = GameUTTT_ChildGame.objects.filter(id_parent=self.pk)
+    def game_list(self) -> list:
+        game_list = GameUTTT_ChildGame.objects.filter(id_parent=self.pk)
         g = [[None for i in range(3)] for j in range(3)]
-        for game in games:
+        for game in game_list:
             g[game.row][game.col] = game.game
         return g
 
