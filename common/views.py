@@ -28,7 +28,7 @@ class SearchView(generic.ListView):
             if self.request.GET['search'] != '' and self.search_fields is not None:
                 self.queryset = self.queryset.annotate(
                     similarity=sum(TrigramSimilarity(s, self.request.GET['search']) for s in self.search_fields)
-                ).filter(similarity__gt=0.3).order_by('-similarity')
+                ).filter(similarity__gt=0.25).order_by('-similarity')
         except KeyError:
             pass
         return super().get_queryset()
@@ -64,6 +64,8 @@ class BaseIndexView(SearchView):
 class LeaderboardView(SearchView):
     template_name = 'common/leaderboard.html'
     model = get_user_model()
+    queryset = model.objects.all()
+    search_fields = {'username', 'full_name'}
     ordering = ['-wins', 'losses', 'username']
 
 

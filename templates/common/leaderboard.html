@@ -18,22 +18,28 @@
                     <th scope="col">Username</th>
                     <th scope="col">Wins</th>
                     <th scope="col">Losses</th>
-                    <th scope="col">Friends</th>
+                    {% if request.user.is_authenticated %}
+                        <th scope="col">Friends</th>
+                    {% endif %}
                 </tr>
             </thead>
             <tbody>
             {% for player in player_list %}
-                {% is_friend request.user player as is_friend %}
+                {% if request.user.is_authenticated %}
+                    {% is_friend request.user player as is_friend %}
+                {% endif %}
                 <tr>
                     <th scope="row" class="text-right">{{ forloop.counter }}</th>
                     <td>{{ player.get_full_name }}</td>
                     <td>{{ player.username }}</td>
                     <td>{{ player.wins }}</td>
                     <td>{{ player.losses }}</td>
-                    {% if is_friend %}
-                        <td><a href="{% url 'common:remove_friend' player.pk %}"><div>Remove</div></a></td>
-                    {% else %}
-                        <td><a href="{% url 'common:add_friend' player.pk %}"><div>Add</div></a></td>
+                    {% if request.user.is_authenticated %}
+                        {% if is_friend %}
+                            <td><a href="{% url 'common:remove_friend' player.pk %}"><div>Remove</div></a></td>
+                        {% else %}
+                            <td><a href="{% url 'common:add_friend' player.pk %}"><div>Add</div></a></td>
+                        {% endif %}
                     {% endif %}
                 </tr>
             {% endfor %}
