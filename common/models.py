@@ -16,6 +16,12 @@ class Game(PolymorphicModel):
     WIDTH = 0
     HEIGHT = 0
 
+    @classmethod
+    def new_game(cls, p1, p2):
+        g = cls(p1=p1, p2=p2)
+        g.save()
+        return g
+
     def get_data(self, i: int, j: int) -> Optional[int]:
         try:
             d = DataCell.objects.get(id_game=self.id, row=i, col=j)

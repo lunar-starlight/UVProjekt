@@ -22,8 +22,7 @@ class CreateGameView(LoginRequiredMixin, generic.RedirectView):
 
     def get_redirect_url(self, *args, **kwargs):
         p2 = get_object_or_404(get_user_model(), pk=kwargs['pk'])
-        g = GameCF(p1=self.request.user, p2=p2)
-        g.save()
+        g = GameCF.new_game(p1=self.request.user, p2=p2)
         return super().get_redirect_url(*args, g.pk)
 
 

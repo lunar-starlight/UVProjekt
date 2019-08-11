@@ -22,10 +22,7 @@ class CreateGameView(LoginRequiredMixin, generic.RedirectView):
 
     def get_redirect_url(self, *args, **kwargs):
         p2 = get_object_or_404(get_user_model(), pk=kwargs['pk'])
-        g = GameTTT(p1=self.request.user, p2=p2, play_id=1)
-        g.save()
-        g.play_id = g.pk
-        g.save()
+        g = GameTTT.new_game(p1=self.request.user, p2=p2)
         return super().get_redirect_url(*args, g.pk)
 
 

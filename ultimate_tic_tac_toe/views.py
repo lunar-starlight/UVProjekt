@@ -5,7 +5,7 @@ from django.views import generic
 
 from common.views import BasePlayView, SearchView
 
-from .models import GameTTT, GameUTTT
+from .models import GameUTTT
 from .models import GameUTTT_ChildGame as Child
 
 
@@ -23,19 +23,7 @@ class CreateGameView(LoginRequiredMixin, generic.RedirectView):
 
     def get_redirect_url(self, *args, **kwargs):
         p2 = get_object_or_404(get_user_model(), pk=kwargs['pk'])
-        game = GameTTT(p1=self.request.user, p2=p2)
-        game.save()
-        g = GameUTTT(p1=self.request.user, p2=p2, game=game)
-        g.save()
-
-        for i in range(3):
-            for j in range(3):
-                child = Child.new_game(g, i, j)
-                if child is not None:
-                    child.play_id = g.id
-                    child.play_url = 'uttt:play'
-                    child.save()
-
+        g = GameUTTT(p1=self.request.user, p2=p2)
         return super().get_redirect_url(*args, g.pk)
 
 

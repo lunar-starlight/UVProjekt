@@ -14,6 +14,22 @@ class GameUTTT(Game):
     WIDTH = 9
     HEIGHT = 9
 
+    @classmethod
+    def new_game(cls, p1, p2):
+        game = GameTTT(p1=p1, p2=p2)
+        game.save()
+        g = cls(p1=p1, p2=p2)
+        g.save()
+
+        for i in range(3):
+            for j in range(3):
+                child = GameUTTT_ChildGame.new_game(g, i, j)
+                if child is not None:  # implement some kind of abort?
+                    child.play_id = g.id
+                    child.play_url = 'uttt:play'
+                    child.save()
+        return g
+
     def play(self, i: int, j: int) -> bool:
         # g = GameTTT.objects.get(id=fk)
         try:

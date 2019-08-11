@@ -12,6 +12,14 @@ class GameTTT(Game):
     WIDTH = 3
     HEIGHT = 3
 
+    @classmethod
+    def new_game(cls, p1, p2):
+        g = cls(p1=p1, p2=p2)
+        g.save()
+        g.play_id = g.pk
+        g.save()
+        return g
+
     def check_win(self, i: int, j: int) -> bool:
         if self.get_data(0, j) == self.get_data(1, j) == self.get_data(2, j) or self.get_data(i, 0) == self.get_data(i, 1) == self.get_data(i, 2):
             return True
