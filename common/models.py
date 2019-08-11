@@ -27,17 +27,17 @@ class Game(PolymorphicModel):
             d = DataCell.objects.get(id_game=self.id, row=i, col=j)
             return d.data
         except models.ObjectDoesNotExist:
-            print("does not exist")
+            # print("does not exist")
             return None
 
     def set_data(self, i: int, j: int, data: int):
         cell: DataCell
         try:
             cell = DataCell.objects.get(id_game=self.id, row=i, col=j)
-            print(f"Modified cell at ({i}, {j}) with {data}.")
+            # print(f"Modified cell at ({i}, {j}) with {data}.")
         except models.ObjectDoesNotExist:
             cell = DataCell(id_game=self, row=i, col=j)
-            print(f"Added cell at ({i}, {j}) with {data}.")
+            # print(f"Added cell at ({i}, {j}) with {data}.")
         cell.data = data
         cell.save()
 
@@ -60,18 +60,18 @@ class Game(PolymorphicModel):
             self.set_data(i, j, player)
             return True
         else:
-            # print(f"ERR: {self.get_data(i, j) is None}")
+            print(f"ERR: self.get_data(i, j) is None")
             return False
 
     def play(self, i: int, j: int, player: int = None) -> bool:
-        print(f"Play at ({i}, {j})")
+        # print(f"Play at ({i}, {j})")
         if player is None:
             player = self.player
         if not self.place(i, j, player=player):
             print(f"ERR: Failed to place at ({i}, {j}) as player {player}.")
             return False
         if self.check_win(i, j):
-            print(f"Game won. {player} won.")
+            # print(f"Game won. {player} won.")
             self.game_over = True
             self.winner = player
             if self.winner == 1:
