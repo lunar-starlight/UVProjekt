@@ -1,6 +1,7 @@
 from django.contrib.auth import get_user_model
+from django.contrib.auth.decorators import login_required
 from django.contrib.postgres.search import TrigramSimilarity
-from django.shortcuts import redirect
+from django.shortcuts import get_object_or_404, redirect
 from django.views import generic
 
 
@@ -45,3 +46,19 @@ class SearchView(generic.ListView):
 class LeaderboardView(SearchView):
     template_name = 'common/leaderboard.html'
     ordering = ['-wins', 'losses', 'username']
+
+
+@login_required
+def add_friend(request, pk: int):
+    friend = get_object_or_404(get_user_model(), pk=pk)
+    request.user.friends.add(friend)
+    request.user.save()
+    return redirect('common:leaderboard')
+
+
+@login_required
+def remove_friend(request, pk: int):
+    friend = get_object_or_404(get_user_model(), pk=pk)
+    request.user.friends.remove(friend)
+    request.user.save()
+    return redirect('common:leaderboard')
