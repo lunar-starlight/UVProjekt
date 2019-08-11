@@ -1,6 +1,9 @@
 from django.contrib.auth import get_user_model
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404, redirect
 from django.views import generic
+
+from common.views import SearchView
 
 from .models import GameCF
 
@@ -31,3 +34,12 @@ def play(request, pk: int, col: int):
     print(f"play game {pk} at {col}")
     g.play(col)
     return redirect('cf:game', pk)
+
+
+class NewGameView(LoginRequiredMixin, SearchView):
+    template_name = 'connect_four/new_game.html'
+    ordering = ['username']
+
+    def get_queryset(self):
+        self.queryset = self.request.user.friends.all()
+        return super().get_queryset()

@@ -1,7 +1,10 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404, redirect, reverse
 from django.views import generic
+
+from common.views import SearchView
 
 from .models import GameTTT
 
@@ -42,3 +45,12 @@ def play(request, pk: int, i: int, j: int):
         query_string = 'next='+reverse('ttt:play', args=(pk, i, j))
         url = '{}?{}'.format(base_url, query_string)
         return redirect(url)
+
+
+class NewGameView(LoginRequiredMixin, SearchView):
+    template_name = 'tic_tac_toe/new_game.html'
+    ordering = ['username']
+
+    def get_queryset(self):
+        self.queryset = self.request.user.friends.all()
+        return super().get_queryset()

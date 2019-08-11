@@ -12,7 +12,7 @@ class SearchView(generic.ListView):
     def get(self, request, *args, **kwargs):
         try:
             if request.GET['search'] == '':
-                return redirect(request.path)
+                return redirect(request.path + '?paginate_by=' + request.GET['paginate_by'])
         except KeyError:
             pass
         return super().get(request, args, kwargs)
@@ -30,7 +30,8 @@ class SearchView(generic.ListView):
 
     def get_paginate_by(self, queryset):
         try:
-            self.paginate_by = self.request.GET['paginate_by']
+            if self.request.GET['paginate_by'] != '':
+                self.paginate_by = self.request.GET['paginate_by']
         except KeyError:
             pass
         return super().get_paginate_by(queryset)
