@@ -1,7 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.views import redirect_to_login
-from django.shortcuts import get_object_or_404, redirect
+from django.shortcuts import get_object_or_404
 from django.views import generic
 
 from common.views import SearchView
@@ -18,14 +18,16 @@ class IndexView(SearchView):
     search_fields = {'p2__username', 'p2__full_name'}
 
 
-def new_game(request, p1: int, p2: int):
-    t1 = get_object_or_404(get_user_model(), pk=p1)
-    t2 = get_object_or_404(get_user_model(), pk=p2)
-    g = GameTTT(p1=t1, p2=t2, play_id=1)
-    g.save()
-    g.play_id = g.id
-    g.save()
-    return redirect('ttt:game', g.id)
+class CreateGameView(LoginRequiredMixin, generic.RedirectView):
+    pattern_name = 'ttt:game'
+
+    def get_redirect_url(self, *args, **kwargs):
+        p2 = get_object_or_404(get_user_model(), pk=kwargs['pk'])
+        g = GameTTT(p1=self.request.user, p2=p2, play_id=1)
+        g.save()
+        g.play_id = g.pk
+        g.save()
+        return super().get_redirect_url(*args, g.pk)
 
 
 class GameView(generic.DetailView):
