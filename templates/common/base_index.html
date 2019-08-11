@@ -12,7 +12,7 @@
                 </tr>
             </thead>
             <tbody>
-            {% for game in games %}
+            {% for game in game_list %}
                 <tr>
                     <th scope="row"><a href="{% url url_game game.pk %}" class=""><div>{{ game.pk }}</div></a></th>
                     <td>{{ game.p1.username }}</td>
