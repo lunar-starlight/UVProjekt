@@ -6,9 +6,7 @@ from django.views import generic
 
 
 class SearchView(generic.ListView):
-    model = get_user_model()
     paginate_by = 10
-    queryset = model.objects.all()
     search_fields = None
 
     def get(self, request, *args, **kwargs):

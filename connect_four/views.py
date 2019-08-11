@@ -40,6 +40,8 @@ def play(request, pk: int, col: int):
 
 class NewGameView(LoginRequiredMixin, SearchView):
     template_name = 'connect_four/new_game.html'
+    model = get_user_model()
+    queryset = model.objects.all()
     ordering = ['username']
     search_fields = {'username', 'full_name'}
 
