@@ -1,11 +1,15 @@
-<div class="ttt-game-board">
+{% if disabled and not free_pick or game.keep_score %}
+    <div class="ttt-game-board">
+{% else %}
+    <div class="ttt-game-board enabled-game">    
+{% endif %}
 {% for row in game.field %}
     <div class="row no-gutters">
     {% for el in row %}
         {% if free_pick %}
             <a class="ttt-link" href="{% url game.play_url game.play_id game_row game_col forloop.parentloop.counter0 forloop.counter0 %}">
         {% elif disabled or game.game_over or el %}
-                <a class="no-link">
+            <a class="no-link">
         {% else %}
             <a class="ttt-link" href="{% url game.play_url game.play_id forloop.parentloop.counter0 forloop.counter0 %}">
         {% endif %}

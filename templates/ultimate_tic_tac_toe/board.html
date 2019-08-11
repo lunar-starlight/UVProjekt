@@ -10,13 +10,10 @@ Player {{ game.player }}
     {% for gm in row %}
         {% if gm.winner == 0 %}
             {% if not my_turn or forloop.parentloop.counter0 != game.prev_i or forloop.counter0 != game.prev_j %}
-                {% if not free_pick or not my_turn %} <div class="col"> {% else %} <div class="col enabled-game"> {% endif %}
-                {% include ttttemplate with game=gm disabled='true' free_pick=free_pick game_row=forloop.parentloop.counter0 game_col=forloop.counter0 %}
+                {% include ttttemplate with game=gm disabled=True free_pick=free_pick game_row=forloop.parentloop.counter0 game_col=forloop.counter0 %}
             {% else %}
-                {% if game.game_over %} <div class="col"> {% else %} <div class="col enabled-game"> {% endif %}
-                {% include ttttemplate with game=gm %}
+                {% include ttttemplate with game=gm disabled=False %}
             {% endif %}
-            </div>
         {% elif gm.winner == 1 %}
             <div class="cell won-board">{% icon 'clear' 'round' %}</div>
         {% elif gm.winner == 2 %}
