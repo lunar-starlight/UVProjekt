@@ -1,7 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.contrib.auth.views import redirect_to_login
 from django.contrib.postgres.search import TrigramSimilarity
 from django.shortcuts import get_object_or_404, redirect
 from django.views import generic
@@ -107,9 +106,6 @@ class BasePlayView(LoginRequiredMixin, UserPassesTestMixin, generic.RedirectView
     def test_func(self):
         g: self.model = get_object_or_404(self.model, pk=self.kwargs['pk'])
         return self.request.user == g.current_player()
-
-    def handle_no_permission(self):
-        return redirect_to_login(self.request.get_full_path(), self.get_login_url(), self.get_redirect_field_name())
 
 
 class BaseNewGameView(LoginRequiredMixin, SearchView):
