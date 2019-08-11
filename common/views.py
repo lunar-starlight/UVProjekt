@@ -4,11 +4,10 @@ from django.shortcuts import redirect
 from django.views import generic
 
 
-class LeaderboardView(generic.ListView):
-    template_name = 'common/leaderboard.html'
+class SearchView(generic.ListView):
     model = get_user_model()
     paginate_by = 10
-    ordering = ['-wins', 'losses', 'username']
+    queryset = model.objects.all()
 
     def get(self, request, *args, **kwargs):
         try:
@@ -21,7 +20,7 @@ class LeaderboardView(generic.ListView):
     def get_queryset(self):
         try:
             if self.request.GET['search'] != '':
-                self.queryset = self.model.objects.annotate(
+                self.queryset = self.queryset.annotate(
                     similarity=TrigramSimilarity('username', self.request.GET['search'])
                     + TrigramSimilarity('full_name', self.request.GET['search'])
                 ).filter(similarity__gt=0.3).order_by('-similarity')
@@ -40,3 +39,8 @@ class LeaderboardView(generic.ListView):
         context = super().get_context_data(**kwargs)
         context["paginate_by_values"] = sorted({10, 25, 100} | {int(self.paginate_by)})
         return context
+
+
+class LeaderboardView(SearchView):
+    template_name = 'common/leaderboard.html'
+    ordering = ['-wins', 'losses', 'username']
