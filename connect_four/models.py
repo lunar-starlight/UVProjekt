@@ -40,7 +40,7 @@ class GameCF(Game):
         return super().play(row, col)
 
     def field(self):
-        conv = {1: icon('times', 'solid'), 2: icon('circle', 'regular')}
+        conv = {1: icon('clear', 'round'), 2: icon('fiber_manual_record', 'outlined')}
         field = [['' for j in range(self.WIDTH)] for i in range(self.HEIGHT)]
         for e in DataCell.objects.filter(id_game=self.pk):
             field[e.row][e.col] = conv[e.data]
