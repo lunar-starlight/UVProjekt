@@ -9,6 +9,7 @@ class SearchView(generic.ListView):
     model = get_user_model()
     paginate_by = 10
     queryset = model.objects.all()
+    search_fields = None
 
     def get(self, request, *args, **kwargs):
         if 'search' in request.GET and request.GET['search'] == '':
@@ -25,10 +26,9 @@ class SearchView(generic.ListView):
 
     def get_queryset(self):
         try:
-            if self.request.GET['search'] != '':
+            if self.request.GET['search'] != '' and self.search_fields is not None:
                 self.queryset = self.queryset.annotate(
-                    similarity=TrigramSimilarity('username', self.request.GET['search'])
-                    + TrigramSimilarity('full_name', self.request.GET['search'])
+                    similarity=sum(TrigramSimilarity(s, self.request.GET['search']) for s in self.search_fields)
                 ).filter(similarity__gt=0.3).order_by('-similarity')
         except KeyError:
             pass

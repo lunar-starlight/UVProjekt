@@ -77,6 +77,7 @@ def pick(request, pk: int, row: int, col: int, i: int, j: int):
 class NewGameView(LoginRequiredMixin, SearchView):
     template_name = 'ultimate_tic_tac_toe/new_game.html'
     ordering = ['username']
+    search_fields = {'username', 'full_name'}
 
     def get_queryset(self):
         self.queryset = self.request.user.friends.all()

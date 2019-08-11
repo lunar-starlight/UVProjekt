@@ -39,6 +39,7 @@ def play(request, pk: int, col: int):
 class NewGameView(LoginRequiredMixin, SearchView):
     template_name = 'connect_four/new_game.html'
     ordering = ['username']
+    search_fields = {'username', 'full_name'}
 
     def get_queryset(self):
         self.queryset = self.request.user.friends.all()
