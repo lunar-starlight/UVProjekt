@@ -69,6 +69,16 @@ def remove_friend(request, pk: int):
     return redirect('common:leaderboard')
 
 
+class BaseCreateGameView(LoginRequiredMixin, generic.RedirectView):
+    pattern_name = None
+    model = None
+
+    def get_redirect_url(self, *args, **kwargs):
+        p2 = get_object_or_404(get_user_model(), pk=kwargs['pk'])
+        g = self.model.new_game(p1=self.request.user, p2=p2)
+        return super().get_redirect_url(*args, g.pk)
+
+
 class BasePlayView(LoginRequiredMixin, UserPassesTestMixin, generic.RedirectView):
     pattern_name = None
     model = None
@@ -85,3 +95,15 @@ class BasePlayView(LoginRequiredMixin, UserPassesTestMixin, generic.RedirectView
 
     def handle_no_permission(self):
         return redirect_to_login(self.request.get_full_path(), self.get_login_url(), self.get_redirect_field_name())
+
+
+class BaseNewGameView(LoginRequiredMixin, SearchView):
+    template_name = None
+    model = get_user_model()
+    queryset = model.objects.all()
+    ordering = ['username']
+    search_fields = {'username', 'full_name'}
+
+    def get_queryset(self):
+        self.queryset = self.request.user.friends.all()
+        return super().get_queryset()

@@ -1,12 +1,10 @@
-from django.contrib.auth import get_user_model
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404
 from django.views import generic
 
-from common.views import BasePlayView, SearchView
+from common.views import (BaseCreateGameView, BaseNewGameView, BasePlayView,
+                          SearchView)
 
-from .models import GameUTTT
-from .models import GameUTTT_ChildGame as Child
+from .models import GameUTTT, GameUTTT_ChildGame
 
 
 class IndexView(SearchView):
@@ -18,13 +16,9 @@ class IndexView(SearchView):
     search_fields = {'p2__username', 'p2__full_name'}
 
 
-class CreateGameView(LoginRequiredMixin, generic.RedirectView):
+class CreateGameView(BaseCreateGameView):
     pattern_name = 'uttt:game'
-
-    def get_redirect_url(self, *args, **kwargs):
-        p2 = get_object_or_404(get_user_model(), pk=kwargs['pk'])
-        g = GameUTTT(p1=self.request.user, p2=p2)
-        return super().get_redirect_url(*args, g.pk)
+    model = GameUTTT
 
 
 class GameView(generic.DetailView):
@@ -35,7 +29,7 @@ class GameView(generic.DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         g: GameUTTT = context['game']
-        context['free_pick'] = Child.get_game(g, g.prev_i, g.prev_j).winner != 0
+        context['free_pick'] = GameUTTT_ChildGame.get_game(g, g.prev_i, g.prev_j).winner != 0
         context['my_turn'] = g.current_player() == self.request.user
         return context
 
@@ -57,13 +51,5 @@ class PickView(BasePlayView):
         return super(BasePlayView, self).get_redirect_url(*args, kwargs['pk'])
 
 
-class NewGameView(LoginRequiredMixin, SearchView):
+class NewGameView(BaseNewGameView):
     template_name = 'ultimate_tic_tac_toe/new_game.html'
-    model = get_user_model()
-    queryset = model.objects.all()
-    ordering = ['username']
-    search_fields = {'username', 'full_name'}
-
-    def get_queryset(self):
-        self.queryset = self.request.user.friends.all()
-        return super().get_queryset()

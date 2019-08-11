@@ -1,9 +1,7 @@
-from django.contrib.auth import get_user_model
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import get_object_or_404
 from django.views import generic
 
-from common.views import SearchView, BasePlayView
+from common.views import (BaseCreateGameView, BaseNewGameView, BasePlayView,
+                          SearchView)
 
 from .models import GameTTT
 
@@ -17,13 +15,9 @@ class IndexView(SearchView):
     search_fields = {'p2__username', 'p2__full_name'}
 
 
-class CreateGameView(LoginRequiredMixin, generic.RedirectView):
+class CreateGameView(BaseCreateGameView):
     pattern_name = 'ttt:game'
-
-    def get_redirect_url(self, *args, **kwargs):
-        p2 = get_object_or_404(get_user_model(), pk=kwargs['pk'])
-        g = GameTTT.new_game(p1=self.request.user, p2=p2)
-        return super().get_redirect_url(*args, g.pk)
+    model = GameTTT
 
 
 class GameView(generic.DetailView):
@@ -38,13 +32,5 @@ class PlayView(BasePlayView):
     play_args = ['i', 'j']
 
 
-class NewGameView(LoginRequiredMixin, SearchView):
+class NewGameView(BaseNewGameView):
     template_name = 'tic_tac_toe/new_game.html'
-    model = get_user_model()
-    queryset = model.objects.all()
-    ordering = ['username']
-    search_fields = {'username', 'full_name'}
-
-    def get_queryset(self):
-        self.queryset = self.request.user.friends.all()
-        return super().get_queryset()
