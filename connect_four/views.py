@@ -1,18 +1,15 @@
 from django.views import generic
 
-from common.views import (BaseCreateGameView, BaseNewGameView, BasePlayView,
-                          SearchView)
+from common.views import (BaseCreateGameView, BaseIndexView, BaseNewGameView,
+                          BasePlayView)
 
 from .models import GameCF
 
 
-class IndexView(SearchView):
+class IndexView(BaseIndexView):
     template_name = 'connect_four/index.html'
-    queryset = GameCF.objects.filter(game_over=False)
-    context_object_name = 'game_list'
     model = GameCF
-    ordering = ['pk']
-    search_fields = {'p2__username', 'p2__full_name'}
+    queryset = model.objects.filter(game_over=False)
 
 
 class CreateGameView(BaseCreateGameView):

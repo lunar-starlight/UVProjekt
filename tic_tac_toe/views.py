@@ -1,18 +1,15 @@
 from django.views import generic
 
-from common.views import (BaseCreateGameView, BaseNewGameView, BasePlayView,
-                          SearchView)
+from common.views import (BaseCreateGameView, BaseIndexView, BaseNewGameView,
+                          BasePlayView)
 
 from .models import GameTTT
 
 
-class IndexView(SearchView):
+class IndexView(BaseIndexView):
     template_name = 'tic_tac_toe/index.html'
-    queryset = GameTTT.objects.filter(game_over=False, keep_score=True).exclude(play_id=0)
-    context_object_name = 'game_list'
     model = GameTTT
-    ordering = ['pk']
-    search_fields = {'p2__username', 'p2__full_name'}
+    queryset = model.objects.filter(game_over=False, keep_score=True).exclude(play_id=0)
 
 
 class CreateGameView(BaseCreateGameView):

@@ -48,6 +48,20 @@ class SearchView(generic.ListView):
         return context
 
 
+class BaseIndexView(SearchView):
+    template_name = None
+    model = None
+    queryset = None
+    context_object_name = 'game_list'
+    ordering = ['pk']
+    search_fields = {'p2__username', 'p2__full_name'}
+
+    def get_queryset(self):
+        if self.queryset is None:
+            self.queryset = self.model.objects.all()
+        return super().get_queryset()
+
+
 class LeaderboardView(SearchView):
     template_name = 'common/leaderboard.html'
     ordering = ['-wins', 'losses', 'username']
