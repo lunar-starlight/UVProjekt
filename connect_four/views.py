@@ -1,10 +1,9 @@
 from django.contrib.auth import get_user_model
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.contrib.auth.views import redirect_to_login
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404
 from django.views import generic
 
-from common.views import SearchView
+from common.views import BasePlayView, SearchView
 
 from .models import GameCF
 
@@ -34,20 +33,10 @@ class GameView(generic.DetailView):
     context_object_name = 'game'
 
 
-class PlayView(LoginRequiredMixin, UserPassesTestMixin, generic.RedirectView):
+class PlayView(BasePlayView):
     pattern_name = 'cf:game'
-
-    def get_redirect_url(self, *args, **kwargs):
-        g = get_object_or_404(GameCF, pk=kwargs['pk'])
-        g.play(kwargs['col'])
-        return super().get_redirect_url(*args, kwargs['pk'])
-
-    def test_func(self):
-        g: GameCF = get_object_or_404(GameCF, pk=self.kwargs['pk'])
-        return self.request.user == g.current_player()
-
-    def handle_no_permission(self):
-        return redirect_to_login(self.request.get_full_path(), self.get_login_url(), self.get_redirect_field_name())
+    model = GameCF
+    play_args = ['col']
 
 
 class NewGameView(LoginRequiredMixin, SearchView):

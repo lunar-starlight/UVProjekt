@@ -1,10 +1,9 @@
 from django.contrib.auth import get_user_model
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.contrib.auth.views import redirect_to_login
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404
 from django.views import generic
 
-from common.views import SearchView
+from common.views import BasePlayView, SearchView
 
 from .models import GameTTT, GameUTTT
 from .models import GameUTTT_ChildGame as Child
@@ -53,38 +52,21 @@ class GameView(generic.DetailView):
         return context
 
 
-class PlayView(LoginRequiredMixin, UserPassesTestMixin, generic.RedirectView):
+class PlayView(BasePlayView):
     pattern_name = 'uttt:game'
+    model = GameUTTT
+    play_args = ['i', 'j']
+
+
+class PickView(BasePlayView):
+    pattern_name = 'uttt:game'
+    model = GameUTTT
+    play_args = ['row', 'col', 'i', 'j']
 
     def get_redirect_url(self, *args, **kwargs):
-        g = get_object_or_404(GameUTTT, pk=kwargs['pk'])
-        g.play(kwargs['i'], kwargs['j'])
-        del kwargs['i']
-        del kwargs['j']
-        return super().get_redirect_url(*args, **kwargs)
-
-    def test_func(self):
-        g: GameUTTT = get_object_or_404(GameUTTT, pk=self.kwargs['pk'])
-        return self.request.user == g.current_player()
-
-    def handle_no_permission(self):
-        return redirect_to_login(self.request.get_full_path(), self.get_login_url(), self.get_redirect_field_name())
-
-
-class PickView(LoginRequiredMixin, UserPassesTestMixin, generic.RedirectView):
-    pattern_name = 'uttt:game'
-
-    def get_redirect_url(self, *args, **kwargs):
-        g = get_object_or_404(GameUTTT, pk=kwargs['pk'])
-        g.pick(kwargs['row'], kwargs['col'], kwargs['i'], kwargs['j'])
-        return super().get_redirect_url(*args, kwargs['pk'])
-
-    def test_func(self):
-        g: GameUTTT = get_object_or_404(GameUTTT, pk=self.kwargs['pk'])
-        return self.request.user == g.current_player()
-
-    def handle_no_permission(self):
-        return redirect_to_login(self.request.get_full_path(), self.get_login_url(), self.get_redirect_field_name())
+        g = get_object_or_404(self.model, pk=kwargs['pk'])
+        g.pick(*(kwargs[s] for s in self.play_args))
+        return super(BasePlayView, self).get_redirect_url(*args, kwargs['pk'])
 
 
 class NewGameView(LoginRequiredMixin, SearchView):
