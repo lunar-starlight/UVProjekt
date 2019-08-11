@@ -32,7 +32,11 @@
                     <td>{{ player.username }}</td>
                     <td>{{ player.wins }}</td>
                     <td>{{ player.losses }}</td>
-                    <td>{{ is_friend|yesno }}</td>
+                    {% if is_friend %}
+                        <td><a href="{% url 'common:remove_friend' player.pk %}"><div>Remove</div></a></td>
+                    {% else %}
+                        <td><a href="{% url 'common:add_friend' player.pk %}"><div>Add</div></a></td>
+                    {% endif %}
                 </tr>
             {% endfor %}
             </tbody>
