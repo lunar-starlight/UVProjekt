@@ -1,7 +1,8 @@
 from django.contrib.auth import get_user_model
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import get_object_or_404, redirect, render, reverse
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.auth.views import redirect_to_login
+from django.shortcuts import get_object_or_404, redirect
+from django.views import generic
 
 from common.views import SearchView
 
@@ -37,42 +38,51 @@ def new_game(request, p1: int, p2: int):
     return redirect('uttt:game', g.id)
 
 
-@login_required
-def game(request, pk: int):
-    g: GameUTTT = get_object_or_404(GameUTTT, pk=pk)
+class GameView(generic.DetailView):
+    model = GameUTTT
+    template_name = 'ultimate_tic_tac_toe/game.html'
+    context_object_name = 'game'
 
-    context = dict()
-    context['game'] = g
-    context['free_pick'] = Child.get_game(g, g.prev_i, g.prev_j).winner != 0
-    context['my_turn'] = g.current_player() == request.user
-
-    return render(request, 'ultimate_tic_tac_toe/game.html', context=context)
-
-
-@login_required
-def play(request, pk: int, i: int, j: int):
-    g: GameUTTT = get_object_or_404(GameUTTT, pk=pk)
-    if g.current_player() == request.user:
-        g.play(i, j)
-        return redirect('uttt:game', pk)
-    else:
-        base_url = reverse('login')
-        query_string = 'next='+reverse('uttt:play', args=(pk, i, j))
-        url = '{}?{}'.format(base_url, query_string)
-        return redirect(url)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        g: GameUTTT = context['game']
+        context['free_pick'] = Child.get_game(g, g.prev_i, g.prev_j).winner != 0
+        context['my_turn'] = g.current_player() == self.request.user
+        return context
 
 
-@login_required
-def pick(request, pk: int, row: int, col: int, i: int, j: int):
-    g: GameUTTT = get_object_or_404(GameUTTT, pk=pk)
-    if g.current_player() == request.user:
-        g.pick(row, col, i, j)
-        return redirect('uttt:game', pk)
-    else:
-        base_url = reverse('login')
-        query_string = 'next='+reverse('uttt:pick', args=(pk, row, col, i, j))
-        url = '{}?{}'.format(base_url, query_string)
-        return redirect(url)
+class PlayView(LoginRequiredMixin, UserPassesTestMixin, generic.RedirectView):
+    pattern_name = 'uttt:game'
+
+    def get_redirect_url(self, *args, **kwargs):
+        g = get_object_or_404(GameUTTT, pk=kwargs['pk'])
+        g.play(kwargs['i'], kwargs['j'])
+        del kwargs['i']
+        del kwargs['j']
+        return super().get_redirect_url(*args, **kwargs)
+
+    def test_func(self):
+        g: GameUTTT = get_object_or_404(GameUTTT, pk=self.kwargs['pk'])
+        return self.request.user == g.current_player()
+
+    def handle_no_permission(self):
+        return redirect_to_login(self.request.get_full_path(), self.get_login_url(), self.get_redirect_field_name())
+
+
+class PickView(LoginRequiredMixin, UserPassesTestMixin, generic.RedirectView):
+    pattern_name = 'uttt:game'
+
+    def get_redirect_url(self, *args, **kwargs):
+        g = get_object_or_404(GameUTTT, pk=kwargs['pk'])
+        g.pick(kwargs['row'], kwargs['col'], kwargs['i'], kwargs['j'])
+        return super().get_redirect_url(*args, kwargs['pk'])
+
+    def test_func(self):
+        g: GameUTTT = get_object_or_404(GameUTTT, pk=self.kwargs['pk'])
+        return self.request.user == g.current_player()
+
+    def handle_no_permission(self):
+        return redirect_to_login(self.request.get_full_path(), self.get_login_url(), self.get_redirect_field_name())
 
 
 class NewGameView(LoginRequiredMixin, SearchView):
