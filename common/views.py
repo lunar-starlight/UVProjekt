@@ -64,6 +64,7 @@ class BaseIndexView(SearchView):
 
 class LeaderboardView(SearchView):
     template_name = 'common/leaderboard.html'
+    model = get_user_model()
     ordering = ['-wins', 'losses', 'username']
 
 
