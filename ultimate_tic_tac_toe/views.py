@@ -1,4 +1,3 @@
-from django.shortcuts import get_object_or_404
 from django.views import generic
 
 from common.views import (BaseCreateGameView, BaseNewGameView, BasePlayView,
@@ -43,12 +42,7 @@ class PlayView(BasePlayView):
 class PickView(BasePlayView):
     pattern_name = 'uttt:game'
     model = GameUTTT
-    play_args = ['row', 'col', 'i', 'j']
-
-    def get_redirect_url(self, *args, **kwargs):
-        g = get_object_or_404(self.model, pk=kwargs['pk'])
-        g.pick(*(kwargs[s] for s in self.play_args))
-        return super(BasePlayView, self).get_redirect_url(*args, kwargs['pk'])
+    play_args = ['i', 'j', 'row', 'col']
 
 
 class NewGameView(BaseNewGameView):

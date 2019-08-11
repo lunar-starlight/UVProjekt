@@ -30,13 +30,15 @@ class GameUTTT(Game):
                     child.save()
         return g
 
-    def play(self, i: int, j: int) -> bool:
-        # g = GameTTT.objects.get(id=fk)
+    def play(self, i: int, j: int, row: int = None, col: int = None) -> bool:
+        if row is None or col is None:
+            row = self.prev_i
+            col = self.prev_j
         try:
-            g = GameUTTT_ChildGame.get_game(self, row=self.prev_i, col=self.prev_j)
+            g = GameUTTT_ChildGame.get_game(self, row=row, col=col)
             if g.play(i, j, player=self.player):
                 if g.winner != 0:
-                    if not self.game.play(self.prev_i, self.prev_j, player=self.player):
+                    if not self.game.play(row, col, player=self.player):
                         raise Exception
 
                     if self.game.winner != 0:
@@ -56,11 +58,6 @@ class GameUTTT(Game):
                 return False
         except (models.ObjectDoesNotExist, Exception):
             return False
-
-    def pick(self, row: int, col: int, i: int, j: int) -> bool:
-        self.prev_i = row
-        self.prev_j = col
-        return self.play(i, j)
 
     def game_list(self) -> list:
         game_list = GameUTTT_ChildGame.objects.filter(id_parent=self.pk)
