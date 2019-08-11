@@ -13,7 +13,7 @@ class SignUpView(generic.CreateView):
 
 class EditView(LoginRequiredMixin, generic.UpdateView):
     form_class = PlayerChangeForm
-    success_url = reverse_lazy('home')
+    success_url = reverse_lazy('common:home')
     login_url = reverse_lazy('login')
     template_name = 'registration/edit.html'
 

@@ -33,7 +33,7 @@
     {{ form.username|as_crispy_field }}
     {{ form.password|as_crispy_field }}
     <button type="submit" class="btn btn-primary">Login</button>
-    <a role="button" href="{% url 'home' %}" class="btn btn-danger">Cancel</a>
+    <a role="button" href="{% url 'common:home' %}" class="btn btn-danger">Cancel</a>
     <input type="hidden" name="next" value="{{ next }}" />
 </form>
 
