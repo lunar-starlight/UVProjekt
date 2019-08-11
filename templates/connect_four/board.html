@@ -2,7 +2,7 @@
 {% for row in game.field %}
     <div class="row no-gutters">
     {% for el in row %}
-        {% if disabled or game.game_over or el %}
+        {% if disabled or game.game_over %}
             <a class="no-link">
         {% else %}
             <a class="cf-link" href="{% url 'cf:play' game.pk forloop.counter0 %}">
