@@ -11,11 +11,16 @@ class SearchView(generic.ListView):
     queryset = model.objects.all()
 
     def get(self, request, *args, **kwargs):
-        try:
-            if request.GET['search'] == '':
+        if 'search' in request.GET and request.GET['search'] == '':
+            if 'paginate_by' in request.GET:
                 return redirect(request.path + '?paginate_by=' + request.GET['paginate_by'])
-        except KeyError:
-            pass
+            else:
+                return redirect(request.path)
+        if 'paginate_by' in request.GET and request.GET['paginate_by'] == '':
+            if 'search' in request.GET:
+                return redirect(request.path + '?search=' + request.GET['search'])
+            else:
+                return redirect(request.path)
         return super().get(request, args, kwargs)
 
     def get_queryset(self):
