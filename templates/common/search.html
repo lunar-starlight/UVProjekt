@@ -1,0 +1,17 @@
+<form
+    method="GET"
+    class="from-inline row justify-content-end"
+    enctype="application/x-www-form-urlencoded">
+    <input
+        name="search"
+        type="text"
+        class="form-control col-4"
+        aria-describedby="search"
+        placeholder="Search"
+        value="{{ request.GET.search }}" />
+
+    <input
+        type="hidden"
+        name="paginate_by"
+        value="{{ request.GET.paginate_by }}" />
+</form>
