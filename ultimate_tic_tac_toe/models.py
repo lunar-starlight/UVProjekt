@@ -18,7 +18,7 @@ class GameUTTT(Game):
     def new_game(cls, p1, p2):
         game = GameTTT(p1=p1, p2=p2)
         game.save()
-        g = cls(p1=p1, p2=p2)
+        g = cls(p1=p1, p2=p2, game=game)
         g.save()
 
         for i in range(3):
