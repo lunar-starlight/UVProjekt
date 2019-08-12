@@ -13,7 +13,7 @@ class TicTacToeModelTests(TestCase):
 
     def test_new_game(self):
         game = GameTTT.new_game(p1=self.p1, p2=self.p2)
-        self.assertEquals(game.pk, game.play_id)
+        self.assertEqual(game.pk, game.play_id)
 
     def test_play_returns_true(self):
         game = GameTTT.new_game(p1=self.p1, p2=self.p2)
@@ -25,13 +25,13 @@ class TicTacToeModelTests(TestCase):
 
         game.play(0, 0)
         cell1 = DataCell.objects.get(id_game=game.pk, row=0, col=0)
-        self.assertEquals(cell1.data, 1)
-        self.assertEquals(game.player, 2)
+        self.assertEqual(cell1.data, 1)
+        self.assertEqual(game.player, 2)
 
         game.play(0, 1)
         cell2 = DataCell.objects.get(id_game=game.pk, row=0, col=1)
-        self.assertEquals(cell2.data, 2)
-        self.assertEquals(game.player, 1)
+        self.assertEqual(cell2.data, 2)
+        self.assertEqual(game.player, 1)
 
     def test_check_win(self):
         game = GameTTT.new_game(p1=self.p1, p2=self.p2)
@@ -41,4 +41,4 @@ class TicTacToeModelTests(TestCase):
         game.play(1, 2)
         game.play(2, 2)
         self.assertTrue(game.game_over)
-        self.assertEquals(game.winner, 1)
+        self.assertEqual(game.winner, 1)

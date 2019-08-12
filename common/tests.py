@@ -7,15 +7,15 @@ class HomePageTests(SimpleTestCase):
 
     def test_home_page_status_code(self):
         response = self.client.get('/')
-        self.assertEquals(response.status_code, 200)
+        self.assertEqual(response.status_code, 200)
 
     def test_view_url_by_name(self):
         response = self.client.get(reverse('common:home'))
-        self.assertEquals(response.status_code, 200)
+        self.assertEqual(response.status_code, 200)
 
     def test_view_uses_correct_template(self):
         response = self.client.get(reverse('common:home'))
-        self.assertEquals(response.status_code, 200)
+        self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'common/home.html')
 
     def test_home_page_contains_correct_html(self):
@@ -32,15 +32,15 @@ class LeaderboardTests(TestCase):
 
     def test_leaderboard_page_status_code(self):
         response = self.client.get('/leaderboard/')
-        self.assertEquals(response.status_code, 200)
+        self.assertEqual(response.status_code, 200)
 
     def test_view_url_by_name(self):
         response = self.client.get(reverse('common:leaderboard'))
-        self.assertEquals(response.status_code, 200)
+        self.assertEqual(response.status_code, 200)
 
     def test_view_uses_correct_template(self):
         response = self.client.get(reverse('common:leaderboard'))
-        self.assertEquals(response.status_code, 200)
+        self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'common/leaderboard.html')
 
     def test_leaderboard_page_contains_correct_html(self):
