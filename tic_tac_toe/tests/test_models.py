@@ -13,7 +13,7 @@ class TicTacToeModelTests(TestCase):
 
     def test_new_game(self):
         game = GameTTT.new_game(p1=self.p1, p2=self.p2)
-        self.assertIsInstance(game.pk, int)
+        self.assertEquals(game.pk, game.play_id)
 
     def test_play_returns_true(self):
         game = GameTTT.new_game(p1=self.p1, p2=self.p2)
