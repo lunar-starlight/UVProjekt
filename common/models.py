@@ -34,10 +34,10 @@ class Game(PolymorphicModel):
         cell: DataCell
         try:
             cell = DataCell.objects.get(id_game=self.id, row=i, col=j)
-            # print(f"Modified cell at ({i}, {j}) with {data}.")
+            # print(f"Modified cell at ({i}, {j}) with {data}")
         except models.ObjectDoesNotExist:
             cell = DataCell(id_game=self, row=i, col=j)
-            # print(f"Added cell at ({i}, {j}) with {data}.")
+            # print(f"Added cell at ({i}, {j}) with {data}")
         cell.data = data
         cell.save()
 
@@ -60,7 +60,7 @@ class Game(PolymorphicModel):
             self.set_data(i, j, player)
             return True
         else:
-            print(f"ERR: self.get_data(i, j) is None")
+            print(f"ERR: self.get_data({i}, {j}) is not None")
             return False
 
     def play(self, i: int, j: int, player: int = None) -> bool:
@@ -68,7 +68,7 @@ class Game(PolymorphicModel):
         if player is None:
             player = self.player
         if not self.place(i, j, player=player):
-            print(f"ERR: Failed to place at ({i}, {j}) as player {player}.")
+            print(f"ERR: Failed to place at ({i}, {j}) as player {player}")
             return False
         if self.check_win(i, j):
             # print(f"Game won. {player} won.")
