@@ -77,7 +77,7 @@ class UltimateTicTacToeModelTests(TestCase):
                 self.assertIsInstance(gm, GameTTT)
 
 
-class ChildGameTests(TestCase):
+class ChildGameModelTests(TestCase):
     model = GameUTTT_ChildGame
 
     def setUp(self):
