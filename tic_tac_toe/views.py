@@ -1,12 +1,10 @@
 from django.views import generic
 
-from common.views import (BaseCreateGameView, BaseIndexView, BaseNewGameView,
-                          BasePlayView)
+from common.views import (BaseCreateAIGameView, BaseCreateGameView,
+                          BaseIndexView, BaseNewGameView, BasePlayView)
 
 from .ai import MinimaxTTTAI, NegamaxTTTAI, RandomTTTAI
 from .models import GameTTT
-
-AI_list = [MinimaxTTTAI, NegamaxTTTAI, RandomTTTAI]
 
 
 class IndexView(BaseIndexView):
@@ -36,13 +34,6 @@ class NewGameView(BaseNewGameView):
     template_name = 'tic_tac_toe/new_game.html'
 
 
-class CreateAIGameView(BaseCreateGameView):
+class CreateAIGameView(BaseCreateAIGameView):
     pattern_name = 'ttt:game'
-    model = None
-
-    def get_redirect_url(self, *args, **kwargs):
-        kwargs['pk'] = 1
-        for model in AI_list:
-            if model.slug == kwargs['slug']:
-                self.model = model
-        return super().get_redirect_url(*args, **kwargs)
+    AI_list = [MinimaxTTTAI, NegamaxTTTAI, RandomTTTAI]

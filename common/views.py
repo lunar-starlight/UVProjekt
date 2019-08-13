@@ -120,3 +120,14 @@ class BaseNewGameView(LoginRequiredMixin, SearchView):
     def get_queryset(self):
         self.queryset = self.request.user.friends.all()
         return super().get_queryset()
+
+
+class BaseCreateAIGameView(BaseCreateGameView):
+
+    def get_redirect_url(self, *args, **kwargs):
+        kwargs['pk'] = 1  # TODO: maybe change this?
+        for model in self.AI_list:
+            if model.slug == kwargs['slug']:
+                self.model = model
+        # TODO: add 404 if model is none
+        return super().get_redirect_url(*args, **kwargs)
