@@ -87,7 +87,7 @@ class Game(PolymorphicModel):
         return True
 
     def field(self):
-        field = [[None for j in range(3)] for i in range(3)]
+        field = [[None for j in range(self.WIDTH)] for i in range(self.HEIGHT)]
         for e in DataCell.objects.filter(id_game=self.pk):
             field[e.row][e.col] = e.data
         return field
