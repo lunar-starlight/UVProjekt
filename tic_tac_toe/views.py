@@ -3,10 +3,10 @@ from django.views import generic
 from common.views import (BaseCreateGameView, BaseIndexView, BaseNewGameView,
                           BasePlayView)
 
-from .ai import MinimaxTTTAI, RandomTTTAI
+from .ai import MinimaxTTTAI, NegamaxTTTAI, RandomTTTAI
 from .models import GameTTT
 
-AI_list = [MinimaxTTTAI, RandomTTTAI]
+AI_list = [MinimaxTTTAI, NegamaxTTTAI, RandomTTTAI]
 
 
 class IndexView(BaseIndexView):
