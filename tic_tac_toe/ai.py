@@ -25,11 +25,11 @@ class RandomTTTAI(BaseAI):
         proxy = True
 
     def move(self):
-        i = random.randint(0, 2)
-        j = random.randint(0, 2)
-        while not super(GameTTT, self).play(i, j):
-            i = random.randint(0, 2)
-            j = random.randint(0, 2)
+        i = random.randint(0, self.HEIGHT-1)
+        j = random.randint(0, self.WIDTH-1)
+        while not super(BaseAI, self).play(i, j):
+            i = random.randint(0, self.HEIGHT-1)
+            j = random.randint(0, self.WIDTH-1)
         return True
 
 
