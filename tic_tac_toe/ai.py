@@ -141,7 +141,7 @@ class NegamaxTTTAI(BaseAI):
     def move(self):
         state = super(GameTTT, self).field()
         i, j = (self.negamax(state, self.player, 10)[0])
-        super(GameTTT, self).play(i, j)
+        super(BaseAI, self).play(i, j)
 
     def negamax(self, state: list, player: int, depth: int):
         colour = (2*player - 3) * (2*self.player - 3)
