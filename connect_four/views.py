@@ -1,9 +1,10 @@
 from django.views import generic
 
-from common.views import (BaseCreateGameView, BaseIndexView, BaseNewGameView,
-                          BasePlayView)
+from common.views import (BaseCreateAIGameView, BaseCreateGameView,
+                          BaseIndexView, BaseNewGameView, BasePlayView)
 
 from .models import GameCF
+from .ai import RandomCFAI
 
 
 class IndexView(BaseIndexView):
@@ -31,3 +32,8 @@ class PlayView(BasePlayView):
 
 class NewGameView(BaseNewGameView):
     template_name = 'connect_four/new_game.html'
+
+
+class CreateAIGameView(BaseCreateAIGameView):
+    pattern_name = 'cf:game'
+    AI_list = [RandomCFAI]
