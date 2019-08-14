@@ -261,9 +261,6 @@ class NegimaxABTablesAI(BaseAI):
     def negamax(self, player: int, depth: int, alpha: int, beta: int):
         colour = (2*player - 3) * (2*self.player - 3)
         alpha_orig = alpha
-        if depth > 9:
-            print(self.column_row)
-
         tt_entry: self.TT = self.tt_lookup(self.state_hash)
         if tt_entry.value is not None and tt_entry.depth >= depth:
             if tt_entry.flag == 'EXACT':
@@ -310,3 +307,38 @@ class NegimaxABTablesAI(BaseAI):
 
         self.tt_store(self.state_hash, tt_entry)
         return best_move, best_score
+
+
+class MTDFAI(NegimaxABTablesAI):
+    slug = 'mtd-f'
+    player = 2  # TODO: get actual palyer number
+
+    class Meta:
+        proxy = True
+
+    def move(self):
+        self.state = super(GameCF, self).field()
+        self.state_hash = self.hash(self.state)
+        for col in range(self.WIDTH):
+            row = self.HEIGHT
+            for i in range(self.HEIGHT):
+                if self.state[i][col] is not None:
+                    row = i
+                    break
+            self.column_row[col] = row-1
+        col = self.MTD(self.player, 0, 11)[0]
+        return super(BaseAI, self).play(col)
+
+    def MTD(self, player, f, depth):
+        g = f
+        upperbound = float('+inf')
+        lowerbound = float('-inf')
+        move = -1
+        while lowerbound < upperbound:
+            beta = max(g, lowerbound+1)
+            move, g = self.negamax(player, depth, beta-1, beta)
+            if g < beta:
+                upperbound = g
+            else:
+                lowerbound = g
+        return move, g
