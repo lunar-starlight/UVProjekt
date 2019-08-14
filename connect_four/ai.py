@@ -368,13 +368,14 @@ class BNSAI(NegimaxABTablesAI):
                     row = i
                     break
             self.column_row[col] = row-1
-        col = self.BNS(11, -11, 11)
+        col = self.BNS(20, -20, 20)
         return super(BaseAI, self).play(col)
 
     def BNS(self, depth, alpha: int, beta: int):
         moves = self.get_available_moves()
         subtree_count = len(moves)
-        best_move = 0
+        if moves:
+            best_move = moves[0]
         while subtree_count != 1:
             test = self.next_guess(alpha, beta, subtree_count)
             better_count = 0
@@ -383,7 +384,7 @@ class BNSAI(NegimaxABTablesAI):
                 self.column_row[col] -= 1
                 self.state[row][col] = self.player
                 self.state_hash ^= rand_table[row][col][self.player-1]
-                score = -self.negamax(3-self.player, depth-1, -test, -test+1)[1]
+                score = -self.negamax(3-self.player, depth-2*len(moves), -test, -test+1)[1]
                 self.state[row][col] = None
                 self.state_hash ^= rand_table[row][col][self.player-1]
                 self.column_row[col] += 1
