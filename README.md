@@ -44,7 +44,24 @@ Namesti postgresql.
 Arch Linux:
 ```
 # pacman -S postgresql
+[postgres]$ initdb -D /var/lib/postgres/data
+# systemctl start postgresql
+[postgres]$ createuser strah -ds
+[postgres]$ createdb strah-db -O strah
 ```
+Popravi nastavitev za bazo podatkov tako:
+```py
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'strah-db',
+        'USER': 'strah',
+        'HOST': 'localhost',
+        'PORT': ''
+    }
+}
+```
+
 
 Naredi virtualno okolje in ga aktiviraj
 ```
@@ -55,10 +72,14 @@ Namesti potrebne pakete
 ```
 $ pip install -r requirements.txt
 ```
-Apliciraj migracije
+Apliciraj migracije in naredi potrebne administratorske račune
 ```
 $ python manage.py migrate
+$ python manage.py createsuperuser --username admin
+$ python manage.py createsuperuser --username ai
 ```
+AI računu je priporočljivo onemogočiti prijavo, tako da nastaviš `is_active` na `False`.
+
 Zaženi strežnik
 ```
 $ python manage.py runserver
