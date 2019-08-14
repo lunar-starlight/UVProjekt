@@ -12,47 +12,54 @@ Okolje lahko postavimo na dva načina; priporočeno je z uporabo Dockerja, venda
 _Opomba: 2. način ni testiran, uporaba na lastno odgovornost._
 
 ### Docker
-Namesti docker in docker-compose.
+
+Namesti `docker-compose`.
+
+Arch Linux:
 ```
-python3 -m venv venv3      # neobvezno
-source venv3/bin/activate  # neobvezno
-pip install docker-compose
+# pacman -S docker-compose
 ```
-Zgradi sliko in dodaj administratorski račun
+
+Dodaj svojega uporabnika v skupino `docker` in zaženi
 ```
-docker-compose build
-docker-compose run web ./manage.py createsuperuser
+$ newgrp docker
 ```
+
+Zgradi sliko, poženi migracije, in dodaj administratorski ter AI račun
+```
+$ docker-compose build
+$ docker-compose run web ./manage.py migrate
+$ docker-compose run web ./manage.py createsuperuser --username admin
+$ docker-compose run web ./manage.py createsuperuser --username ai
+```
+AI računu je priporočljivo onemogočiti prijavo, tako da nastaviš `is_active` na `False`.
+
 Zaženi strežnik
 ```
-docker-compose up --build 
+$ docker-compose up
 ```
 ### Venv
 Namesti postgresql.
 
 Arch Linux:
 ```
-$ pacman -S postgresql
-```
-Debian:
-```
-$ apt install postgresql postgresql-client
+# pacman -S postgresql
 ```
 
 Naredi virtualno okolje in ga aktiviraj
 ```
-python3 -m venv venv3
-source venv3/bin/activate
+$ python3 -m venv venv3
+$ source venv3/bin/activate
 ```
 Namesti potrebne pakete
 ```
-pip install -r requirements.txt
+$ pip install -r requirements.txt
 ```
 Apliciraj migracije
 ```
-python manage.py migrate
+$ python manage.py migrate
 ```
 Zaženi strežnik
 ```
-python manage.py runserver
+$ python manage.py runserver
 ```
