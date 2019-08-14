@@ -18,7 +18,6 @@
             <tbody>
             {% for player in player_list %}
                 <tr>
-                {{ game.pk }}
                     <th scope="row" class="text-right">
                         <a href="{% url url_new_game player.pk %}"><div>{{ forloop.counter }}</div></a>
                     </th>
@@ -30,6 +29,24 @@
             {% endfor %}
             </tbody>
         </table>
-    </div>
     {% include "common/pagination.html" %}
+    </div>
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col" class="text-left">AI</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for ai in ai_list %}
+                <tr>
+                    <th scope="row" class="text-left">
+                        <a href="{% url url_new_game ai.slug %}"><div>{{ ai.slug }}</div></a>
+                    </th>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
 </div>

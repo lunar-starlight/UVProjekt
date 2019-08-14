@@ -6,6 +6,8 @@ from common.views import (BaseCreateAIGameView, BaseCreateGameView,
 from .ai import MinimaxTTTAI, NegamaxTTTAI, RandomTTTAI
 from .models import GameTTT
 
+AI_list = [MinimaxTTTAI, NegamaxTTTAI, RandomTTTAI]
+
 
 class IndexView(BaseIndexView):
     template_name = 'tic_tac_toe/index.html'
@@ -33,7 +35,12 @@ class PlayView(BasePlayView):
 class NewGameView(BaseNewGameView):
     template_name = 'tic_tac_toe/new_game.html'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['ai_list'] = AI_list
+        return context
+
 
 class CreateAIGameView(BaseCreateAIGameView):
     pattern_name = 'ttt:game'
-    AI_list = [MinimaxTTTAI, NegamaxTTTAI, RandomTTTAI]
+    AI_list = AI_list

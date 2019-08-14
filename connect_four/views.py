@@ -7,6 +7,9 @@ from .ai import (MTDFAI, NegamaxPrunningTTTAI, NegamaxTTTAI, NegimaxABTablesAI,
                  PrincipalVariationSearchAI, RandomCFAI)
 from .models import GameCF
 
+AI_list = [MTDFAI, NegamaxTTTAI, NegamaxPrunningTTTAI, NegimaxABTablesAI,
+           PrincipalVariationSearchAI, RandomCFAI]
+
 
 class IndexView(BaseIndexView):
     template_name = 'connect_four/index.html'
@@ -34,8 +37,12 @@ class PlayView(BasePlayView):
 class NewGameView(BaseNewGameView):
     template_name = 'connect_four/new_game.html'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['ai_list'] = AI_list
+        return context
+
 
 class CreateAIGameView(BaseCreateAIGameView):
     pattern_name = 'cf:game'
-    AI_list = [MTDFAI, NegamaxTTTAI, NegamaxPrunningTTTAI, NegimaxABTablesAI,
-               PrincipalVariationSearchAI, RandomCFAI]
+    AI_list = AI_list
