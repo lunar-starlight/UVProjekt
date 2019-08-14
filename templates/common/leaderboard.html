@@ -34,7 +34,7 @@
                     <td>{{ player.username }}</td>
                     <td>{{ player.wins }}</td>
                     <td>{{ player.losses }}</td>
-                    {% if request.user.is_authenticated %}
+                    {% if request.user.is_authenticated and player.username != 'ai' %}
                         {% if is_friend %}
                             <td><a href="{% url 'common:remove_friend' player.pk %}"><div>Remove</div></a></td>
                         {% else %}

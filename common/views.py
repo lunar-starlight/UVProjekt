@@ -72,8 +72,9 @@ class LeaderboardView(SearchView):
 @login_required
 def add_friend(request, pk: int):
     friend = get_object_or_404(get_user_model(), pk=pk)
-    request.user.friends.add(friend)
-    request.user.save()
+    if friend.username != 'ai':
+        request.user.friends.add(friend)
+        request.user.save()
     return redirect('common:leaderboard')
 
 
