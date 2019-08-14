@@ -125,7 +125,8 @@ class BaseNewGameView(LoginRequiredMixin, SearchView):
 class BaseCreateAIGameView(BaseCreateGameView):
 
     def get_redirect_url(self, *args, **kwargs):
-        kwargs['pk'] = 1  # TODO: maybe change this?
+        pai = get_object_or_404(get_user_model(), username='ai')
+        kwargs['pk'] = pai.pk
         for model in self.AI_list:
             if model.slug == kwargs['slug']:
                 self.model = model
