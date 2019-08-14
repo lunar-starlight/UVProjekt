@@ -342,3 +342,63 @@ class MTDFAI(NegimaxABTablesAI):
             else:
                 lowerbound = g
         return move, g
+
+
+class BNSAI(NegimaxABTablesAI):
+    slug = 'bns'
+    player = 2  # TODO: get actual palyer number
+
+    class Meta:
+        proxy = True
+
+    def get_available_moves(self):
+        moves = list()
+        for col in reversed([3, 2, 4, 1, 5, 0, 6]):
+            if self.column_row[col] >= 0:
+                moves.append(col)
+        return moves
+
+    def move(self):
+        self.state = super(GameCF, self).field()
+        self.state_hash = self.hash(self.state)
+        for col in range(self.WIDTH):
+            row = self.HEIGHT
+            for i in range(self.HEIGHT):
+                if self.state[i][col] is not None:
+                    row = i
+                    break
+            self.column_row[col] = row-1
+        col = self.BNS(11, -11, 11)
+        return super(BaseAI, self).play(col)
+
+    def BNS(self, depth, alpha: int, beta: int):
+        moves = self.get_available_moves()
+        subtree_count = len(moves)
+        best_move = 0
+        while subtree_count != 1:
+            test = self.next_guess(alpha, beta, subtree_count)
+            better_count = 0
+            for col in moves:
+                row = self.column_row[col]
+                self.column_row[col] -= 1
+                self.state[row][col] = self.player
+                self.state_hash ^= rand_table[row][col][self.player-1]
+                score = -self.negamax(3-self.player, depth-1, -test, -test+1)[1]
+                self.state[row][col] = None
+                self.state_hash ^= rand_table[row][col][self.player-1]
+                self.column_row[col] += 1
+                # print(f'move: ({col}), score: {score}')
+                if score >= test:
+                    best_move = col
+                    better_count += 1
+            if better_count != 0:
+                subtree_count = better_count
+                alpha = test
+            else:
+                beta = test
+            if beta - alpha < 2:
+                break
+        return best_move
+
+    def next_guess(self, alpha, beta, subtree_count):
+        return alpha + (beta - alpha) * (subtree_count - 1) // (subtree_count)
