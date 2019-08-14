@@ -47,10 +47,10 @@
                         {{ ai.slug }}
                     </th>
                     <td>
-                        <a href="{% url url_new_game ai.slug 1 %}"><div>As player 1</div></a>
+                        <a href="{% url url_new_game ai.slug 0 %}"><div>As player 1</div></a>
                     </td>
                     <td>
-                        <a href="{% url url_new_game ai.slug 2 %}"><div>As player 2</div></a>
+                        <a href="{% url url_new_game ai.slug 1 %}"><div>As player 2</div></a>
                     </td>
                 </tr>
             {% endfor %}

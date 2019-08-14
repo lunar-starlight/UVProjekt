@@ -1,9 +1,11 @@
 from django.views import generic
 
-from common.views import (BaseCreateGameView, BaseIndexView, BaseNewGameView,
-                          BasePlayView)
+from common.views import (BaseCreateAIGameView, BaseCreateGameView,
+                          BaseIndexView, BaseNewGameView, BasePlayView)
 
 from .models import GameUTTT, GameUTTT_ChildGame
+from .ai import RandomUTTTAI
+AI_list = [RandomUTTTAI]
 
 
 class IndexView(BaseIndexView):
@@ -26,6 +28,7 @@ class GameView(generic.DetailView):
         context = super().get_context_data(**kwargs)
         g: GameUTTT = context['game']
         context['free_pick'] = GameUTTT_ChildGame.get_game(g, g.prev_i, g.prev_j).winner != 0
+        context['free_pick'] &= not g.game_over
         context['my_turn'] = g.current_player() == self.request.user
         return context
 
@@ -44,3 +47,13 @@ class PickView(BasePlayView):
 
 class NewGameView(BaseNewGameView):
     template_name = 'ultimate_tic_tac_toe/new_game.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['ai_list'] = AI_list
+        return context
+
+
+class CreateAIGameView(BaseCreateAIGameView):
+    pattern_name = 'uttt:game'
+    AI_list = AI_list
