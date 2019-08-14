@@ -3,7 +3,8 @@ from django.views import generic
 from common.views import (BaseCreateAIGameView, BaseCreateGameView,
                           BaseIndexView, BaseNewGameView, BasePlayView)
 
-from .ai import NegamaxPrunningTTTAI, NegamaxTTTAI, RandomCFAI
+from .ai import (NegamaxPrunningTTTAI, NegamaxTTTAI,
+                 PrincipalVariationSearchAI, RandomCFAI)
 from .models import GameCF
 
 
@@ -36,4 +37,5 @@ class NewGameView(BaseNewGameView):
 
 class CreateAIGameView(BaseCreateAIGameView):
     pattern_name = 'cf:game'
-    AI_list = [NegamaxTTTAI, NegamaxPrunningTTTAI, RandomCFAI]
+    AI_list = [NegamaxTTTAI, NegamaxPrunningTTTAI,
+               PrincipalVariationSearchAI, RandomCFAI]

@@ -19,7 +19,7 @@ class BaseAI(GameCF):
 
     def get_available_moves(self, state):
         moves = list()
-        for col in range(self.WIDTH):
+        for col in [3, 2, 4, 1, 5, 0, 6]:
             if state[0][col] is None:
                 moves.append(col)
         return moves
@@ -148,6 +148,54 @@ class NegamaxPrunningTTTAI(BaseAI):
 
             clone[row][col] = player
             score = -self.negamax(clone, 3-player, depth-1, -beta, -alpha)[1]
+            if score > best_score:
+                best_move = col
+                best_score = score
+            alpha = max(alpha, best_score)
+            if alpha >= beta:
+                break
+            # if depth > 4:
+            #     print('\t'*(6-depth)+f'move: ({col}), score: {score}')
+        return best_move, best_score
+
+
+class PrincipalVariationSearchAI(BaseAI):
+    slug = 'pvs'
+    player = 2  # TODO: get actual palyer number
+
+    class Meta:
+        proxy = True
+
+    def move(self):
+        state = super(GameCF, self).field()
+        col = self.pvs(state, self.player, 10, float('-inf'), float('inf'))[0]
+        super(BaseAI, self).play(col)
+
+    def pvs(self, state: list, player: int, depth: int, alpha: int, beta: int):
+        colour = (2*player - 3) * (2*self.player - 3)
+        moves = self.get_available_moves(state)
+        score = self.evaluate(state, depth)
+        if not moves or score or not depth:
+            return (-1, colour * score)
+        best_move = moves[0]
+        best_score = float('-inf')
+        for col in moves:
+            clone = [list(state[i]) for i in range(self.HEIGHT)]
+
+            row = self.HEIGHT
+            for i in range(self.HEIGHT):
+                if clone[i][col] is not None:
+                    row = i
+                    break
+            row -= 1  # place above the highest piece
+
+            clone[row][col] = player
+            if col == moves[0]:
+                score = -self.pvs(clone, 3-player, depth-1, -beta, -alpha)[1]
+            else:
+                score = -self.pvs(clone, 3-player, depth-1, -alpha-1, -alpha)[1]
+                if alpha < score < beta and depth > 2:
+                    score = -self.pvs(clone, 3-player, depth-1, -beta, -score)[1]
             if score > best_score:
                 best_move = col
                 best_score = score
