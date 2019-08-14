@@ -17,6 +17,7 @@
             </thead>
             <tbody>
             {% for player in player_list %}
+                {% if player.is_active %}
                 <tr>
                     <th scope="row" class="text-right">
                         <a href="{% url url_new_game player.pk %}"><div>{{ forloop.counter }}</div></a>
@@ -26,6 +27,7 @@
                     <td>{{ player.wins }}</td>
                     <td>{{ player.losses }}</td>
                 </tr>
+                {% endif %}
             {% endfor %}
             </tbody>
         </table>
