@@ -5,19 +5,21 @@ from .models import GameCF
 
 class BaseAI(GameCF):
     column_row = [5]*7
+    # player_num = 2  # TODO: get actual palyer number
 
     class Meta:
         proxy = True
 
     def play(self, col: int) -> bool:
-        if super().play(col):
-            self.column_row[col] -= 1
-            if self.game_over:
-                return True
-            else:
-                return self.move()
+        if super().current_player().username != 'ai':
+            b = super().play(col)
+            if b:
+                self.column_row[col] -= 1
+        self.player_num = self.player
+        if self.game_over:
+            return b
         else:
-            return False
+            return self.move()
 
     def get_available_moves(self):
         moves = list()
@@ -31,7 +33,7 @@ class BaseAI(GameCF):
         for i in range(self.HEIGHT):
             for j in range(self.WIDTH - 3):
                 if state[i][j+0] == state[i][j+1] == state[i][j+2] == state[i][j+3]:
-                    if state[i][j] == self.player:
+                    if state[i][j] == self.player_num:
                         return depth
                     elif state[i][j] is not None:
                         return -depth
@@ -40,7 +42,7 @@ class BaseAI(GameCF):
         for i in range(self.HEIGHT - 3):
             for j in range(self.WIDTH):
                 if state[i+0][j] == state[i+1][j] == state[i+2][j] == state[i+3][j]:
-                    if state[i][j] == self.player:
+                    if state[i][j] == self.player_num:
                         return depth
                     elif state[i][j] is not None:
                         return -depth
@@ -49,7 +51,7 @@ class BaseAI(GameCF):
         for i in range(self.HEIGHT - 3):
             for j in range(self.WIDTH - 3):
                 if state[i+0][j+0] == state[i+1][j+1] == state[i+2][j+2] == state[i+3][j+3]:
-                    if state[i][j] == self.player:
+                    if state[i][j] == self.player_num:
                         return depth
                     elif state[i][j] is not None:
                         return -depth
@@ -58,7 +60,7 @@ class BaseAI(GameCF):
         for i in range(self.HEIGHT - 3):
             for j in range(3, self.WIDTH):
                 if state[i+0][j-0] == state[i+1][j-1] == state[i+2][j-2] == state[i+3][j-3]:
-                    if state[i][j] == self.player:
+                    if state[i][j] == self.player_num:
                         return depth
                     elif state[i][j] is not None:
                         return -depth
@@ -80,18 +82,17 @@ class RandomCFAI(BaseAI):
 
 class NegamaxTTTAI(BaseAI):
     slug = 'negamax'
-    player = 2  # TODO: get actual palyer number
 
     class Meta:
         proxy = True
 
     def move(self):
         state = super(GameCF, self).field()
-        col = self.negamax(state, self.player, 6)[0]
+        col = self.negamax(state, self.player_num, 6)[0]
         super(BaseAI, self).play(col)
 
     def negamax(self, state: list, player: int, depth: int):
-        colour = (2*player - 3) * (2*self.player - 3)
+        colour = (2*player - 3) * (2*self.player_num - 3)
         moves = self.get_available_moves()
         score = self.evaluate(state, depth)
         if not moves or score or not depth:
@@ -120,7 +121,6 @@ class NegamaxTTTAI(BaseAI):
 
 class NegamaxPrunningTTTAI(BaseAI):
     slug = 'negamax-prunning'
-    player = 2  # TODO: get actual palyer number
 
     class Meta:
         proxy = True
@@ -131,7 +131,7 @@ class NegamaxPrunningTTTAI(BaseAI):
         super(BaseAI, self).play(col)
 
     def negamax(self, state: list, player: int, depth: int, alpha: int, beta: int):
-        colour = (2*player - 3) * (2*self.player - 3)
+        colour = (2*player - 3) * (2*self.player_num - 3)
         moves = self.get_available_moves()
         score = self.evaluate(state, depth)
         if not moves or score or not depth:
@@ -163,18 +163,17 @@ class NegamaxPrunningTTTAI(BaseAI):
 
 class PrincipalVariationSearchAI(BaseAI):
     slug = 'pvs'
-    player = 2  # TODO: get actual palyer number
 
     class Meta:
         proxy = True
 
     def move(self):
         state = super(GameCF, self).field()
-        col = self.pvs(state, self.player, 10, float('-inf'), float('inf'))[0]
+        col = self.pvs(state, self.player_num, 10, float('-inf'), float('inf'))[0]
         super(BaseAI, self).play(col)
 
     def pvs(self, state: list, player: int, depth: int, alpha: int, beta: int):
-        colour = (2*player - 3) * (2*self.player - 3)
+        colour = (2*player - 3) * (2*self.player_num - 3)
         moves = self.get_available_moves()
         score = self.evaluate(state, depth)
         if not moves or score or not depth:
@@ -216,7 +215,6 @@ table = dict()
 
 class NegimaxABTablesAI(BaseAI):
     slug = 'negamax-tables'
-    player = 2  # TODO: get actual palyer number
 
     class Meta:
         proxy = True
@@ -234,7 +232,7 @@ class NegimaxABTablesAI(BaseAI):
                     row = i
                     break
             self.column_row[col] = row-1
-        col = self.negamax(self.player, 10, float('-inf'), float('inf'))[0]
+        col = self.negamax(self.player_num, 10, float('-inf'), float('inf'))[0]
         return super(BaseAI, self).play(col)
 
     class TT:
@@ -259,7 +257,7 @@ class NegimaxABTablesAI(BaseAI):
         table[state_hash] = tt_entry
 
     def negamax(self, player: int, depth: int, alpha: int, beta: int):
-        colour = (2*player - 3) * (2*self.player - 3)
+        colour = (2*player - 3) * (2*self.player_num - 3)
         alpha_orig = alpha
         tt_entry: self.TT = self.tt_lookup(self.state_hash)
         if tt_entry.value is not None and tt_entry.depth >= depth:
@@ -311,7 +309,6 @@ class NegimaxABTablesAI(BaseAI):
 
 class MTDFAI(NegimaxABTablesAI):
     slug = 'mtd-f'
-    player = 2  # TODO: get actual palyer number
 
     class Meta:
         proxy = True
@@ -326,7 +323,7 @@ class MTDFAI(NegimaxABTablesAI):
                     row = i
                     break
             self.column_row[col] = row-1
-        col = self.MTD(self.player, 0, 11)[0]
+        col = self.MTD(self.player_num, 0, 11)[0]
         return super(BaseAI, self).play(col)
 
     def MTD(self, player, f, depth):
@@ -346,7 +343,6 @@ class MTDFAI(NegimaxABTablesAI):
 
 class BNSAI(NegimaxABTablesAI):
     slug = 'bns'
-    player = 2  # TODO: get actual palyer number
 
     class Meta:
         proxy = True
@@ -382,11 +378,11 @@ class BNSAI(NegimaxABTablesAI):
             for col in moves:
                 row = self.column_row[col]
                 self.column_row[col] -= 1
-                self.state[row][col] = self.player
-                self.state_hash ^= rand_table[row][col][self.player-1]
-                score = -self.negamax(3-self.player, depth-2*len(moves), -test, -test+1)[1]
+                self.state[row][col] = self.player_num
+                self.state_hash ^= rand_table[row][col][self.player_num-1]
+                score = -self.negamax(3-self.player_num, depth-2*len(moves), -test, -test+1)[1]
                 self.state[row][col] = None
-                self.state_hash ^= rand_table[row][col][self.player-1]
+                self.state_hash ^= rand_table[row][col][self.player_num-1]
                 self.column_row[col] += 1
                 # print(f'move: ({col}), score: {score}')
                 if score >= test:

@@ -35,15 +35,21 @@
         <table class="table table-hover">
             <thead>
                 <tr>
-                    <th scope="col" class="text-left">AI</th>
+                    <th scope="col" class="text-left" colspan="3">AI</th>
                 </tr>
             </thead>
             <tbody>
             {% for ai in ai_list %}
                 <tr>
                     <th scope="row" class="text-left">
-                        <a href="{% url url_new_game ai.slug %}"><div>{{ ai.slug }}</div></a>
+                        {{ ai.slug }}
                     </th>
+                    <td>
+                        <a href="{% url url_new_game ai.slug 1 %}"><div>As player 1</div></a>
+                    </td>
+                    <td>
+                        <a href="{% url url_new_game ai.slug 2 %}"><div>As player 2</div></a>
+                    </td>
                 </tr>
             {% endfor %}
             </tbody>

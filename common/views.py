@@ -90,8 +90,11 @@ class BaseCreateGameView(LoginRequiredMixin, generic.RedirectView):
     model = None
 
     def get_redirect_url(self, *args, **kwargs):
+        p1 = self.request.user
         p2 = get_object_or_404(get_user_model(), pk=kwargs['pk'])
-        g = self.model.new_game(p1=self.request.user, p2=p2)
+        if kwargs.get('play_as'):
+            p1, p2 = p2, p1  # swap
+        g = self.model.new_game(p1=p1, p2=p2)
         return super().get_redirect_url(*args, g.pk)
 
 
@@ -107,7 +110,7 @@ class BasePlayView(LoginRequiredMixin, UserPassesTestMixin, generic.RedirectView
 
     def test_func(self):
         g: self.model = get_object_or_404(self.model, pk=self.kwargs['pk'])
-        return self.request.user == g.current_player()
+        return self.request.user == g.current_player() or g.current_player().username == 'ai'
 
 
 class BaseNewGameView(LoginRequiredMixin, SearchView):

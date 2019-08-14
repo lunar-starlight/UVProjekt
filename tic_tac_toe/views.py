@@ -25,6 +25,12 @@ class GameView(generic.DetailView):
     template_name = 'tic_tac_toe/game.html'
     context_object_name = 'game'
 
+    def get_object(self, queryset=None):
+        obj: GameTTT = super().get_object(queryset)
+        if obj.current_player().username == 'ai':
+            obj.play(-1, -1)
+        return obj
+
 
 class PlayView(BasePlayView):
     pattern_name = 'ttt:game'

@@ -9,13 +9,13 @@ class BaseAI(GameTTT):
         proxy = True
 
     def play(self, i: int, j: int, player: int = None) -> bool:
-        if super().play(i, j, player):
-            if self.game_over:
-                return True
-            else:
-                return self.move()
+        if super().current_player().username != 'ai':
+            b = super().play(i, j)
+        self.player_num = self.player
+        if self.game_over:
+            return b
         else:
-            return False
+            return self.move()
 
 
 class RandomTTTAI(BaseAI):
@@ -51,7 +51,7 @@ class MinimaxTTTAI(BaseAI):
 
     def move(self):
         state = super(GameTTT, self).field()
-        i, j = self.minimax(state, self.player)
+        i, j = self.minimax(state, self.player_num)
         super(GameTTT, self).play(i, j)
 
     def minimax(self, state, player):
@@ -99,24 +99,24 @@ class MinimaxTTTAI(BaseAI):
 
     def evaluate(self, state: list, depth):
         if state[0][0] == state[1][1] == state[2][2]:
-            if state[1][1] == self.player:
+            if state[1][1] == self.player_num:
                 return (self.SCORE - depth)
             elif state[1][1] is not None:
                 return -(self.SCORE - depth)
         if state[0][2] == state[1][1] == state[2][0]:
-            if state[1][1] == self.player:
+            if state[1][1] == self.player_num:
                 return (self.SCORE - depth)
             elif state[1][1] is not None:
                 return -(self.SCORE - depth)
 
         for i in range(3):
             if state[i][0] == state[i][1] == state[i][2]:
-                if state[i][1] == self.player:
+                if state[i][1] == self.player_num:
                     return (self.SCORE - depth)
                 elif state[i][1] is not None:
                     return -(self.SCORE - depth)
             if state[0][i] == state[1][i] == state[2][i]:
-                if state[1][i] == self.player:
+                if state[1][i] == self.player_num:
                     return (self.SCORE - depth)
                 elif state[1][i] is not None:
                     return -(self.SCORE - depth)
@@ -140,11 +140,11 @@ class NegamaxTTTAI(BaseAI):
 
     def move(self):
         state = super(GameTTT, self).field()
-        i, j = (self.negamax(state, self.player, 10)[0])
+        i, j = (self.negamax(state, self.player_num, 10)[0])
         super(BaseAI, self).play(i, j)
 
     def negamax(self, state: list, player: int, depth: int):
-        colour = (2*player - 3) * (2*self.player - 3)
+        colour = (2*player - 3) * (2*self.player_num - 3)
         moves = self.get_available_moves(state)
         score = self.evaluate(state, depth)
         if not moves or score or not depth:
@@ -163,24 +163,24 @@ class NegamaxTTTAI(BaseAI):
 
     def evaluate(self, state: list, depth: int):
         if state[0][0] == state[1][1] == state[2][2]:
-            if state[1][1] == self.player:
+            if state[1][1] == self.player_num:
                 return depth
             elif state[1][1] is not None:
                 return -depth
         if state[0][2] == state[1][1] == state[2][0]:
-            if state[1][1] == self.player:
+            if state[1][1] == self.player_num:
                 return depth
             elif state[1][1] is not None:
                 return -depth
 
         for i in range(3):
             if state[i][0] == state[i][1] == state[i][2]:
-                if state[i][1] == self.player:
+                if state[i][1] == self.player_num:
                     return depth
                 elif state[i][1] is not None:
                     return -depth
             if state[0][i] == state[1][i] == state[2][i]:
-                if state[1][i] == self.player:
+                if state[1][i] == self.player_num:
                     return depth
                 elif state[1][i] is not None:
                     return -depth
