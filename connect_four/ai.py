@@ -196,7 +196,7 @@ class PrincipalVariationSearchAI(BaseAI):
             else:
                 score = -self.pvs(clone, 3-player, depth-1, -alpha-1, -alpha)[1]
                 if alpha < score < beta and depth > 2:
-                    score = -self.pvs(clone, 3-player, depth-1, -beta, -score)[1]
+                    score = -self.pvs(clone, 3-player, depth-1, -beta, -alpha)[1]
             if score > best_score:
                 best_move = col
                 best_score = score
