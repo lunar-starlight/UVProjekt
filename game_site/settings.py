@@ -25,7 +25,7 @@ SECRET_KEY = 'pg0ac#hfa4!-8m^vue4dd&p_y(s+bx-v@b5v&7g6o&mg+o@3^x'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['rokstrah.com']
 
 
 # Application definition
