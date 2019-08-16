@@ -17,7 +17,7 @@ class BaseAI(GameCF):
                 self.column_row[col] -= 1
         self.player_num = self.player
         if self.game_over:
-            return b
+            return True
         else:
             return self.move()
 
@@ -208,8 +208,9 @@ class PrincipalVariationSearchAI(BaseAI):
         return best_move, best_score
 
 
-rand_table = [[(random.randint(0, 2**16), random.randint(0, 2**32))
+rand_table = [[(random.randint(0, 2**32), random.randint(0, 2**32))
                for j in range(7)] for i in range(6)]
+# table = [None] * (2**16)
 table = dict()
 
 
@@ -232,7 +233,7 @@ class NegimaxABTablesAI(BaseAI):
                     row = i
                     break
             self.column_row[col] = row-1
-        col = self.negamax(self.player_num, 10, float('-inf'), float('inf'))[0]
+        col = self.negamax(self.player_num, 12, float('-inf'), float('inf'))[0]
         return super(BaseAI, self).play(col)
 
     class TT:
@@ -252,6 +253,7 @@ class NegimaxABTablesAI(BaseAI):
 
     def tt_lookup(self, state_hash: int):
         return table.get(state_hash, self.TT())
+        # return table[state_hash] or self.TT()
 
     def tt_store(self, state_hash: int, tt_entry: TT):
         table[state_hash] = tt_entry
@@ -260,7 +262,7 @@ class NegimaxABTablesAI(BaseAI):
         colour = (2*player - 3) * (2*self.player_num - 3)
         alpha_orig = alpha
         tt_entry: self.TT = self.tt_lookup(self.state_hash)
-        if tt_entry.value is not None and tt_entry.depth >= depth:
+        if tt_entry.value is not None and tt_entry.depth >= depth - 2:
             if tt_entry.flag == 'EXACT':
                 return (tt_entry.move, tt_entry.value)
             elif tt_entry.flag == 'LOWERBOUND':
@@ -380,7 +382,7 @@ class BNSAI(NegimaxABTablesAI):
                 self.column_row[col] -= 1
                 self.state[row][col] = self.player_num
                 self.state_hash ^= rand_table[row][col][self.player_num-1]
-                score = -self.negamax(3-self.player_num, depth-2*len(moves), -test, -test+1)[1]
+                score = -self.negamax(3-self.player_num, depth-int((1.5)*len(moves)), -test, -test+1)[1]
                 self.state[row][col] = None
                 self.state_hash ^= rand_table[row][col][self.player_num-1]
                 self.column_row[col] += 1
