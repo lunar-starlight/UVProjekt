@@ -119,8 +119,8 @@ class NegamaxTTTAI(BaseAI):
         return best_move, best_score
 
 
-class NegamaxPrunningTTTAI(BaseAI):
-    slug = 'negamax-prunning'
+class NegamaxPruningTTTAI(BaseAI):
+    slug = 'negamax-pruning'
 
     class Meta:
         proxy = True
@@ -214,7 +214,7 @@ rand_table = [[(random.randint(0, 2**32), random.randint(0, 2**32))
 table = dict()
 
 
-class NegimaxABTablesAI(BaseAI):
+class NegamaxABTablesAI(BaseAI):
     slug = 'negamax-tables'
 
     class Meta:

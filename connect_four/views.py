@@ -3,12 +3,12 @@ from django.views import generic
 from common.views import (BaseCreateAIGameView, BaseCreateGameView,
                           BaseIndexView, BaseNewGameView, BasePlayView)
 
-from .ai import (BNSAI, MTDFAI, NegamaxPrunningTTTAI, NegamaxTTTAI,
-                 NegimaxABTablesAI, PrincipalVariationSearchAI, RandomCFAI)
+from .ai import (BNSAI, MTDFAI, NegamaxPruningTTTAI, NegamaxTTTAI,
+                 NegamaxABTablesAI, PrincipalVariationSearchAI, RandomCFAI)
 from .models import GameCF
 
-AI_list = [BNSAI, MTDFAI, NegamaxTTTAI, NegamaxPrunningTTTAI,
-           NegimaxABTablesAI, PrincipalVariationSearchAI, RandomCFAI]
+AI_list = [BNSAI, MTDFAI, NegamaxTTTAI, NegamaxPruningTTTAI,
+           NegamaxABTablesAI, PrincipalVariationSearchAI, RandomCFAI]
 
 
 class IndexView(BaseIndexView):
