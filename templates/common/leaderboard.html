@@ -34,12 +34,16 @@
                     <td>{{ player.username }}</td>
                     <td>{{ player.wins }}</td>
                     <td>{{ player.losses }}</td>
-                    {% if request.user.is_authenticated and player.username != 'ai' %}
-                        {% if is_friend %}
-                            <td><a href="{% url 'common:remove_friend' player.pk %}"><div>Remove</div></a></td>
-                        {% else %}
-                            <td><a href="{% url 'common:add_friend' player.pk %}"><div>Add</div></a></td>
+                    {% if request.user.is_authenticated %}
+                        <td>
+                        {% if player.username != 'ai' %}
+                            {% if is_friend %}
+                                <a href="{% url 'common:remove_friend' player.pk %}"><div>Remove</div></a>
+                            {% else %}
+                                <a href="{% url 'common:add_friend' player.pk %}"><div>Add</div></a>
+                            {% endif %}
                         {% endif %}
+                        </td>
                     {% endif %}
                 </tr>
             {% endfor %}
