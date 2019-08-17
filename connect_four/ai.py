@@ -309,7 +309,7 @@ class NegamaxABTablesAI(BaseAI):
         return best_move, best_score
 
 
-class MTDFAI(NegimaxABTablesAI):
+class MTDFAI(NegamaxABTablesAI):
     slug = 'mtd-f'
 
     class Meta:
@@ -343,7 +343,7 @@ class MTDFAI(NegimaxABTablesAI):
         return move, g
 
 
-class BNSAI(NegimaxABTablesAI):
+class BNSAI(NegamaxABTablesAI):
     slug = 'bns'
 
     class Meta:
