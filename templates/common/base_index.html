@@ -25,8 +25,8 @@
                     <td>{{ game.p2.username }}</td>
                     {% if request.user.is_authenticated %}
                         <td class="button-cell icon-button text-center">
-                            <a href="{% url url_delete_game game.pk %}" class="btn btn-outline-danger">
-                                {% icon 'clear' 'round' %}
+                            <a href="{% url url_delete_game game.pk %}" class="btn btn-outline-danger" aria-label="delete game">
+                                <span aria-hidden="true">{% icon 'clear' 'round' %}</span>
                             </a>
                         </td>
                     {% endif %}
