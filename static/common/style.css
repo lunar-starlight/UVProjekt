@@ -1,3 +1,19 @@
 @-ms-viewport {
     width: device-width;
 }
+
+.button-cell {
+    padding: 0.5rem !important;
+}
+
+.button-cell > .btn {
+    padding: 0 !important;
+}
+
+.button-cell > div,
+.button-cell > .btn {
+    min-width: 4rem !important;
+    min-height: 1.5rem !important;
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+}

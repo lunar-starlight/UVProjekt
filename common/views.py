@@ -136,3 +136,17 @@ class BaseCreateAIGameView(BaseCreateGameView):
                 self.model = model
         # TODO: add 404 if model is none
         return super().get_redirect_url(*args, **kwargs)
+
+
+class BaseDeleteGameView(LoginRequiredMixin, UserPassesTestMixin, generic.RedirectView):
+    pattern_name = None
+    model = None
+
+    def get_redirect_url(self, *args, **kwargs):
+        g: self.model = get_object_or_404(self.model, pk=self.kwargs['pk'])
+        g.delete()
+        return super().get_redirect_url()
+
+    def test_func(self):
+        g: self.model = get_object_or_404(self.model, pk=self.kwargs['pk'])
+        return self.request.user == g.p1 or self.request.user == g.p2

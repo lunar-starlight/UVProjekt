@@ -1,3 +1,4 @@
+{% load tags %}
 <div class="container">
     <div class="container">
         {% include "common/search.html" %}
@@ -9,14 +10,24 @@
                     <th scope="col">#</th>
                     <th scope="col">Player 1</th>
                     <th scope="col">Player 2</th>
+                    {% if request.user.is_authenticated %}
+                        <th scope="col">Delete game?</th>
+                    {% endif %}
                 </tr>
             </thead>
             <tbody>
             {% for game in game_list %}
                 <tr>
-                    <th scope="row"><a href="{% url url_game game.pk %}" class=""><div>{{ game.pk }}</div></a></th>
+                    <th class="button-cell" scope="row">
+                        <a href="{% url url_game game.pk %}" class="btn btn-primary"><div>{{ game.pk }}</div></a>
+                    </th>
                     <td>{{ game.p1.username }}</td>
                     <td>{{ game.p2.username }}</td>
+                    {% if request.user.is_authenticated %}
+                        <td class="button-cell"><a href="{% url url_delete_game game.pk %}" class="btn btn-danger">
+                            {% icon 'clear' 'round' %}
+                        </a></td>
+                    {% endif %}
                 </tr>
             {% endfor %}
             </tbody>

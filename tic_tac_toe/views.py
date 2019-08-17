@@ -1,7 +1,8 @@
 from django.views import generic
 
 from common.views import (BaseCreateAIGameView, BaseCreateGameView,
-                          BaseIndexView, BaseNewGameView, BasePlayView)
+                          BaseDeleteGameView, BaseIndexView, BaseNewGameView,
+                          BasePlayView)
 
 from .ai import MinimaxTTTAI, NegamaxTTTAI, RandomTTTAI
 from .models import GameTTT
@@ -50,3 +51,8 @@ class NewGameView(BaseNewGameView):
 class CreateAIGameView(BaseCreateAIGameView):
     pattern_name = 'ttt:game'
     AI_list = AI_list
+
+
+class DeleteGameView(BaseDeleteGameView):
+    pattern_name = 'ttt:index'
+    model = GameTTT

@@ -1,10 +1,12 @@
 from django.views import generic
 
 from common.views import (BaseCreateAIGameView, BaseCreateGameView,
-                          BaseIndexView, BaseNewGameView, BasePlayView)
+                          BaseDeleteGameView, BaseIndexView, BaseNewGameView,
+                          BasePlayView)
 
-from .models import GameUTTT, GameUTTT_ChildGame
 from .ai import RandomUTTTAI
+from .models import GameUTTT, GameUTTT_ChildGame
+
 AI_list = [RandomUTTTAI]
 
 
@@ -57,3 +59,8 @@ class NewGameView(BaseNewGameView):
 class CreateAIGameView(BaseCreateAIGameView):
     pattern_name = 'uttt:game'
     AI_list = AI_list
+
+
+class DeleteGameView(BaseDeleteGameView):
+    pattern_name = 'uttt:index'
+    model = GameUTTT

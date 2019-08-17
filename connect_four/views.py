@@ -1,10 +1,11 @@
 from django.views import generic
 
 from common.views import (BaseCreateAIGameView, BaseCreateGameView,
-                          BaseIndexView, BaseNewGameView, BasePlayView)
+                          BaseDeleteGameView, BaseIndexView, BaseNewGameView,
+                          BasePlayView)
 
-from .ai import (BNSAI, MTDFAI, NegamaxPruningTTTAI, NegamaxTTTAI,
-                 NegamaxABTablesAI, PrincipalVariationSearchAI, RandomCFAI)
+from .ai import (BNSAI, MTDFAI, NegamaxABTablesAI, NegamaxPruningTTTAI,
+                 NegamaxTTTAI, PrincipalVariationSearchAI, RandomCFAI)
 from .models import GameCF
 
 AI_list = [BNSAI, MTDFAI, NegamaxTTTAI, NegamaxPruningTTTAI,
@@ -52,3 +53,8 @@ class NewGameView(BaseNewGameView):
 class CreateAIGameView(BaseCreateAIGameView):
     pattern_name = 'cf:game'
     AI_list = AI_list
+
+
+class DeleteGameView(BaseDeleteGameView):
+    pattern_name = 'cf:index'
+    model = GameCF
