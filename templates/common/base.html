@@ -15,12 +15,15 @@
 
 <body>
     {% block header %}
-        {% if user.is_authenticated %}
-            <p>Hello {{ user.username }}. <a href="{% url 'logout' %}">Logout</a></p>
-        {% else %}
-            <a href="{% url 'login' %}">Login</a>
-            <a href="{% url 'signup' %}">Sign Up</a>
-        {% endif %}
+        <header>
+            {% if user.is_authenticated %}
+                <p>Hello {{ user.username }}.
+                <a href="{% url 'logout' %}" class="btn btn-link">Logout</a></p>
+            {% else %}
+                <a href="{% url 'login' %}" class="btn btn-link">Login</a>
+                <a href="{% url 'signup' %}" class="btn btn-link">Sign Up</a>
+            {% endif %}
+        </header>
     {% endblock header %}
 
     {% block nav %}

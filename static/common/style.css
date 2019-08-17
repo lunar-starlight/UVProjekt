@@ -25,3 +25,13 @@
     padding-left: 0rem !important;
     padding-right: 0rem !important;
 }
+
+header {
+    float: right;
+}
+
+html {
+    margin: 2rem;
+    margin-left: 4rem;
+    margin-right: 4rem;
+}
