@@ -17,3 +17,11 @@
     padding-left: 1rem !important;
     padding-right: 1rem !important;
 }
+
+.button-cell.icon-button > div,
+.button-cell.icon-button > .btn {
+    min-width: 1.5rem !important;
+    min-height: 1.5rem !important;
+    padding-left: 0rem !important;
+    padding-right: 0rem !important;
+}

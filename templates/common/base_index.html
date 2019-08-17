@@ -4,29 +4,31 @@
         {% include "common/search.html" %}
     </div>
     <div class="table-responsive">
-        <table class="table table table-hover">
+        <table class="table table table-hover text-center">
             <thead>
                 <tr>
-                    <th scope="col">#</th>
+                    <th scope="col" class="text-center">#</th>
                     <th scope="col">Player 1</th>
                     <th scope="col">Player 2</th>
                     {% if request.user.is_authenticated %}
-                        <th scope="col">Delete game?</th>
+                        <th scope="col" class="text-center">Delete?</th>
                     {% endif %}
                 </tr>
             </thead>
             <tbody>
             {% for game in game_list %}
                 <tr>
-                    <th class="button-cell" scope="row">
-                        <a href="{% url url_game game.pk %}" class="btn btn-primary"><div>{{ game.pk }}</div></a>
+                    <th class="button-cell text-center" scope="row">
+                        <a href="{% url url_game game.pk %}" class="btn btn-outline-primary"><div>{{ game.pk }}</div></a>
                     </th>
                     <td>{{ game.p1.username }}</td>
                     <td>{{ game.p2.username }}</td>
                     {% if request.user.is_authenticated %}
-                        <td class="button-cell"><a href="{% url url_delete_game game.pk %}" class="btn btn-danger">
-                            {% icon 'clear' 'round' %}
-                        </a></td>
+                        <td class="button-cell icon-button text-center">
+                            <a href="{% url url_delete_game game.pk %}" class="btn btn-outline-danger">
+                                {% icon 'clear' 'round' %}
+                            </a>
+                        </td>
                     {% endif %}
                 </tr>
             {% endfor %}

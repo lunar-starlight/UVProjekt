@@ -16,10 +16,10 @@
                     <th scope="col" class="text-right">#</th>
                     <th scope="col">Name</th>
                     <th scope="col">Username</th>
-                    <th scope="col">Wins</th>
-                    <th scope="col">Losses</th>
+                    <th scope="col" class="text-right">Wins</th>
+                    <th scope="col" class="text-right">Losses</th>
                     {% if request.user.is_authenticated %}
-                        <th scope="col">Friends</th>
+                        <th scope="col" class="text-center">Friends</th>
                     {% endif %}
                 </tr>
             </thead>
@@ -32,15 +32,19 @@
                     <th scope="row" class="text-right">{{ forloop.counter }}</th>
                     <td>{{ player.get_full_name }}</td>
                     <td>{{ player.username }}</td>
-                    <td>{{ player.wins }}</td>
-                    <td>{{ player.losses }}</td>
+                    <td class="text-right">{{ player.wins }}</td>
+                    <td class="text-right">{{ player.losses }}</td>
                     {% if request.user.is_authenticated %}
-                        <td>
+                        <td class="button-cell icon-button text-center">
                         {% if player.username != 'ai' %}
                             {% if is_friend %}
-                                <a href="{% url 'common:remove_friend' player.pk %}"><div>Remove</div></a>
+                                <a href="{% url 'common:remove_friend' player.pk %}" class="btn btn-outline-danger">
+                                    <div>{% icon 'remove' 'round' %}</div>
+                                </a>
                             {% else %}
-                                <a href="{% url 'common:add_friend' player.pk %}"><div>Add</div></a>
+                                <a href="{% url 'common:add_friend' player.pk %}" class="btn btn-outline-success">
+                                    <div>{% icon 'add' 'round' %}</div>
+                                </a>
                             {% endif %}
                         {% endif %}
                         </td>
