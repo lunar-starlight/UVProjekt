@@ -38,11 +38,15 @@
                         <td class="button-cell icon-button text-center">
                         {% if player.username != 'ai' %}
                             {% if is_friend %}
-                                <a href="{% url 'common:remove_friend' player.pk %}" class="btn btn-outline-danger" aria-label="remove friend">
+                                <a href="{% url 'common:remove_friend' player.pk %}"
+                                   class="btn btn-outline-danger"
+                                   aria-label="remove friend">
                                     <div aria-hidden="true">{% icon 'remove' 'round' %}</div>
                                 </a>
                             {% else %}
-                                <a href="{% url 'common:add_friend' player.pk %}" class="btn btn-outline-success" aria-label="add friend">
+                                <a href="{% url 'common:add_friend' player.pk %}"
+                                   class="btn btn-outline-success"
+                                   aria-label="add friend">
                                     <div aria-hidden="true">{% icon 'add' 'round' %}</div>
                                 </a>
                             {% endif %}
