@@ -1,15 +1,17 @@
 {% extends '../common/base.html' %}
+{% load static %}
+
 
 {% block head %}
-{% load static %}
-<link rel="stylesheet" type="text/css" href="{% static 'tic_tac_toe/style.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/tic_tac_toe/style.css' %}">
 {% endblock head %}
+
 
 {% block title %} UTTT Game {{ game.pk }} {% endblock title %}
 
+
 {% block content %}
 {% include 'ultimate_tic_tac_toe/board.html' %}
-
 
 {% if game.game_over %}
     {% if game.winner == 0 %} The game was a tie. {% endif %}
@@ -27,3 +29,8 @@
 {% endif %}
 
 {% endblock content %}
+
+
+{% block script %}
+<script  src="{% static 'js/app.js' %}"></script>
+{% endblock script %}

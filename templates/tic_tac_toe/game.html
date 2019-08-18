@@ -1,11 +1,14 @@
 {% extends '../common/base.html' %}
+{% load static %}
+
 
 {% block head %}
-{% load static %}
-<link rel="stylesheet" type="text/css" href="{% static 'tic_tac_toe/style.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/tic_tac_toe/style.css' %}">
 {% endblock head %}
 
+
 {% block title %} TTT Game {{ game.pk }} {% endblock title %}
+
 
 {% block content %}
 <div class="container">
@@ -19,3 +22,35 @@
 {% endif %}
 </div>
 {% endblock content %}
+
+
+{% block script %}
+<script>
+    let gamePK = {{ game.pk }};
+
+    let gameSocket = new WebSocket(
+        'ws://' + window.location.host +
+        '/ws/ttt/game/' + gamePK + '/');
+
+    gameSocket.onmessage = function(e) {
+        let data = JSON.parse(e.data);
+        let player = data['player'];
+        let i = data['i'];
+        let j = data['j'];
+        console.log("receive(" + i + "," + j + ") => " + player);
+    };
+
+    gameSocket.onclose = function(e) {
+        console.error('Chat socket closed unexpectedly');
+    };
+
+    sendToSocket = function(i, j) {
+        console.log("send(" + i + "," + j + ") => {{ game.player }}");
+        gameSocket.send(JSON.stringify({
+            'player': {{ game.player }},
+            'i': i,
+            'j': j,
+        }));
+    };
+</script>
+{% endblock script %}

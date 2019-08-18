@@ -1,11 +1,14 @@
 {% extends '../common/base.html' %}
+{% load static %}
+
 
 {% block head %}
-{% load static %}
-<link rel="stylesheet" type="text/css" href="{% static 'tic_tac_toe/style.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/tic_tac_toe/style.css' %}">
 {% endblock head %}
 
+
 {% block title %} CF Game {{ game.pk }} {% endblock title %}
+
 
 {% block content %}
 <div class="container">
@@ -19,3 +22,8 @@
 {% endif %}
 </div>
 {% endblock content %}
+
+
+{% block script %}
+<script  src="{% static 'js/app.js' %}"></script>
+{% endblock script %}
