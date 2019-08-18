@@ -16,7 +16,7 @@ services:
       - db
   tests:
     build: .
-    command: python /code/manage.py test
+    command: python /code/manage.py test --no-input --parallel 4
 
 volumes:
   postgres_data:

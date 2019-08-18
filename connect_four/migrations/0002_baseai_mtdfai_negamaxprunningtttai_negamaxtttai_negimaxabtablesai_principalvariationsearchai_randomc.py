@@ -85,6 +85,6 @@ class Migration(migrations.Migration):
                 'indexes': [],
                 'constraints': [],
             },
-            bases=('connect_four.negamaxabtablesai',),
+            bases=('connect_four.negimaxabtablesai',),
         ),
     ]
