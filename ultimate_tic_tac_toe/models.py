@@ -40,14 +40,16 @@ class GameUTTT(Game):
                 if g.winner != 0:
                     if not self.game.play(row, col, player=self.player):
                         raise Exception
+                elif g.winner == 0 and g.game_over:
+                    self.game.play(row, col, player=10*(3*row+col))
 
-                    if self.game.winner != 0:
-                        self.winner = self.game.winner
-                        for game in GameTTT.objects.filter(play_id=self.pk):
-                            game.game_over = True
-                            game.save()
+                if self.game.game_over:
+                    self.game_over = True
+                    self.winner = self.game.winner
+                    for game in GameTTT.objects.filter(play_id=self.pk):
+                        game.game_over = True
+                        game.save()
 
-                self.game_over = self.game.game_over
                 self.prev_i = i
                 self.prev_j = j
                 self.toggle_player()
