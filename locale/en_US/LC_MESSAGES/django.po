@@ -1,22 +1,26 @@
-#
-# Rok Strah <rok.strah@student.uni-lj.si>, 2019.
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# Rok Strah <rok.strah@student.fmf.uni-lj.si>, 2019.
 #
 msgid ""
 msgstr ""
-"MIME-Version: 1.0\n"
 "Project-Id-Version: 1\n"
-"Last-Translator: Rok Strah <rok.strah@student.uni-lj.si>\n"
-"Language-Team: English - United Kingdom <rok.strah@student.fmf.uni-lj.si>\n"
-"Language: en_GB\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-08-18 23:04+0000\n"
+"PO-Revision-Date: 2019-08-19 01:07+0200\n"
+"Last-Translator: Rok Strah <rok.strah@student.fmf.uni-lj.si>\n"
+"Language-Team: English - United States <rok.strah@student.fmf.uni-lj.si>\n"
+"Language: en_US\n"
+"MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"PO-Revision-Date: 2019-08-19 01:06+0200\n"
+"Plural-Forms: \n"
 "X-Generator: Gtranslator 3.32.1\n"
 
 #: accounts/admin.py:16
 msgid "Personal info"
-msgstr "Personal info"
+msgstr ""
 
 #: accounts/admin.py:17
 msgid "Friends"
@@ -38,21 +42,21 @@ msgstr ""
 msgid "full name"
 msgstr ""
 
-#: game_site/settings.py:134
+#: game_site/settings.py:135
 msgid "simplified english"
 msgstr "American English"
 
-#: game_site/settings.py:135
+#: game_site/settings.py:136
 msgid "classic english"
 msgstr "British English"
 
-#: game_site/settings.py:136
+#: game_site/settings.py:137
 msgid "slovenian"
 msgstr "Slovenian"
 
-#: templates/common/home.html:8
+#: templates/common/home.html:7
 msgid "test"
-msgstr "british"
+msgstr ""
 
 #: venv/lib/python3.7/site-packages/crispy_forms/tests/test_form_helper.py:140
 #: venv/lib/python3.7/site-packages/crispy_forms/tests/test_form_helper.py:150
