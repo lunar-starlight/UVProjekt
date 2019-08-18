@@ -6,17 +6,22 @@
 {% for row in game.field %}
     <div class="row no-gutters">
     {% for el in row %}
-        {% if game.game_over or el %}
-            <a class="no-link">
-        {% elif free_pick %}
-            <a class="ttt-link" href="{% url game.play_url game.play_id forloop.parentloop.counter0 forloop.counter0 game_row game_col %}">
-        {% elif disabled %}
-            <a class="no-link">
-        {% else %}
-            <a class="ttt-link" href="{% url game.play_url game.play_id forloop.parentloop.counter0 forloop.counter0 %}">
-        {% endif %}
-        <div class="cell">{{ el|safe }}</div>
-        </a>
+        {% with i=forloop.parentloop.counter0 j=forloop.counter0 %}
+            {% if game.game_over or el %}
+                <a class="no-link">
+            {% elif free_pick %}
+                <a onclick="sendToSocket({{ i }}, {{ j }}, {{ game_row }}, {{ game_col }})" class="ttt-link"
+                   href="{% url game.play_url game.play_id i j game_row game_col %}">
+            {% elif disabled %}
+                <a class="no-link">
+            {% else %}
+                <a onclick="sendToSocket({{ i }}, {{ j }})" class="ttt-link"
+                   {% comment %} href="{% url game.play_url game.play_id i j %}"> {% endcomment %}
+                   href="#">
+            {% endif %}
+            <div id="cell-{{ i }}-{{ j }}" class="cell">{{ el|safe }}</div>
+            </a>
+        {% endwith %}
     {% endfor %}
     </div>
 {% endfor %}

@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'polymorphic',
     'mathfilters',
+    'channels',
 ]
 
 MIDDLEWARE = [
@@ -79,7 +80,15 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'game_site.wsgi.application'
-
+ASGI_APPLICATION = "game_site.routing.application"
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('redis', 6379)],  # set in docker-compose.yml, default redis port
+        },
+    },
+}
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
