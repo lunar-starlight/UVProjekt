@@ -1,3 +1,70 @@
 {% extends '../common/base.html' %}
 
-{% block title %}Home{% endblock %}
+{% block title %}Home{% endblock title %}
+
+{% block content %}
+<div class="row">
+    <div class="col-4">
+        <div class="list-group" id="list-tab" role="tablist">
+            <a class="list-group-item list-group-item-action active"
+               id="list-about-list" data-toggle="list"
+               href="#list-about" role="tab" aria-controls="about">About</a>
+            <a class="list-group-item list-group-item-action"
+               id="list-ttt-list" data-toggle="list"
+               href="#list-ttt"role="tab" aria-controls="ttt">Tic Tac Toe</a>
+            <a class="list-group-item list-group-item-action"
+               id="list-uttt-list" data-toggle="list"
+               href="#list-uttt" role="tab" aria-controls="uttt">Ultimate Tic Tac Toe</a>
+            <a class="list-group-item list-group-item-action"
+               id="list-cf-list" data-toggle="list"
+               href="#list-cf" role="tab" aria-controls="cf">Connect Four</a>
+        </div>
+    </div>
+    <div class="col-8">
+        <div class="tab-content" id="nav-tabContent">
+            <div class="tab-pane fade show active" id="list-about" role="tabpanel" aria-labelledby="list-about-list">
+                Pozdravljeni na glavni strani ene projektne naloge pri predmetu UVP
+                na fakulteti za matematiko in fiziko.<br />
+                Avtor: Rok Strah<br />
+                Izvirna koda: <a href="https://github.com/StrahR/UVProjekt">Github</a>
+            </div>
+            <div class="tab-pane fade" id="list-ttt" role="tabpanel" aria-labelledby="list-ttt-list">
+                Igra se igra na 3&times;3 polju. Igralca izmenično označujeta prazne kvadratke
+                dokler en od igralcev ne dobi 3 v vrsto. Če igralca zapolnita vse kvadratke, pa nihče ni zmagal,
+                je igra neodločena.
+            </div>
+            <div class="tab-pane fade" id="list-uttt" role="tabpanel" aria-labelledby="list-uttt-list">
+                Igra izgleda zelo podobno navadni igri Križcev in krožcev, vendar pa tu v vsako polje
+                postavimo <em>še eno</em> igro Križcev in krožcev.<br />
+                Veliki igri pravimo igra, malim igram pa polja.
+                Pravila so podobna navadni igri:
+                <ol>
+                    <li>Igralca izmenično označujeta prazne kvadratke.</li>
+                    <li>Ko ima igralec 3 v vrsto na polju ga zmaga.</li>
+                    <li>Igro zmagaš tako, da dobiš 3 v vrsto v igri.</li>
+                </ol>
+                Vendar pa nam manjka še najpomembnejše pravilo:
+                    igralec si ne izbere v katerem polju lahko igra.
+                To določa nasprotnikova zadnja poteza; igraš v tistem <em>polju</em>,
+                ki je istoležno <em>kvadratku</em>, ki ga je izbral nasprotnik.
+                Na primer: nasprotnik igra v sredino zgornjega desnega polja.
+                Potem ti igraš kamorkoli v srednje polje.<br />
+                Še par podrobnosti:
+                <ul>
+                    <li>Če te nasprotnik pošlje na zmagano polje si lahko izbereš na katerem polju boš igral.</li>
+                    <li>Če se igra konča z remijem je ni zmagal nihče.</li>
+                </ul>
+                Povzeto po:
+                <a href="https://mathwithbaddrawings.com/2013/06/16/ultimate-tic-tac-toe/">Vir 1</a> in
+                <a href="https://arxiv.org/abs/1606.04779">Vir 2</a>.
+            </div>
+            <div class="tab-pane fade" id="list-cf" role="tabpanel" aria-labelledby="list-cf-list">
+                Igralca izmenično vstavljata "žetone" svoje barve v enega od sedmih stolpcev.
+                Zmagovalec je tisti, ki prej zloži 4 žetone v vrsto ali v stolpec ali po diagonali.<br />
+                Povzeto po:
+                <a href="http://www.educa.fmf.uni-lj.si/izodel/sola/2004/dira/mihelcic/netlogo/stiri.html">Vir</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
