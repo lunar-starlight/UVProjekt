@@ -68,6 +68,9 @@ class GameUTTT(Game):
             g[game.row][game.col] = game.game
         return g
 
+    def is_free_pick(self) -> bool:
+        return GameUTTT_ChildGame.get_game(self, self.prev_i, self.prev_j).game_over and not self.game_over
+
 
 class GameUTTT_ChildGame(models.Model):
     id_parent = models.ForeignKey(GameUTTT, on_delete=models.CASCADE)

@@ -5,7 +5,7 @@ from common.views import (BaseCreateAIGameView, BaseCreateGameView,
                           BasePlayView)
 
 from .ai import RandomUTTTAI
-from .models import GameUTTT, GameUTTT_ChildGame
+from .models import GameUTTT
 
 AI_list = [RandomUTTTAI]
 
@@ -29,8 +29,7 @@ class GameView(generic.DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         g: GameUTTT = context['game']
-        context['free_pick'] = GameUTTT_ChildGame.get_game(g, g.prev_i, g.prev_j).game_over
-        context['free_pick'] &= not g.game_over
+        context['free_pick'] = g.is_free_pick()
         context['my_turn'] = g.current_player() == self.request.user
         return context
 
