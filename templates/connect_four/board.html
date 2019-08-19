@@ -5,9 +5,11 @@
         {% if disabled or game.game_over %}
             <a class="no-link">
         {% else %}
-            <a class="cf-link" href="{% url 'cf:play' game.pk forloop.counter0 %}">
+            <a class="cf-link" href="#"> {# href="{% url 'cf:play' game.pk forloop.counter0 %}"> #}
         {% endif %}
-        <div class="cell">{{ el|safe }}</div>
+        <div onclick="sendToSocket('', '', '', {{ forloop.counter0 }})"
+            id="cell----{{ forloop.counter0 }}"
+            class="cell">{{ el|safe }}</div>
         </a>
     {% endfor %}
     </div>

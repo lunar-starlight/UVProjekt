@@ -10,16 +10,25 @@
             {% if game.game_over or el %}
                 <a class="no-link">
             {% elif free_pick %}
-                <a onclick="sendToSocket({{ i }}, {{ j }}, {{ game_row }}, {{ game_col }})" class="ttt-link"
-                   href="{% url game.play_url game.play_id i j game_row game_col %}">
+                <a class="ttt-link"
+                   href="#">
+                   {# href="{% url game.play_url game.play_id i j game_row game_col %}"> #}
             {% elif disabled %}
                 <a class="no-link">
             {% else %}
-                <a onclick="sendToSocket({{ i }}, {{ j }})" class="ttt-link"
-                   {% comment %} href="{% url game.play_url game.play_id i j %}"> {% endcomment %}
+                <a class="ttt-link"
                    href="#">
+                   {# href="{% url game.play_url game.play_id i j %}"> #}
             {% endif %}
-            <div id="cell-{{ i }}-{{ j }}" class="cell">{{ el|safe }}</div>
+            {% if game_row and game_col or game_row == 0 or game_col == 0 %}
+                <div onclick="sendToSocket({{ i }}, {{ j }}, {{ game_row }}, {{ game_col }})"
+                    id="cell-{{ i }}-{{ j }}-{{ game_row }}-{{ game_col }}"
+                    class="cell">{{ el|safe }}</div>
+            {% else %}
+                <div onclick="sendToSocket({{ i }}, {{ j }})"
+                    id="cell-{{ i }}-{{ j }}--"
+                    class="cell">{{ el|safe }}</div>
+            {% endif %}
             </a>
         {% endwith %}
     {% endfor %}

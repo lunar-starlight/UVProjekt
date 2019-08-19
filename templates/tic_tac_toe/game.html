@@ -1,6 +1,6 @@
 {% extends '../common/base.html' %}
 {% load static %}
-
+{% load tags %}
 
 {% block head %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/tic_tac_toe/style.css' %}">
@@ -27,30 +27,10 @@
 {% block script %}
 <script>
     let gamePK = {{ game.pk }};
-
-    let gameSocket = new WebSocket(
-        'ws://' + window.location.host +
-        '/ws/ttt/game/' + gamePK + '/');
-
-    gameSocket.onmessage = function(e) {
-        let data = JSON.parse(e.data);
-        let player = data['player'];
-        let i = data['i'];
-        let j = data['j'];
-        console.log("receive(" + i + "," + j + ") => " + player);
-    };
-
-    gameSocket.onclose = function(e) {
-        console.error('Chat socket closed unexpectedly');
-    };
-
-    sendToSocket = function(i, j) {
-        console.log("send(" + i + "," + j + ") => {{ game.player }}");
-        gameSocket.send(JSON.stringify({
-            'player': {{ game.player }},
-            'i': i,
-            'j': j,
-        }));
-    };
+    let player = {{ game.player }};
+    let icon1 = '{% icon 'clear' 'round' %}';
+    let icon2 = '{% icon 'fiber_manual_record' 'outlined' %}';
+    let reload = false;
 </script>
+<script src="{% static 'js/app.js' %}"></script>
 {% endblock script %}
