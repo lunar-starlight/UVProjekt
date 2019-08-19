@@ -8,7 +8,7 @@
         <table class="table table-hover">
             <thead>
                 <tr>
-                    <th scope="col" class="text-right">#</th>
+                    <th scope="col" class="text-center">#</th>
                     <th scope="col">Name</th>
                     <th scope="col">Username</th>
                     <th scope="col">Wins</th>
@@ -19,8 +19,8 @@
             {% for player in player_list %}
                 {% if player.is_active %}
                 <tr>
-                    <th scope="row" class="text-right">
-                        <a href="{% url url_new_game player.pk %}"><div>{{ forloop.counter }}</div></a>
+                    <th scope="row" class="button-cell text-center">
+                        <a href="{% url url_new_game player.pk %}" class="btn btn-outline-primary">{{ forloop.counter }}</a>
                     </th>
                     <td>{{ player.get_full_name }}</td>
                     <td>{{ player.username }}</td>
@@ -46,11 +46,11 @@
                     <th scope="row" class="text-left">
                         {{ ai.slug }}
                     </th>
-                    <td>
-                        <a href="{% url url_new_game ai.slug 0 %}"><div>As player 1</div></a>
+                    <td class="button-cell">
+                        <a href="{% url url_new_game ai.slug 0 %}" class="btn btn-link">As player 1</a>
                     </td>
-                    <td>
-                        <a href="{% url url_new_game ai.slug 1 %}"><div>As player 2</div></a>
+                    <td class="button-cell">
+                        <a href="{% url url_new_game ai.slug 1 %}" class="btn btn-link">As player 2</a>
                     </td>
                 </tr>
             {% endfor %}

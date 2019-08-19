@@ -4,25 +4,28 @@
 {% block title %}Home{% endblock title %}
 
 {% block content %}
-{% trans 'test' %}
 <div class="row">
-    <div class="col-4">
-        <div class="list-group" id="list-tab" role="tablist">
-            <a class="list-group-item list-group-item-action active"
+    <div class="navbar navbar-expand-md navbar-light bg-light col-md-4 flex-row-reverse align-items-start">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#list-tab" aria-controls="list-tab" aria-expanded="false" aria-label="Toggle navigation">
+            Menu
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="list-group collapse navbar-collapse" id="list-tab" role="tablist">
+            <a class="nav-item nav-link list-group-item-action active"
                id="list-about-list" data-toggle="list"
                href="#list-about" role="tab" aria-controls="about">About</a>
-            <a class="list-group-item list-group-item-action"
+            <a class="nav-item nav-link list-group-item-action"
                id="list-ttt-list" data-toggle="list"
                href="#list-ttt"role="tab" aria-controls="ttt">Tic Tac Toe</a>
-            <a class="list-group-item list-group-item-action"
+            <a class="nav-item nav-link list-group-item-action"
                id="list-uttt-list" data-toggle="list"
                href="#list-uttt" role="tab" aria-controls="uttt">Ultimate Tic Tac Toe</a>
-            <a class="list-group-item list-group-item-action"
+            <a class="nav-item nav-link list-group-item-action"
                id="list-cf-list" data-toggle="list"
                href="#list-cf" role="tab" aria-controls="cf">Connect Four</a>
         </div>
     </div>
-    <div class="col-8">
+    <div class="bg-light p-3 col-md-8">
         <div class="tab-content" id="nav-tabContent">
             <div class="tab-pane fade show active" id="list-about" role="tabpanel" aria-labelledby="list-about-list">
                 Pozdravljeni na glavni strani ene projektne naloge pri predmetu UVP

@@ -14,10 +14,10 @@
             <thead>
                 <tr>
                     <th scope="col" class="text-right">#</th>
-                    <th scope="col">Name</th>
+                    <th scope="col" class="d-none d-sm-table-cell">Name</th>
                     <th scope="col">Username</th>
-                    <th scope="col" class="text-right">Wins</th>
-                    <th scope="col" class="text-right">Losses</th>
+                    <th scope="col" class="text-right d-none d-md-table-cell">Wins</th>
+                    <th scope="col" class="text-right d-none d-md-table-cell">Losses</th>
                     {% if request.user.is_authenticated %}
                         <th scope="col" class="text-center">Friends</th>
                     {% endif %}
@@ -30,10 +30,10 @@
                 {% endif %}
                 <tr>
                     <th scope="row" class="text-right">{{ forloop.counter }}</th>
-                    <td>{{ player.get_full_name }}</td>
+                    <td class="d-none d-sm-table-cell">{{ player.get_full_name }}</td>
                     <td>{{ player.username }}</td>
-                    <td class="text-right">{{ player.wins }}</td>
-                    <td class="text-right">{{ player.losses }}</td>
+                    <td class="text-right d-none d-md-table-cell">{{ player.wins }}</td>
+                    <td class="text-right d-none d-md-table-cell">{{ player.losses }}</td>
                     {% if request.user.is_authenticated %}
                         <td class="button-cell icon-button text-center">
                         {% if player.username != 'ai' %}

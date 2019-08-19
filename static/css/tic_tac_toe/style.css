@@ -3,6 +3,12 @@
 .uttt-game-board {
     margin: 3px;
 }
+.cf-game-board > .row,
+.ttt-game-board > .row,
+.uttt-game-board > .row {
+    flex-wrap: nowrap;
+    -ms-flex-wrap: nowrap;
+}
 
 .col,
 .ttt-game-board {

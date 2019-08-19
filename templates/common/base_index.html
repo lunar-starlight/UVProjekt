@@ -8,10 +8,10 @@
             <thead>
                 <tr>
                     <th scope="col" class="text-center">#</th>
-                    <th scope="col">Player 1</th>
-                    <th scope="col">Player 2</th>
+                    <th scope="col">Player&nbsp;1</th>
+                    <th scope="col">Player&nbsp;2</th>
                     {% if request.user.is_authenticated %}
-                        <th scope="col" class="text-center">Delete?</th>
+                        <th scope="col" class="text-center">Delete</th>
                     {% endif %}
                 </tr>
             </thead>
@@ -19,7 +19,7 @@
             {% for game in game_list %}
                 <tr>
                     <th class="button-cell text-center" scope="row">
-                        <a href="{% url url_game game.pk %}" class="btn btn-outline-primary"><div>{{ game.pk }}</div></a>
+                        <a href="{% url url_game game.pk %}" class="btn btn-outline-primary">{{ game.pk }}</a>
                     </th>
                     <td>{{ game.p1.username }}</td>
                     <td>{{ game.p2.username }}</td>
