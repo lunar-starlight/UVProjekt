@@ -1,11 +1,14 @@
 {% extends '../common/base.html' %}
+{% load static %}
+{% load tags %}
 
 {% block head %}
-{% load static %}
-<link rel="stylesheet" type="text/css" href="{% static 'tic_tac_toe/style.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/tic_tac_toe/style.css' %}">
 {% endblock head %}
 
+
 {% block title %} TTT Game {{ game.pk }} {% endblock title %}
+
 
 {% block content %}
 <div class="container">
@@ -19,3 +22,15 @@
 {% endif %}
 </div>
 {% endblock content %}
+
+
+{% block script %}
+<script>
+    let gamePK = {{ game.pk }};
+    let player = {{ game.player }};
+    let icon1 = '{% icon 'clear' 'round' %}';
+    let icon2 = '{% icon 'fiber_manual_record' 'outlined' %}';
+    let reload = false;
+</script>
+<script src="{% static 'js/app.js' %}"></script>
+{% endblock script %}

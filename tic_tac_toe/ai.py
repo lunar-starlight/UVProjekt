@@ -10,10 +10,10 @@ class BaseAI(GameTTT):
 
     def play(self, i: int, j: int, player: int = None) -> bool:
         if super().current_player().username != 'ai':
-            b = super().play(i, j)
+            super().play(i, j)
         self.player_num = self.player
         if self.game_over:
-            return b
+            return True
         else:
             return self.move()
 
