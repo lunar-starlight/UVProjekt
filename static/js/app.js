@@ -1,6 +1,6 @@
 let gameSocket = new WebSocket(
     'ws://' + window.location.host +
-    '/ws/ttt/game/' + gamePK + '/');
+    '/ws/game/' + gamePK + '/');
 
 gameSocket.onmessage = function(e) {
     let data = JSON.parse(e.data);
@@ -22,7 +22,8 @@ gameSocket.onmessage = function(e) {
 };
 
 gameSocket.onclose = function(e) {
-    console.error('Chat socket closed unexpectedly');
+    console.error('Game socket closed unexpectedly');
+    // location.reload()
 };
 
 sendToSocket = function(i='', j='', row='', col='') {
