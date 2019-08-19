@@ -83,5 +83,5 @@ class GameConsumer(WebsocketConsumer):
             'j': j,
             'row': row,
             'col': col,
-            'reload': g.game_over,
+            'reload': g.game_over or g.p1.username == 'ai' or g.p2.username == 'ai',
         }))
