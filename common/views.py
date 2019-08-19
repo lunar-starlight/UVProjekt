@@ -52,7 +52,7 @@ class BaseIndexView(SearchView):
     model = None
     queryset = None
     context_object_name = 'game_list'
-    ordering = ['pk']
+    ordering = ['-pk']
     search_fields = {'p2__username', 'p2__full_name'}
 
     def get_queryset(self):
