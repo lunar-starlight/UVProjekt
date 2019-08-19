@@ -5,7 +5,7 @@ from channels.generic.websocket import WebsocketConsumer
 
 from common.models import Game
 from tic_tac_toe.models import GameTTT
-from ultimate_tic_tac_toe.models import GameUTTT
+from ultimate_tic_tac_toe.models import GameUTTT, GameUTTT_ChildGame
 from connect_four.models import GameCF
 
 
@@ -39,9 +39,28 @@ class GameConsumer(WebsocketConsumer):
         j = text_data_json.get('j', None)
         row = text_data_json.get('row', None)
         col = text_data_json.get('col', None)
+        reload = False
+
         g: Game = Game.objects.get(pk=game)
-        if self.user != g.current_player():
+        if self.user == g.current_player():
+            if isinstance(g, GameUTTT) and g.is_free_pick():
+                s = g.play(i, j, row, col)
+                t = 'uttt'
+            elif isinstance(g, GameUTTT):
+                s = g.play(i, j)
+                t = 'uttt'
+            elif isinstance(g, GameTTT):
+                s = g.play(i, j)
+                t = 'ttt'
+            elif isinstance(g, GameCF):
+                s = g.play(col)
+                t = 'cf'
+        else:
             return
+
+        if isinstance(g, GameUTTT):
+            reload = g.is_free_pick()
+            reload |= GameUTTT_ChildGame.get_game(parent=g, row=row, col=col).winner
 
         # Send message to game group
         async_to_sync(self.channel_layer.group_send)(
@@ -54,34 +73,14 @@ class GameConsumer(WebsocketConsumer):
                 'j': j,
                 'row': row,
                 'col': col,
+                'reload': g.game_over or reload,
+                'ai': g.p1.username == 'ai' or g.p2.username == 'ai',
+                's': s,
+                'game_type': t,
             }
         )
 
     # Receive message from room group
     def game_move(self, event):
-        game = event['game']
-        player = event['player']
-        i = event.get('i', None)
-        j = event.get('j', None)
-        row = event.get('row', None)
-        col = event.get('col', None)
-
-        g: Game = Game.objects.get(pk=game)
-        if self.user == g.current_player():
-            if isinstance(g, GameUTTT) and g.is_free_pick():
-                g.play(i, j, row, col)
-            elif isinstance(g, GameTTT) or isinstance(g, GameUTTT):
-                g.play(i, j)
-            elif isinstance(g, GameCF):
-                g.play(col)
-
         # Send message to WebSocket
-        self.send(text_data=json.dumps({
-            'game': game,
-            'player': player,
-            'i': i,
-            'j': j,
-            'row': row,
-            'col': col,
-            'reload': g.game_over or g.p1.username == 'ai' or g.p2.username == 'ai',
-        }))
+        self.send(text_data=json.dumps(event))

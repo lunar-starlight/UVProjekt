@@ -30,7 +30,7 @@ class RandomTTTAI(BaseAI):
         while not super(BaseAI, self).play(i, j):
             i = random.randint(0, self.WIDTH-1)
             j = random.randint(0, self.HEIGHT-1)
-        return True
+        return i, j
 
 
 class MinimaxTTTAI(BaseAI):
@@ -53,6 +53,7 @@ class MinimaxTTTAI(BaseAI):
         state = super(GameTTT, self).field()
         i, j = self.minimax(state, self.player_num)
         super(GameTTT, self).play(i, j)
+        return i, j
 
     def minimax(self, state, player):
         moves = self.get_available_moves(state)
@@ -65,7 +66,7 @@ class MinimaxTTTAI(BaseAI):
             if score > best_score:
                 best_move = move
                 best_score = score
-            print(f'move: ({move[0]}, {move[1]}), score: {score}')
+            # print(f'move: ({move[0]}, {move[1]}), score: {score}')
         return best_move
 
     def min_play(self, state: list, player, depth=0):
@@ -142,6 +143,7 @@ class NegamaxTTTAI(BaseAI):
         state = super(GameTTT, self).field()
         i, j = (self.negamax(state, self.player_num, 10)[0])
         super(BaseAI, self).play(i, j)
+        return i, j
 
     def negamax(self, state: list, player: int, depth: int):
         colour = (2*player - 3) * (2*self.player_num - 3)

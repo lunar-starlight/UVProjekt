@@ -37,7 +37,8 @@ class GameCF(Game):
         for cell in cells:
             row = min(row, cell.row)
         row -= 1  # place above the highest piece
-        return super().play(row, col)
+        super().play(row, col)
+        return '', '', row, col
 
     def field(self):
         conv = {1: icon('clear', 'round'), 2: icon('fiber_manual_record', 'outlined')}

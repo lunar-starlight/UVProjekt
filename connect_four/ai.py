@@ -16,10 +16,21 @@ class BaseAI(GameCF):
             if b:
                 self.column_row[col] -= 1
         self.player_num = self.player
+        self.state = super(GameCF, self).field()
+        self.state_hash = self.hash(self.state)
+        for column in range(self.WIDTH):
+            row = self.HEIGHT
+            for i in range(self.HEIGHT):
+                if self.state[i][column] is not None:
+                    row = i
+                    break
+            self.column_row[column] = row-1
         if self.game_over:
             return True
         else:
-            return self.move()
+            row = self.column_row[col] + 1
+            i, j = self.move()
+            return i, j, row, col
 
     def get_available_moves(self):
         moves = list()
@@ -77,7 +88,7 @@ class RandomCFAI(BaseAI):
         col = random.randint(0, self.WIDTH-1)
         while not super(BaseAI, self).play(col):
             col = random.randint(0, self.WIDTH-1)
-        return True
+        return self.column_row[col], col
 
 
 class NegamaxTTTAI(BaseAI):
@@ -90,6 +101,7 @@ class NegamaxTTTAI(BaseAI):
         state = super(GameCF, self).field()
         col = self.negamax(state, self.player_num, 6)[0]
         super(BaseAI, self).play(col)
+        return self.column_row[col], col
 
     def negamax(self, state: list, player: int, depth: int):
         colour = (2*player - 3) * (2*self.player_num - 3)
@@ -129,6 +141,7 @@ class NegamaxPruningTTTAI(BaseAI):
         state = super(GameCF, self).field()
         col = self.negamax(state, self.player, 10, float('-inf'), float('inf'))[0]
         super(BaseAI, self).play(col)
+        return self.column_row[col], col
 
     def negamax(self, state: list, player: int, depth: int, alpha: int, beta: int):
         colour = (2*player - 3) * (2*self.player_num - 3)
@@ -171,6 +184,7 @@ class PrincipalVariationSearchAI(BaseAI):
         state = super(GameCF, self).field()
         col = self.pvs(state, self.player_num, 10, float('-inf'), float('inf'))[0]
         super(BaseAI, self).play(col)
+        return self.column_row[col], col
 
     def pvs(self, state: list, player: int, depth: int, alpha: int, beta: int):
         colour = (2*player - 3) * (2*self.player_num - 3)
@@ -220,21 +234,10 @@ class NegamaxABTablesAI(BaseAI):
     class Meta:
         proxy = True
 
-    def __init__(self, *args, **kwargs):
-        return super().__init__(*args, **kwargs)
-
     def move(self):
-        self.state = super(GameCF, self).field()
-        self.state_hash = self.hash(self.state)
-        for col in range(self.WIDTH):
-            row = self.HEIGHT
-            for i in range(self.HEIGHT):
-                if self.state[i][col] is not None:
-                    row = i
-                    break
-            self.column_row[col] = row-1
         col = self.negamax(self.player_num, 12, float('-inf'), float('inf'))[0]
-        return super(BaseAI, self).play(col)
+        super(BaseAI, self).play(col)
+        return self.column_row[col], col
 
     class TT:
 
@@ -316,17 +319,9 @@ class MTDFAI(NegamaxABTablesAI):
         proxy = True
 
     def move(self):
-        self.state = super(GameCF, self).field()
-        self.state_hash = self.hash(self.state)
-        for col in range(self.WIDTH):
-            row = self.HEIGHT
-            for i in range(self.HEIGHT):
-                if self.state[i][col] is not None:
-                    row = i
-                    break
-            self.column_row[col] = row-1
         col = self.MTD(self.player_num, 0, 11)[0]
-        return super(BaseAI, self).play(col)
+        super(BaseAI, self).play(col)
+        return self.column_row[col], col
 
     def MTD(self, player, f, depth):
         g = f
@@ -357,17 +352,9 @@ class BNSAI(NegamaxABTablesAI):
         return moves
 
     def move(self):
-        self.state = super(GameCF, self).field()
-        self.state_hash = self.hash(self.state)
-        for col in range(self.WIDTH):
-            row = self.HEIGHT
-            for i in range(self.HEIGHT):
-                if self.state[i][col] is not None:
-                    row = i
-                    break
-            self.column_row[col] = row-1
         col = self.BNS(20, -20, 20)
-        return super(BaseAI, self).play(col)
+        super(BaseAI, self).play(col)
+        return self.column_row[col], col
 
     def BNS(self, depth, alpha: int, beta: int):
         moves = self.get_available_moves()

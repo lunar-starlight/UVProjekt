@@ -1,6 +1,6 @@
 import random
 
-from .models import GameUTTT, GameUTTT_ChildGame
+from .models import GameUTTT
 
 
 class BaseAI(GameUTTT):
@@ -25,7 +25,9 @@ class RandomUTTTAI(BaseAI):
         proxy = True
 
     def move(self):
-        if GameUTTT_ChildGame.get_game(self, self.prev_i, self.prev_j).winner == 0:
+        row = self.prev_i
+        col = self.prev_j
+        if not self.is_free_pick():
             i = random.randint(0, 2)
             j = random.randint(0, 2)
             while not super(BaseAI, self).play(i, j):
@@ -41,4 +43,4 @@ class RandomUTTTAI(BaseAI):
                 j = random.randint(0, 2)
                 row = random.randint(0, 2)
                 col = random.randint(0, 2)
-        return True
+        return i, j, row, col

@@ -53,6 +53,7 @@
 a.cf-link,
 a.ttt-link {
     text-decoration: none;
+    cursor: pointer !important;
 }
 
 .won-board {
