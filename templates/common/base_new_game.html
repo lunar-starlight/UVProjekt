@@ -1,3 +1,4 @@
+{% load i18n %}
 {% load tags %}
 
 <div class="container">
@@ -9,10 +10,10 @@
             <thead>
                 <tr>
                     <th scope="col" class="text-center">#</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Username</th>
-                    <th scope="col">Wins</th>
-                    <th scope="col">Losses</th>
+                    <th scope="col">{% trans 'Name' %}</th>
+                    <th scope="col">{% trans 'Username' %}</th>
+                    <th scope="col">{% trans 'Wins' %}</th>
+                    <th scope="col">{% trans 'Losses' %}</th>
                 </tr>
             </thead>
             <tbody>
@@ -37,7 +38,7 @@
         <table class="table table-hover">
             <thead>
                 <tr>
-                    <th scope="col" class="text-left" colspan="3">AI</th>
+                    <th scope="col" class="text-left" colspan="3">{% trans 'AI' %}</th>
                 </tr>
             </thead>
             <tbody>
@@ -47,10 +48,10 @@
                         {{ ai.slug }}
                     </th>
                     <td class="button-cell">
-                        <a href="{% url url_new_game ai.slug 0 %}" class="btn btn-link">As player 1</a>
+                        <a href="{% url url_new_game ai.slug 0 %}" class="btn btn-link">{% trans 'As player 1' %}</a>
                     </td>
                     <td class="button-cell">
-                        <a href="{% url url_new_game ai.slug 1 %}" class="btn btn-link">As player 2</a>
+                        <a href="{% url url_new_game ai.slug 1 %}" class="btn btn-link">{% trans 'As player 2' %}</a>
                     </td>
                 </tr>
             {% endfor %}

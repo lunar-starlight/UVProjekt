@@ -1,17 +1,19 @@
 {% extends '../common/base.html' %}
-
 {% load crispy_forms_tags %}
+{% load i18n %}
 
-{% block title %}Edit Player{% endblock %}
+
+{% block title %}{% trans 'Edit Player' %}{% endblock %}
+
 
 {% block content %}
-<h2>Edit Player</h2>
+<h2>{% trans 'Edit Player' %}</h2>
 <form method="post">
     {% csrf_token %}
     {{ form.username|as_crispy_field }}
     {{ form.email|as_crispy_field }}
     {{ form.full_name|as_crispy_field }}
-    <button type="submit" class="btn btn-success">Save</button>
-    <a role="button" href="{% url 'common:home' %}" class="btn btn-danger">Cancel</a>
+    <button type="submit" class="btn btn-success">{% trans 'Save' %}</button>
+    <a role="button" href="{% url 'common:home' %}" class="btn btn-danger">{% trans 'Cancel' %}</a>
 </form>
 {% endblock %}

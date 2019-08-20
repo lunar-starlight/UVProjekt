@@ -3,22 +3,24 @@
 #
 msgid ""
 msgstr ""
-"MIME-Version: 1.0\n"
 "Project-Id-Version: 1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-08-20 09:20+0000\n"
+"PO-Revision-Date: 2019-08-20 11:24+0200\n"
 "Last-Translator: Rok Strah <rok.strah@student.uni-lj.si>\n"
 "Language-Team: English - United Kingdom <rok.strah@student.fmf.uni-lj.si>\n"
 "Language: en_GB\n"
+"MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"PO-Revision-Date: 2019-08-19 01:06+0200\n"
 "X-Generator: Gtranslator 3.32.1\n"
 
 #: accounts/admin.py:16
 msgid "Personal info"
 msgstr "Personal info"
 
-#: accounts/admin.py:17
+#: accounts/admin.py:17 templates/common/leaderboard.html:24
 msgid "Friends"
 msgstr ""
 
@@ -34,25 +36,322 @@ msgstr ""
 msgid "Important dates"
 msgstr ""
 
+#: accounts/models.py:7
+msgid "wins"
+msgstr ""
+
+#: accounts/models.py:8
+msgid "losses"
+msgstr ""
+
 #: accounts/models.py:11
 msgid "full name"
 msgstr ""
 
-#: game_site/settings.py:134
+#: accounts/models.py:12
+msgid "friends"
+msgstr ""
+
+#: common/models.py:10
+msgid "player"
+msgstr ""
+
+#: common/models.py:11
+msgid "winner"
+msgstr ""
+
+#: common/models.py:18
+msgid "player 1"
+msgstr ""
+
+#: common/models.py:25
+msgid "player 2"
+msgstr ""
+
+#: common/models.py:26
+msgid "game over"
+msgstr ""
+
+#: game_site/settings.py:143
 msgid "simplified english"
 msgstr "American English"
 
-#: game_site/settings.py:135
+#: game_site/settings.py:144
 msgid "classic english"
 msgstr "British English"
 
-#: game_site/settings.py:136
+#: game_site/settings.py:145
 msgid "slovenian"
 msgstr "Slovenian"
 
-#: templates/common/home.html:8
-msgid "test"
-msgstr "british"
+#: templates/common/base.html:33 templates/common/home.html:4
+msgid "Home"
+msgstr ""
+
+#: templates/common/base.html:34 templates/common/leaderboard.html:6
+msgid "Leaderboard"
+msgstr ""
+
+#: templates/common/base.html:35 templates/common/home.html:19
+#: templates/tic_tac_toe/index.html:5
+msgid "Tic Tac Toe"
+msgstr "Noughts and Crosses"
+
+#: templates/common/base.html:36 templates/common/home.html:22
+#: templates/ultimate_tic_tac_toe/index.html:5
+msgid "Ultimate Tic Tac Toe"
+msgstr "Super Noughts and Crosses"
+
+#: templates/common/base.html:37 templates/common/home.html:25
+#: templates/connect_four/index.html:5
+msgid "Connect Four"
+msgstr ""
+
+#: templates/common/base.html:44
+msgid "Logout"
+msgstr ""
+
+#: templates/common/base.html:46 templates/registration/login.html:6
+#: templates/registration/login.html:41
+msgid "Login"
+msgstr ""
+
+#: templates/common/base.html:47 templates/registration/signup.html:7
+#: templates/registration/signup.html:11
+msgid "Sign Up"
+msgstr ""
+
+#: templates/common/base_index.html:13
+msgid "Player&nbsp;1"
+msgstr ""
+
+#: templates/common/base_index.html:14
+msgid "Player&nbsp;2"
+msgstr ""
+
+#: templates/common/base_index.html:16
+#: venv/lib/python3.7/site-packages/django/forms/formsets.py:375
+msgid "Delete"
+msgstr ""
+
+#: templates/common/base_index.html:30
+msgid "delete game"
+msgstr ""
+
+#: templates/common/base_index.html:41
+msgid "New game"
+msgstr ""
+
+#: templates/common/base_new_game.html:13 templates/common/leaderboard.html:19
+msgid "Name"
+msgstr ""
+
+#: templates/common/base_new_game.html:14 templates/common/leaderboard.html:20
+msgid "Username"
+msgstr ""
+
+#: templates/common/base_new_game.html:15 templates/common/leaderboard.html:21
+msgid "Wins"
+msgstr ""
+
+#: templates/common/base_new_game.html:16 templates/common/leaderboard.html:22
+msgid "Losses"
+msgstr ""
+
+#: templates/common/base_new_game.html:41
+msgid "AI"
+msgstr ""
+
+#: templates/common/base_new_game.html:51
+msgid "As player 1"
+msgstr ""
+
+#: templates/common/base_new_game.html:54
+msgid "As player 2"
+msgstr ""
+
+#: templates/common/home.html:16
+msgid "About"
+msgstr ""
+
+#: templates/common/leaderboard.html:45
+msgid "remove friend"
+msgstr ""
+
+#: templates/common/leaderboard.html:51
+msgid "add friend"
+msgstr ""
+
+#: templates/common/pagination.html:8
+#, python-format
+msgid "Showing %(from)s to %(to)s of %(total)s rows"
+msgstr ""
+
+#: templates/common/pagination.html:21
+msgid "rows per page"
+msgstr ""
+
+#: templates/common/pagination.html:23 templates/common/search.html:11
+msgid "search"
+msgstr ""
+
+#: templates/common/pagination.html:34 templates/common/pagination.html:41
+msgid "Previous"
+msgstr ""
+
+#: templates/common/pagination.html:53
+msgid "current"
+msgstr ""
+
+#: templates/common/pagination.html:78 templates/common/pagination.html:85
+msgid "Next"
+msgstr ""
+
+#: templates/common/search.html:12
+msgid "Search"
+msgstr ""
+
+#: templates/connect_four/game.html:12
+#, python-format
+msgid "CF Game %(game.pk)s"
+msgstr ""
+
+#: templates/connect_four/game.html:18 templates/tic_tac_toe/game.html:19
+#: templates/ultimate_tic_tac_toe/game.html:19
+msgid "The game was a tie."
+msgstr ""
+
+#: templates/connect_four/game.html:19 templates/tic_tac_toe/game.html:20
+#: templates/ultimate_tic_tac_toe/game.html:20
+msgid "Player 1 won."
+msgstr ""
+
+#: templates/connect_four/game.html:20 templates/tic_tac_toe/game.html:21
+#: templates/ultimate_tic_tac_toe/game.html:21
+msgid "Player 2 won."
+msgstr ""
+
+#: templates/connect_four/new_game.html:5
+msgid "New Connect Four Game"
+msgstr ""
+
+#: templates/registration/edit.html:6 templates/registration/edit.html:10
+msgid "Edit Player"
+msgstr ""
+
+#: templates/registration/edit.html:16 templates/registration/signup.html:19
+msgid "Save"
+msgstr ""
+
+#: templates/registration/edit.html:17 templates/registration/login.html:42
+#: templates/registration/password_reset_confirm.html:17
+#: templates/registration/password_reset_form.html:17
+#: templates/registration/signup.html:20
+msgid "Cancel"
+msgstr ""
+
+#: templates/registration/login.html:12
+msgid "Your username and password didn't match. Please try again."
+msgstr ""
+
+#: templates/registration/login.html:13 templates/registration/login.html:31
+#: templates/registration/password_reset_confirm.html:28
+msgid "Close"
+msgstr ""
+
+#: templates/registration/login.html:23
+msgid ""
+"Your account doesn't have access to this page. To proceed, please login with "
+"an account that has access."
+msgstr ""
+
+#: templates/registration/login.html:29
+msgid "Please login to see this page."
+msgstr ""
+
+#: templates/registration/login.html:47
+msgid "Lost password?"
+msgstr ""
+
+#: templates/registration/password_reset_complete.html:5
+msgid "The password has been changed!"
+msgstr ""
+
+#: templates/registration/password_reset_confirm.html:6
+#: templates/registration/password_reset_form.html:6
+msgid "Password Reset"
+msgstr ""
+
+#: templates/registration/password_reset_confirm.html:11
+msgid "Please enter (and confirm) your new password."
+msgstr ""
+
+#: templates/registration/password_reset_confirm.html:16
+msgid "Change my password"
+msgstr ""
+
+#: templates/registration/password_reset_confirm.html:21
+msgid "Password reset failed"
+msgstr ""
+
+#: templates/registration/password_reset_confirm.html:23
+msgid ""
+"The password reset link was invalid, possibly because it has already been "
+"used. Please request a new password reset."
+msgstr ""
+
+#: templates/registration/password_reset_done.html:5
+msgid ""
+"We've emailed you instructions for setting your password. If they haven't "
+"arrived in a few minutes, check your spam folder."
+msgstr ""
+
+#: templates/registration/password_reset_email.html:3
+#, python-format
+msgid ""
+"Someone asked for a password reset for email %(email)s. Follow the link "
+"below:"
+msgstr ""
+"Somebody asked for a password reset for email %(email)s. Follow the link "
+"below:"
+
+#: templates/registration/password_reset_form.html:16
+msgid "Reset password"
+msgstr ""
+
+#: templates/tic_tac_toe/game.html:12
+#, python-format
+msgid "TTT Game %(game.pk)s"
+msgstr "NC Game %(game.pk)s"
+
+#: templates/tic_tac_toe/new_game.html:5
+msgid "New Tic Tac Toe Game"
+msgstr "New Noughts and Crosses Game"
+
+#: templates/ultimate_tic_tac_toe/game.html:12
+#, python-format
+msgid "UTTT Game %(game.pk)s"
+msgstr "SNC Game %(game.pk)s"
+
+#: templates/ultimate_tic_tac_toe/new_game.html:5
+msgid "New Ultimate Tic Tac Toe Game"
+msgstr "New Super Noughts and Crosses Game"
+
+#: tic_tac_toe/models.py:9
+msgid "keep_score"
+msgstr ""
+
+#: tic_tac_toe/models.py:10
+msgid "play_id"
+msgstr ""
+
+#: tic_tac_toe/models.py:11
+msgid "play_url"
+msgstr ""
+
+#: ultimate_tic_tac_toe/models.py:16
+msgid "uttt game"
+msgstr "snc game"
 
 #: venv/lib/python3.7/site-packages/crispy_forms/tests/test_form_helper.py:140
 #: venv/lib/python3.7/site-packages/crispy_forms/tests/test_form_helper.py:150
@@ -600,10 +899,6 @@ msgstr[1] ""
 #: venv/lib/python3.7/site-packages/django/forms/formsets.py:371
 #: venv/lib/python3.7/site-packages/django/forms/formsets.py:373
 msgid "Order"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/forms/formsets.py:375
-msgid "Delete"
 msgstr ""
 
 #: venv/lib/python3.7/site-packages/django/forms/models.py:751
@@ -1239,3 +1534,6 @@ msgstr ""
 #: venv/lib/python3.7/site-packages/django/views/templates/default_urlconf.html:408
 msgid "Connect, get help, or contribute"
 msgstr ""
+
+#~ msgid "test"
+#~ msgstr "british"

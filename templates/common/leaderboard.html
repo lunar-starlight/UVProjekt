@@ -1,8 +1,10 @@
 {% extends "../common/base.html" %}
-
-{% block title %} Leaderboard {% endblock title %}
-
 {% load tags %}
+{% load i18n %}
+
+
+{% block title %}{% trans 'Leaderboard' %}{% endblock title %}
+
 
 {% block content %}
 <div class="container">
@@ -14,12 +16,12 @@
             <thead>
                 <tr>
                     <th scope="col" class="text-right">#</th>
-                    <th scope="col" class="d-none d-sm-table-cell">Name</th>
-                    <th scope="col">Username</th>
-                    <th scope="col" class="text-right">Wins</th>
-                    <th scope="col" class="text-right d-none d-md-table-cell">Losses</th>
+                    <th scope="col" class="d-none d-sm-table-cell">{% trans 'Name' %}</th>
+                    <th scope="col">{% trans 'Username' %}</th>
+                    <th scope="col" class="text-right">{% trans 'Wins' %}</th>
+                    <th scope="col" class="text-right d-none d-md-table-cell">{% trans 'Losses' %}</th>
                     {% if request.user.is_authenticated %}
-                        <th scope="col" class="text-center">Friends</th>
+                        <th scope="col" class="text-center">{% trans 'Friends' %}</th>
                     {% endif %}
                 </tr>
             </thead>
@@ -40,13 +42,13 @@
                             {% if is_friend %}
                                 <a href="{% url 'common:remove_friend' player.pk %}"
                                    class="btn btn-outline-danger"
-                                   aria-label="remove friend">
+                                   aria-label="{% trans 'remove friend' %}">
                                     <div aria-hidden="true">{% icon 'remove' 'round' %}</div>
                                 </a>
                             {% else %}
                                 <a href="{% url 'common:add_friend' player.pk %}"
                                    class="btn btn-outline-success"
-                                   aria-label="add friend">
+                                   aria-label="{% trans 'add friend' %}">
                                     <div aria-hidden="true">{% icon 'add' 'round' %}</div>
                                 </a>
                             {% endif %}

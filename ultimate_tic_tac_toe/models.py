@@ -1,13 +1,19 @@
 from typing import Optional
 
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 
 from common.models import Game
 from tic_tac_toe.models import GameTTT
 
 
 class GameUTTT(Game):
-    game = models.ForeignKey(GameTTT, on_delete=models.CASCADE, related_name='uttt_game', null=True)
+    game = models.ForeignKey(
+        GameTTT,
+        on_delete=models.CASCADE,
+        related_name='uttt_game',
+        null=True,
+        verbose_name=_('uttt game'))
     prev_i = models.IntegerField(default=0)
     prev_j = models.IntegerField(default=0)
 

@@ -1,3 +1,5 @@
+{% load i18n %}
+
 <form
     method="GET"
     class="from-inline row justify-content-end"
@@ -6,8 +8,8 @@
         name="search"
         type="text"
         class="form-control col-4"
-        aria-describedby="search"
-        placeholder="Search"
+        aria-describedby="{% trans 'search' %}"
+        placeholder="{% trans 'Search' %}"
         value="{{ request.GET.search }}" />
 
     <input

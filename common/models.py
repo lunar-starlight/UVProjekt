@@ -2,16 +2,28 @@ from typing import Optional
 
 from django.conf import settings
 from django.db import models
-
+from django.utils.translation import gettext_lazy as _
 from polymorphic.models import PolymorphicModel
 
 
 class Game(PolymorphicModel):
-    player = models.IntegerField(default=1)
-    winner = models.IntegerField(default=0)
-    p1 = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="%(app_label)s_%(class)s_p1", on_delete=models.DO_NOTHING, default=0, null=True)
-    p2 = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="%(app_label)s_%(class)s_p2", on_delete=models.DO_NOTHING, default=0, null=True)
-    game_over = models.BooleanField(default=False)
+    player = models.IntegerField(_('player'), default=1)
+    winner = models.IntegerField(_('winner'), default=0)
+    p1 = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        related_name="%(app_label)s_%(class)s_p1",
+        on_delete=models.DO_NOTHING,
+        default=0,
+        null=True,
+        verbose_name=_('player 1'))
+    p2 = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        related_name="%(app_label)s_%(class)s_p2",
+        on_delete=models.DO_NOTHING,
+        default=0,
+        null=True,
+        verbose_name=_('player 2'))
+    game_over = models.BooleanField(_('game over'), default=False)
 
     WIDTH = 0
     HEIGHT = 0

@@ -4,12 +4,12 @@ from django.utils.translation import gettext_lazy as _
 
 
 class Player(AbstractUser):
-    wins = models.IntegerField(default=0)
-    losses = models.IntegerField(default=0)
+    wins = models.IntegerField(_('wins'), default=0)
+    losses = models.IntegerField(_('losses'), default=0)
     first_name = None
     last_name = None
     full_name = models.CharField(_('full name'), max_length=200, blank=True)
-    friends = models.ManyToManyField('self', symmetrical=False, blank=True)
+    friends = models.ManyToManyField('self', verbose_name=_('friends'), symmetrical=False, blank=True)
 
     def won(self):
         self.wins += 1

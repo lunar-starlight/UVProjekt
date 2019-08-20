@@ -1,13 +1,14 @@
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 
 from common.models import DataCell, Game
 from common.templatetags.tags import icon
 
 
 class GameTTT(Game):
-    keep_score = models.BooleanField(default=True)
-    play_id = models.IntegerField(default=0)
-    play_url = models.CharField(default='ttt:play', max_length=100)
+    keep_score = models.BooleanField(_('keep_score'), default=True)
+    play_id = models.IntegerField(_('play_id'), default=0)
+    play_url = models.CharField(_('play_url'), default='ttt:play', max_length=100)
 
     WIDTH = 3
     HEIGHT = 3

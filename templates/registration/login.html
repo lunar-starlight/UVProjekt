@@ -1,14 +1,16 @@
 {% extends '../common/base.html' %}
-
 {% load crispy_forms_tags %}
+{% load i18n %}
 
-{% block title %}Login{% endblock %}
+
+{% block title %}{% trans 'Login' %}{% endblock %}
+
 
 {% block content %}
 {% if form.errors %}
     <div class="alert alert-danger alert-dismissible fade show" role="alert">
-        <p class="mb-0">Your username and password didn't match. Please try again.</p>
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <p class="mb-0">{% trans "Your username and password didn't match. Please try again." %}</p>
+        <button type="button" class="close" data-dismiss="alert" aria-label="{% trans 'Close' %}">
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
@@ -17,12 +19,16 @@
 {% if next %}
     <div class="alert alert-danger alert-dismissible fade show" role="alert">
         {% if user.is_authenticated %}
-            <p class="mb-0">Your account doesn't have access to this page. To proceed,
-            please login with an account that has access.</p>
+            <p class="mb-0">
+            {% blocktrans trimmed %}
+                Your account doesn't have access to this page. To proceed,
+                please login with an account that has access.
+            {% endblocktrans %}
+            </p>
         {% else %}
-            <p class="mb-0">Please login to see this page.</p>
+            <p class="mb-0">{% trans 'Please login to see this page.' %}</p>
         {% endif %}
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <button type="button" class="close" data-dismiss="alert" aria-label="{% trans 'Close' %}">
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
@@ -32,11 +38,11 @@
     {% csrf_token %}
     {{ form.username|as_crispy_field }}
     {{ form.password|as_crispy_field }}
-    <button type="submit" class="btn btn-primary">Login</button>
-    <a role="button" href="{% url 'common:home' %}" class="btn btn-danger">Cancel</a>
+    <button type="submit" class="btn btn-primary">{% trans 'Login' %}</button>
+    <a role="button" href="{% url 'common:home' %}" class="btn btn-danger">{% trans 'Cancel' %}</a>
     <input type="hidden" name="next" value="{{ next }}" />
 </form>
 
 {# Assumes you setup the password_reset view in your URLconf #}
-<p><a href="{% url 'password_reset' %}">Lost password?</a></p>
+<p><a href="{% url 'password_reset' %}">{% trans 'Lost password?' %}</a></p>
 {% endblock %}

@@ -1,5 +1,6 @@
 {% load static %}
 {% load tags %}
+{% load i18n %}
 
 <!DOCTYPE html5>
 <html lang="en">
@@ -29,21 +30,21 @@
             </button>
             <div class="collapse navbar-collapse" id="main-nav">
                 <div class="navbar-nav">
-                    <a class="nav-item nav-link" href="{% url 'common:home' %}">Home</a>
-                    <a class="nav-item nav-link" href="{% url 'common:leaderboard' %}">Leaderboard</a>
-                    <a class="nav-item nav-link" href="{% url 'ttt:index' %}">Tic Tac Toe</a>
-                    <a class="nav-item nav-link" href="{% url 'uttt:index' %}">Ultimate Tic Tac Toe</a>
-                    <a class="nav-item nav-link" href="{% url 'cf:index' %}">Connect Four</a>
+                    <a class="nav-item nav-link" href="{% url 'common:home' %}">{% trans 'Home' %}</a>
+                    <a class="nav-item nav-link" href="{% url 'common:leaderboard' %}">{% trans 'Leaderboard' %}</a>
+                    <a class="nav-item nav-link" href="{% url 'ttt:index' %}">{% trans 'Tic Tac Toe' %}</a>
+                    <a class="nav-item nav-link" href="{% url 'uttt:index' %}">{% trans 'Ultimate Tic Tac Toe' %}</a>
+                    <a class="nav-item nav-link" href="{% url 'cf:index' %}">{% trans 'Connect Four' %}</a>
                 </div>
             </div>
             <div class="collapse navbar-collapse flex-grow-0" id="main-nav">
                 <span class="navbar-text mr-0">
                     {% if user.is_authenticated %}
                         Hello {{ user.username }}.
-                        <a href="{% url 'logout' %}" class="btn btn-link">Logout</a>
+                        <a href="{% url 'logout' %}" class="btn btn-link">{% trans 'Logout' %}</a>
                     {% else %}
-                        <a href="{% url 'login' %}" class="btn btn-link">Login</a>
-                        <a href="{% url 'signup' %}" class="btn btn-link">Sign Up</a>
+                        <a href="{% url 'login' %}" class="btn btn-link">{% trans 'Login' %}</a>
+                        <a href="{% url 'signup' %}" class="btn btn-link">{% trans 'Sign Up' %}</a>
                     {% endif %}
                 </span>
             </div>

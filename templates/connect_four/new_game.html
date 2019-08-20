@@ -1,6 +1,9 @@
 {% extends '../common/base.html' %}
+{% load i18n %}
 
-{% block title %} New Connect Four Game {% endblock title %}
+
+{% block title %}{% trans 'New Connect Four Game' %}{% endblock title %}
+
 
 {% block content %}
 {% include "../common/base_new_game.html" with url_game='cf:game' url_new_game='cf:new_game' ai_list=ai_list %}

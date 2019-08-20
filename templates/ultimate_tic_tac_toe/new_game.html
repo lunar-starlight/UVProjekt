@@ -1,6 +1,9 @@
 {% extends '../common/base.html' %}
+{% load i18n %}
 
-{% block title %} New Ultimate Tic Tac Toe Game {% endblock title %}
+
+{% block title %}{% trans 'New Ultimate Tic Tac Toe Game' %}{% endblock title %}
+
 
 {% block content %}
 {% include "../common/base_new_game.html" with url_game='uttt:game' url_new_game='uttt:new_game' %}

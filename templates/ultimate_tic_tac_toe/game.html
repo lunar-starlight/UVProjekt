@@ -1,6 +1,7 @@
 {% extends '../common/base.html' %}
 {% load static %}
 {% load tags %}
+{% load i18n %}
 
 
 {% block head %}
@@ -8,16 +9,16 @@
 {% endblock head %}
 
 
-{% block title %} UTTT Game {{ game.pk }} {% endblock title %}
+{% block title %}{% blocktrans %}UTTT Game {{ game.pk }}{% endblocktrans %}{% endblock title %}
 
 
 {% block content %}
 {% include 'ultimate_tic_tac_toe/board.html' %}
 
 {% if game.game_over %}
-    {% if game.winner == 0 %} The game was a tie. {% endif %}
-    {% if game.winner == 1 %} Player 1 won. {% endif %}
-    {% if game.winner == 2 %} Player 2 won. {% endif %}
+    {% if game.winner == 0 %} {% trans 'The game was a tie.' %} {% endif %}
+    {% if game.winner == 1 %} {% trans 'Player 1 won.' %} {% endif %}
+    {% if game.winner == 2 %} {% trans 'Player 2 won.' %} {% endif %}
 
     <br><a href="{% url 'uttt:index' %}">Return</a>
 {% else %}
