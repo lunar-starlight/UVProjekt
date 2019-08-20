@@ -32,18 +32,18 @@
 
 .cell {
     display: block;
-    border: 1px solid black;
+    border: 1px solid var(--border-color);
     width: 4rem;
     height: 4rem;
     font-size: 4rem;
     font-family: Helvetica, sans-serif;
-    color: black;
+    color: var(--color);
     text-align: center;
     margin: 2px;
 }
 
 .enabled-game {
-    background-color: lightgreen;
+    background-color: var(--enabled-game);
 }
 
 .no-link:hover {
