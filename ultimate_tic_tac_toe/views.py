@@ -4,10 +4,10 @@ from common.views import (BaseCreateAIGameView, BaseCreateGameView,
                           BaseDeleteGameView, BaseIndexView, BaseNewGameView,
                           BasePlayView)
 
-from .ai import RandomUTTTAI
+from .ai import NegamaxABAI, RandomUTTTAI
 from .models import GameUTTT
 
-AI_list = [RandomUTTTAI]
+AI_list = [NegamaxABAI, RandomUTTTAI]
 
 
 class IndexView(BaseIndexView):
