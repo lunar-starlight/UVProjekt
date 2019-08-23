@@ -59,8 +59,9 @@ class GameConsumer(WebsocketConsumer):
             return
 
         if isinstance(g, GameUTTT):
-            reload = g.is_free_pick()
             reload |= GameUTTT_ChildGame.get_game(parent=g, row=row, col=col).winner
+            if g.p1.username == 'ai' or g.p2.username == 'ai':
+                reload |= g.game_over or GameUTTT_ChildGame.get_game(parent=g, row=s[2], col=s[3]).winner
 
         # Send message to game group
         async_to_sync(self.channel_layer.group_send)(

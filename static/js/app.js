@@ -20,7 +20,7 @@ gameSocket.onmessage = function(e) {
         if (data['game_type'] === 'cf') {
             row = data['s'][2];
         } else if (data['game_type'] === 'uttt') {
-            enabled_games = document.querySelectorAll('.enabled-game');
+            let enabled_games = document.querySelectorAll('.enabled-game');
             for (let game of enabled_games) {
                 game.className = "ttt-game-board";
                 for (let row of game.children) {
@@ -29,15 +29,22 @@ gameSocket.onmessage = function(e) {
                     }
                 }
             }
+            let next_games;
             if (data['ai']) {
-                next_game = document.querySelector('#game-' + data['s'][0] + '-' + data['s'][1]);
+                next_games = document.querySelectorAll('#game-' + data['s'][0] + '-' + data['s'][1]);
             } else {
-                next_game = document.querySelector('#game-' + i + '-' + j);
+                next_games = document.querySelectorAll('#game-' + i + '-' + j);
             }
-            next_game.className = next_game.className + ' enabled-game';
-            for (let row of next_game.children) {
-                for (let anchor of row.children) {
-                    anchor.className = "ttt-link";
+            console.log(next_games);
+            if (next_games.length === 0) {
+                next_games = document.querySelectorAll('.ttt-game-board');
+            }
+            for (let next_game of next_games) {
+                next_game.className = next_game.className + ' enabled-game';
+                for (let row of next_game.children) {
+                    for (let anchor of row.children) {
+                        anchor.className = "ttt-link";
+                    }
                 }
             }
         }
@@ -58,7 +65,9 @@ gameSocket.onmessage = function(e) {
 
 gameSocket.onclose = function(e) {
     console.error('Game socket closed unexpectedly');
-    // location.reload()
+    setTimeout(function(){
+        location.reload();
+    }, 5000);
 };
 
 sendToSocket = function(i='', j='', row='', col='') {
