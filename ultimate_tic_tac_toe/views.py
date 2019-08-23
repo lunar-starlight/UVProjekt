@@ -33,6 +33,12 @@ class GameView(generic.DetailView):
         context['my_turn'] = g.current_player() == self.request.user
         return context
 
+    def get_object(self, queryset=None):
+        obj: GameUTTT = super().get_object(queryset)
+        if obj.current_player().username == 'ai':
+            obj.play(-1, -1)
+        return obj
+
 
 class PlayView(BasePlayView):
     pattern_name = 'uttt:game'
